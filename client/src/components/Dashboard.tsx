@@ -15,6 +15,7 @@ export default function Dashboard() {
       {stacks.map((stack) => (
         <StackComponent key={stack.id} stack={stack} />
       ))}
+      <button id='new-stack'>Add New Stack</button>
     </main>
   );
 }

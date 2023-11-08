@@ -44,4 +44,5 @@
 .movement-buttons {
   grid-column: 6/8;
   display: flex;
+  justify-content: space-around;
 }
