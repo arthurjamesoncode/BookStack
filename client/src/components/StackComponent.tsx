@@ -22,12 +22,30 @@ export default function StackComponent({ stack }: StackComponentProps) {
 
   return (
     <div className='container stack-container'>
-      <h2>{stack.title}</h2>
+      <div className='stack-header'>
+        <h2>{stack.title}</h2>
+        <button>View Stack</button>
+      </div>
       {books.length > 0 && (
-        <div className='container'>
-          <div className='book-container'>
-          <img className='large-cover-img' alt={`The cover of ${books[index].title}`}/>
-          <h3>{books[index].title}</h3>
+        <div className='grid'>
+          <div className='book-container grid'>
+            <img
+              className='large-cover-img'
+              alt={`The cover of ${books[index].title}`}
+            />
+            <div className='book-info'>
+              <h3>{books[index].title}</h3>
+              <h4>by {books[index].author}</h4>
+              <div className='description'>
+                <h5>Description:</h5>
+                <p>
+                  {books[index].description != null &&
+                  books[index].description!.length > 50
+                    ? `${books[index].description?.substring(0, 47)}...`
+                    : books[index].description}
+                </p>
+              </div>
+            </div>
           </div>
           <div className='movement-buttons'>
             <button disabled={index === 0} onClick={() => changeIndex(-1)}>
