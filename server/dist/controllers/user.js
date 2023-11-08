@@ -37,7 +37,21 @@ function createUser(req, res) {
                 return res.status(400).send('User Exists');
             const salt = yield bcrypt_1.default.genSalt();
             const passwordHash = yield bcrypt_1.default.hash(password, salt);
-            const newUser = yield models_1.User.create({ data: { username, password: passwordHash } });
+            const newUser = yield models_1.User.create({
+                data: {
+                    username,
+                    passwordHash,
+                    stacks: {
+                        createMany: {
+                            data: [
+                                { title: 'Currently Reading', type: 'current' },
+                                { title: 'To Read', type: 'tbr' },
+                                { title: 'Finished', type: 'finished' }
+                            ],
+                        },
+                    },
+                },
+            });
             res.status(201).send(newUser);
         }
         catch (error) {

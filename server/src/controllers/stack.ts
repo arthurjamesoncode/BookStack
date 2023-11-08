@@ -13,7 +13,8 @@ export async function getAllStacks(req: Request, res: Response) {
 
 export async function addStack (req : Request, res: Response) {
   try {
-    const stackData = req.body;
+    const userId = 1 //placeholder will be taken from a jwt/session after I do auth 
+    const stackData = {...req.body, userId};
     const newStack = await Stack.create({data: stackData})
 
     res.status(201).send(newStack);

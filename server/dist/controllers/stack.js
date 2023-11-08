@@ -27,7 +27,8 @@ exports.getAllStacks = getAllStacks;
 function addStack(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const stackData = req.body;
+            const userId = 1; //placeholder will be taken from a jwt/session after I do auth 
+            const stackData = Object.assign(Object.assign({}, req.body), { userId });
             const newStack = yield models_1.Stack.create({ data: stackData });
             res.status(201).send(newStack);
         }

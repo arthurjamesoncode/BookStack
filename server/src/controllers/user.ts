@@ -16,15 +16,29 @@ export async function createUser(req: Request, res: Response) {
   try {
     const { username, password } = req.body;
 
-    const existingUser = await User.findFirst({where: {username}})
+    const existingUser = await User.findFirst({ where: { username } });
 
-    if(existingUser) return res.status(400).send('User Exists')
+    if (existingUser) return res.status(400).send('User Exists');
 
     const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt)
+    const passwordHash = await bcrypt.hash(password, salt);
 
-    const newUser = await User.create({ data: { username, password : passwordHash } });
-    
+    const newUser = await User.create({
+      data: {
+        username,
+        passwordHash,
+        stacks: {
+          createMany: {
+            data: [
+              { title: 'Currently Reading', type: 'current' },
+              { title: 'To Read', type: 'tbr' },
+              { title: 'Finished', type: 'finished'}
+            ],
+          },
+        },
+      },
+    });
+
     res.status(201).send(newUser);
   } catch (error) {
     console.log(error);

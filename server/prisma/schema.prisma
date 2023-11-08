@@ -11,10 +11,10 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  username String  @unique @db.VarChar(50)
-  password String  @db.Char(60)
-  stacks   Stack[]
+  id           Int     @id @default(autoincrement())
+  username     String  @unique @db.VarChar(50)
+  passwordHash String  @db.Char(60)
+  stacks       Stack[]
 }
 
 model Book {
@@ -34,16 +34,16 @@ model Book {
 model Stack {
   id     Int             @id @default(autoincrement())
   title  String          @db.VarChar(255)
-  user   User            @relation(fields: [userId], references: [id])
+  user   User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
   type   String          @db.VarChar(8)
   books  BooksInStacks[]
 }
 
 model BooksInStacks {
-  book    Book  @relation(fields: [bookId], references: [id])
+  book    Book  @relation(fields: [bookId], references: [id], onDelete: Cascade)
   bookId  Int
-  stack   Stack @relation(fields: [stackId], references: [id])
+  stack   Stack @relation(fields: [stackId], references: [id], onDelete: Cascade)
   stackId Int
 
   @@id([bookId, stackId])
