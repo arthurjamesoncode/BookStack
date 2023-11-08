@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BooksInStacks = exports.Stack = exports.Book = exports.User = void 0;
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
+const User = prisma.user;
+exports.User = User;
+const Book = prisma.book;
+exports.Book = Book;
+const Stack = prisma.stack;
+exports.Stack = Stack;
+const BooksInStacks = prisma.booksInStacks;
+exports.BooksInStacks = BooksInStacks;
