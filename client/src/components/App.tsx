@@ -1,8 +1,15 @@
+import Dashboard from './Dashboard';
+import Navbar from './Navbar';
+
 import '../styles/App.css';
-import { Navbar } from './Navbar';
 
 function App() {
-  return <><Navbar/></>;
+  return (
+    <>
+      <Navbar />
+      <Dashboard />
+    </>
+  );
 }
 
 export default App;

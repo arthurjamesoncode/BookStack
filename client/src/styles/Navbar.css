@@ -1,0 +1,34 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  height: 10vh;
+  padding: 1rem;
+  align-items: center;
+  border-bottom: solid black 1px;
+}
+
+.heading-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.heading {
+  margin: 0 0.5rem;
+}
+
+.logo-icon {
+  height: 8vh;
+}
+
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-line {
+  height: 0.4rem;
+  width: 2rem;
+  background-color: black;
+  margin-top: 0.1rem;
+}

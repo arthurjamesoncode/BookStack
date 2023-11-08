@@ -1,6 +1,7 @@
 import logoIcon from '../assets/book-stack-icon.png';
+import '../styles/Navbar.css'
 
-export function Navbar() {
+export default function Navbar() {
   return (
     <header>
       <div className='heading-container'>
