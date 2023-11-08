@@ -1,4 +1,4 @@
-import { Book, BooksInStacks } from '../models';
+import { Book } from '../models';
 import { Request, Response } from 'express';
 
 export async function getAllBooks(req: Request, res: Response) {
@@ -29,7 +29,7 @@ export async function addBookToStack(req: Request, res: Response) {
 
 export async function getBooksInStack(req: Request, res: Response) {
   try {
-    const stackId = Number(req.params.stackId)
+    const stackId = Number(req.params.stackId);
 
     const books = await Book.findMany({
       where: {

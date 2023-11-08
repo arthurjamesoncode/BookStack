@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addStack = exports.getAllStacks = void 0;
+exports.getUserStacks = exports.addStack = exports.getAllStacks = void 0;
 const models_1 = require("../models");
 function getAllStacks(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -27,7 +27,7 @@ exports.getAllStacks = getAllStacks;
 function addStack(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const userId = 1; //placeholder will be taken from a jwt/session after I do auth 
+            const userId = 1; //placeholder will be taken from a jwt/session after I do auth
             const stackData = Object.assign(Object.assign({}, req.body), { userId });
             const newStack = yield models_1.Stack.create({ data: stackData });
             res.status(201).send(newStack);
@@ -39,3 +39,17 @@ function addStack(req, res) {
     });
 }
 exports.addStack = addStack;
+function getUserStacks(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const userId = Number(req.params.userId);
+            const stacks = yield models_1.Stack.findMany({ where: { userId } });
+            res.status(201).send(stacks);
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
+    });
+}
+exports.getUserStacks = getUserStacks;

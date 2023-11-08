@@ -7,6 +7,8 @@ const router = Router();
 
 router.route('/users').get(User.getAllUsers).post(User.createUser);
 
+router.route('/users/:userId/stacks').get(Stack.getUserStacks);
+
 router.route('/books').get(Book.getAllBooks);
 
 router.route('/stacks').get(Stack.getAllStacks).post(Stack.addStack);
@@ -16,5 +18,4 @@ router.route('/stacks/:stackId').get(Book.getBooksInStack).post(Book.addBookToSt
 export default router;
 
 //ignore users until I do auth
-//need to edit endpoints so that books are always placed in a certain stack defined in query params
-//define initial stacks in create user
+
