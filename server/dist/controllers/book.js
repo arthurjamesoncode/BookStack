@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addBook = exports.getAllBooks = void 0;
+exports.getBooksInStack = exports.addBookToStack = exports.getAllBooks = void 0;
 const models_1 = require("../models");
 function getAllBooks(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -24,11 +24,14 @@ function getAllBooks(req, res) {
     });
 }
 exports.getAllBooks = getAllBooks;
-function addBook(req, res) {
+function addBookToStack(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const stackId = Number(req.params.stackId);
             const bookData = req.body;
-            const newBook = yield models_1.Book.create({ data: bookData });
+            const newBook = yield models_1.Book.create({
+                data: Object.assign(Object.assign({}, bookData), { stacks: { create: { stackId } } }),
+            });
             res.status(201).send(newBook);
         }
         catch (error) {
@@ -37,4 +40,26 @@ function addBook(req, res) {
         }
     });
 }
-exports.addBook = addBook;
+exports.addBookToStack = addBookToStack;
+function getBooksInStack(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const stackId = Number(req.params.stackId);
+            const books = yield models_1.Book.findMany({
+                where: {
+                    stacks: {
+                        some: {
+                            stackId,
+                        },
+                    },
+                },
+            });
+            res.status(200).send(books);
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
+    });
+}
+exports.getBooksInStack = getBooksInStack;

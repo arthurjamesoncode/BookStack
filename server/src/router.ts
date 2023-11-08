@@ -7,9 +7,11 @@ const router = Router();
 
 router.route('/users').get(User.getAllUsers).post(User.createUser);
 
-router.route('/books').get(Book.getAllBooks).post(Book.addBook);
+router.route('/books').get(Book.getAllBooks);
 
 router.route('/stacks').get(Stack.getAllStacks).post(Stack.addStack);
+
+router.route('/stacks/:stackId').get(Book.getBooksInStack).post(Book.addBookToStack);
 
 export default router;
 

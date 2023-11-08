@@ -29,8 +29,9 @@ const Book = __importStar(require("./controllers/book"));
 const Stack = __importStar(require("./controllers/stack"));
 const router = (0, express_1.Router)();
 router.route('/users').get(User.getAllUsers).post(User.createUser);
-router.route('/books').get(Book.getAllBooks).post(Book.addBook);
+router.route('/books').get(Book.getAllBooks);
 router.route('/stacks').get(Stack.getAllStacks).post(Stack.addStack);
+router.route('/stacks/:stackId').get(Book.getBooksInStack).post(Book.addBookToStack);
 exports.default = router;
 //ignore users until I do auth
 //need to edit endpoints so that books are always placed in a certain stack defined in query params
