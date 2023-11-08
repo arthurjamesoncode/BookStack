@@ -3,6 +3,7 @@ import { Book, Stack } from '../types';
 import { getBooksInStack } from '../services/APIClient';
 
 import '../styles/StackComponent.css';
+import BookPreview from './BookPreview';
 
 type StackComponentProps = {
   stack: Stack;
@@ -28,25 +29,7 @@ export default function StackComponent({ stack }: StackComponentProps) {
       </div>
       {books.length > 0 && (
         <div className='grid'>
-          <div className='book-container grid'>
-            <img
-              className='large-cover-img'
-              alt={`The cover of ${books[index].title}`}
-            />
-            <div className='book-info'>
-              <h3>{books[index].title}</h3>
-              <h4>by {books[index].author}</h4>
-              <div className='description'>
-                <h5>Description:</h5>
-                <p>
-                  {books[index].description != null &&
-                  books[index].description!.length > 50
-                    ? `${books[index].description?.substring(0, 47)}...`
-                    : books[index].description}
-                </p>
-              </div>
-            </div>
-          </div>
+          <BookPreview book={books[index]} />
           <div className='movement-buttons'>
             <button disabled={index === 0} onClick={() => changeIndex(-1)}>
               {'<-'}
