@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  username String  @db.VarChar(50)
+  password String  @db.Char(60)
+  stacks   Stack[]
+}
+
+model Book {
+  id          Int             @id @default(autoincrement())
+  title       String          @db.VarChar(255)
+  author      String          @db.VarChar(255)
+  totalPages  Int
+  currentPage Int             @default(1)
+  bookType    String          @default("paper") @db.VarChar(10)
+  publisher   String?         @db.VarChar(255)
+  ISBN        String?         @db.VarChar(13)
+  OLID        String?         @db.VarChar(15)
+  description String?         @db.Text
+  stacks      BooksInStacks[]
+}
+
+model Stack {
+  id     Int             @id @default(autoincrement())
+  title  String          @db.VarChar(255)
+  user   User            @relation(fields: [userId], references: [id])
+  userId Int
+  type   String          @db.VarChar(8)
+  books  BooksInStacks[]
+}
+
+model BooksInStacks {
+  book    Book  @relation(fields: [bookId], references: [id])
+  bookId  Int
+  stack   Stack @relation(fields: [stackId], references: [id])
+  stackId Int
+
+  @@id([bookId, stackId])
+}
