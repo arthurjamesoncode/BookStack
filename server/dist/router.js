@@ -25,7 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const User = __importStar(require("./controllers/user"));
+const Book = __importStar(require("./controllers/book"));
 const router = (0, express_1.Router)();
-router.get('/users', User.getAllUsers);
-router.post('/users', User.createUser);
+router.route('/users').get(User.getAllUsers).post(User.createUser);
+router.route('/books').get(Book.getAllBooks).post(Book.addBook);
 exports.default = router;
