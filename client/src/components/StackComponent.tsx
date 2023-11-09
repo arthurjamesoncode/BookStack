@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Book, Stack } from '../types';
 import { getBooksInStack } from '../services/APIClient';
 
+import { useNavigate } from 'react-router-dom';
+
 import '../styles/StackComponent.css';
 import BookPreview from './BookPreview';
 
@@ -13,6 +15,8 @@ export default function StackComponent({ stack }: StackComponentProps) {
   const [books, setBooks] = useState([] as Book[]);
   const [index, setIndex] = useState(0);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     getBooksInStack(stack.id).then((result) => setBooks(result));
   }, []);
@@ -21,31 +25,33 @@ export default function StackComponent({ stack }: StackComponentProps) {
     setIndex(index + diff);
   }
 
+  function goToStackView() {
+    navigate(`/stacks/${stack.id}`);
+  }
+
   return (
     <div className='container stack-container'>
       <div className='stack-header'>
         <h2>{stack.title}</h2>
-        <button>View Stack</button>
+        <button onClick={goToStackView}>View Stack</button>
       </div>
-      {books.length > 0 && (
-        <div className='grid'>
-          <BookPreview book={books[index]} />
-          <div className='stack-buttons'>
-            <div className='movement-buttons'>
-              <button disabled={index === 0} onClick={() => changeIndex(-1)}>
-                {'<-'}
-              </button>
-              <button
-                disabled={index === books.length - 1}
-                onClick={() => changeIndex(1)}
-              >
-                {'->'}
-              </button>
-            </div>
-            <button>Add Book</button>
+      <div className='grid'>
+        {books.length > 0 && <BookPreview book={books[index]} />}
+        <div className='stack-buttons'>
+          <div className='movement-buttons'>
+            <button disabled={index === 0} onClick={() => changeIndex(-1)}>
+              {'<-'}
+            </button>
+            <button
+              disabled={index === books.length - 1}
+              onClick={() => changeIndex(1)}
+            >
+              {'->'}
+            </button>
           </div>
+          <button>Add Book</button>
         </div>
-      )}
+      </div>
     </div>
   );
 }

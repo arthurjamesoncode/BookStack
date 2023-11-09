@@ -20,7 +20,7 @@
 }
 
 .stack-header h2 {
-  max-width: 210px;
+  max-width: 220px;
   overflow-wrap: break-word;
 }
 
@@ -63,7 +63,6 @@
 }
 
 .movement-buttons {
-  grid-column: 6/8;
   display: flex;
   justify-content: space-around;
 }
