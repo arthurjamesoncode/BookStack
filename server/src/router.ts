@@ -10,6 +10,7 @@ router.route('/users').get(User.getAllUsers).post(User.createUser);
 router.route('/users/:userId/stacks').get(Stack.getUserStacks);
 
 router.route('/books').get(Book.getAllBooks);
+router.route('/books/:bookId').put(Book.editBook)
 
 router.route('/stacks').get(Stack.getAllStacks).post(Stack.addStack);
 

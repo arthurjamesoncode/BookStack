@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getBooksInStack = exports.addBookToStack = exports.getAllBooks = void 0;
+exports.editBook = exports.getBooksInStack = exports.addBookToStack = exports.getAllBooks = void 0;
 const models_1 = require("../models");
 function getAllBooks(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -63,3 +63,19 @@ function getBooksInStack(req, res) {
     });
 }
 exports.getBooksInStack = getBooksInStack;
+function editBook(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const bookId = Number(req.params.bookId);
+            console.log(bookId);
+            const bookData = req.body;
+            const book = yield models_1.Book.update({ where: { id: bookId }, data: bookData });
+            res.status(200).send(book);
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
+    });
+}
+exports.editBook = editBook;

@@ -47,3 +47,17 @@ export async function getBooksInStack(req: Request, res: Response) {
     res.status(500).send(error);
   }
 }
+
+export async function editBook(req: Request, res: Response) {
+  try {
+    const bookId = Number(req.params.bookId);
+    const bookData = req.body;
+
+    const book = await Book.update({ where: { id: bookId }, data: bookData });
+
+    res.status(200).send(book);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}
