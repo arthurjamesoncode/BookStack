@@ -19,6 +19,7 @@ router.post('/stacks', Stack.addStack); //behind auth middleware
 
 router.get('/stacks/:stackId', Book.getBooksInStack);
 router.put('/stacks/:stackId', Stack.editStack);
+router.delete('/stacks/:stackId', Stack.deleteStack);
 router.post('/stacks/:type/:stackId', Book.addNewBookToStack); //behind auth middleware
 
 router.post('/stacks/:type/:stackId/:bookId', Book.addExistingBookToStack); //behind auth middleware

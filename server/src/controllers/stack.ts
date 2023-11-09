@@ -67,3 +67,16 @@ export async function editStack(req: Request, res: Response) {
     res.status(500).send(error);
   }
 }
+
+export async function deleteStack(req: Request, res: Response) {
+  try {
+    const stackId = Number(req.params.stackId)
+
+    const response = await Stack.delete({where: {id: stackId, type: 'other'}})
+
+    res.status(203).send(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}
