@@ -8,3 +8,9 @@
 p {
   font-size: 0.8rem;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0.5rem
+}

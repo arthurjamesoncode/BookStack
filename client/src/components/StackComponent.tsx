@@ -30,16 +30,19 @@ export default function StackComponent({ stack }: StackComponentProps) {
       {books.length > 0 && (
         <div className='grid'>
           <BookPreview book={books[index]} />
-          <div className='movement-buttons'>
-            <button disabled={index === 0} onClick={() => changeIndex(-1)}>
-              {'<-'}
-            </button>
-            <button
-              disabled={index === books.length - 1}
-              onClick={() => changeIndex(1)}
-            >
-              {'->'}
-            </button>
+          <div className='stack-buttons'>
+            <div className='movement-buttons'>
+              <button disabled={index === 0} onClick={() => changeIndex(-1)}>
+                {'<-'}
+              </button>
+              <button
+                disabled={index === books.length - 1}
+                onClick={() => changeIndex(1)}
+              >
+                {'->'}
+              </button>
+            </div>
+            <button>Add Book</button>
           </div>
         </div>
       )}

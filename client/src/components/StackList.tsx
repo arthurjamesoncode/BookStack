@@ -3,7 +3,9 @@ import { Stack } from '../types';
 import { getUserStacks } from '../services/APIClient';
 import StackComponent from './StackComponent';
 
-export default function Dashboard() {
+import '../styles/StackList.css'
+
+export default function StackList() {
   const [stacks, setStacks] = useState([] as Stack[]);
 
   useEffect(() => {

@@ -19,6 +19,11 @@
   justify-content: space-between
 }
 
+.stack-header h2 {
+  max-width: 210px;
+  overflow-wrap: break-word;
+}
+
 .book-container {
   grid-column: 1/13
 }
@@ -46,7 +51,15 @@
 .action-buttons {
   display: flex;
   align-items: flex-end;
-  height: 100%
+  justify-content: space-around;
+  height: 100%;
+  width: 100%;
+}
+
+.stack-buttons {
+  grid-column: 1/13;
+  display: flex;
+  justify-content: space-around;
 }
 
 .movement-buttons {
