@@ -50,3 +50,20 @@ export async function getStacksWithBook(req: Request, res: Response) {
     res.status(500).send(error);
   }
 }
+
+export async function editStack(req: Request, res: Response) {
+  try {
+    const stackId = Number(req.params.stackId);
+    const newStackData = req.body;
+
+    const updatedStack = await Stack.update({
+      where: { id: stackId },
+      data: newStackData,
+    });
+
+    res.status(200).send(updatedStack);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}
