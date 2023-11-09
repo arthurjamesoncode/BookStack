@@ -28,7 +28,7 @@ model Book {
   ISBN        String?         @db.VarChar(13)
   OLID        String?         @db.VarChar(15)
   description String?         @db.Text
-  stacks      BooksInStacks[]
+  stacks      Stack[]
 }
 
 model Stack {
@@ -37,14 +37,5 @@ model Stack {
   user   User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
   type   String          @db.VarChar(8)
-  books  BooksInStacks[]
-}
-
-model BooksInStacks {
-  book    Book  @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  bookId  Int
-  stack   Stack @relation(fields: [stackId], references: [id], onDelete: Cascade)
-  stackId Int
-
-  @@id([bookId, stackId])
+  books  Book[]
 }

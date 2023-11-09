@@ -15,6 +15,7 @@ export async function addStack(req: Request, res: Response) {
   try {
     const userId = 1; //placeholder will be taken from a jwt/session after I do auth
     const stackData = { ...req.body, userId };
+    console.log(stackData);
     const newStack = await Stack.create({ data: stackData });
 
     res.status(201).send(newStack);

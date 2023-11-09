@@ -2,7 +2,7 @@
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "username" VARCHAR(50) NOT NULL,
-    "password" CHAR(60) NOT NULL,
+    "passwordHash" CHAR(60) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -34,18 +34,25 @@ CREATE TABLE "Stack" (
 );
 
 -- CreateTable
-CREATE TABLE "BooksInStacks" (
-    "bookId" INTEGER NOT NULL,
-    "stackId" INTEGER NOT NULL,
-
-    CONSTRAINT "BooksInStacks_pkey" PRIMARY KEY ("bookId","stackId")
+CREATE TABLE "_BookToStack" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
 );
 
--- AddForeignKey
-ALTER TABLE "Stack" ADD CONSTRAINT "Stack_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_BookToStack_AB_unique" ON "_BookToStack"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_BookToStack_B_index" ON "_BookToStack"("B");
 
 -- AddForeignKey
-ALTER TABLE "BooksInStacks" ADD CONSTRAINT "BooksInStacks_bookId_fkey" FOREIGN KEY ("bookId") REFERENCES "Book"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Stack" ADD CONSTRAINT "Stack_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "BooksInStacks" ADD CONSTRAINT "BooksInStacks_stackId_fkey" FOREIGN KEY ("stackId") REFERENCES "Stack"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "_BookToStack" ADD CONSTRAINT "_BookToStack_A_fkey" FOREIGN KEY ("A") REFERENCES "Book"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_BookToStack" ADD CONSTRAINT "_BookToStack_B_fkey" FOREIGN KEY ("B") REFERENCES "Stack"("id") ON DELETE CASCADE ON UPDATE CASCADE;
