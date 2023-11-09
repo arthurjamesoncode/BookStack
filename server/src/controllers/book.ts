@@ -1,4 +1,4 @@
-import { Book } from '../models';
+import { Book, Stack } from '../models';
 import { Request, Response } from 'express';
 
 export async function getAllBooks(req: Request, res: Response) {
@@ -13,11 +13,20 @@ export async function getAllBooks(req: Request, res: Response) {
 
 export async function addNewBookToStack(req: Request, res: Response) {
   try {
-    const stackId = Number(req.params.stackId);
+    const [type, stackId] = [req.params.type, Number(req.params.stackId)];
+    const userId = 1; //will take this from a token / session after doing auth
 
     const bookData = req.body;
+
+    const stacks : {[key : string]: number | string}[] = [{ id: stackId }]
+
+    if (type === 'other') {
+      const tbr = await Stack.findFirst({where: {userId, type: 'tbr'}});
+      stacks.push({id: tbr!.id});
+    };
+
     const newBook = await Book.create({
-      data: { ...bookData, stacks: { connect: { id: stackId } } },
+      data: { ...bookData, stacks: { connect: stacks} },
     });
 
     res.status(201).send(newBook);

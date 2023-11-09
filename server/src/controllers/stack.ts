@@ -36,3 +36,17 @@ export async function getUserStacks(req: Request, res: Response) {
     res.status(500).send(error);
   }
 }
+
+export async function getStacksWithBook(req: Request, res: Response) {
+  try {
+    const bookId = Number(req.params.bookId);
+    const stacks = await Stack.findMany({
+      where: { books: { some: { id: bookId } } },
+    });
+
+    res.status(200).send(stacks);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}
