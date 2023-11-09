@@ -1,3 +1,5 @@
+import { Book } from "../types";
+
 const url = 'http://localhost:3000';
 
 export async function getUserStacks(userId: number) {
@@ -18,4 +20,16 @@ export async function getBooksInStack(stackId: number) {
   const books = await respsonse.json();
 
   return books
+}
+
+export async function addNewBookToStack(stackId : string, stackType: string, book : Book) {
+  const response = await fetch(`${url}/stacks/${stackType}/${stackId}`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(book)
+  })
+
+  const newBook = await response.json();
+
+  return newBook;
 }
