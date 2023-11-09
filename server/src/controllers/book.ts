@@ -70,7 +70,7 @@ export async function deleteBookFromStack(req: Request, res: Response) {
       Number(req.params.bookId),
     ];
 
-    let response: Object
+    let response: Object;
     if (type === 'other') {
       const book = await Book.findFirst({
         where: { id: bookId },
@@ -86,11 +86,11 @@ export async function deleteBookFromStack(req: Request, res: Response) {
         },
       });
 
-      console.log('woof')
+      console.log('woof');
 
-      response = updatedBook
+      response = updatedBook;
     } else {
-      response = await Book.delete({where: {id: bookId}});
+      response = await Book.delete({ where: { id: bookId } });
     }
 
     res.status(200).send(response);
@@ -100,4 +100,43 @@ export async function deleteBookFromStack(req: Request, res: Response) {
   }
 }
 
+export async function addExistingBookToStack(req: Request, res: Response) {
+  try {
+    const [type, stackId, bookId] = [
+      req.params.type,
+      Number(req.params.stackId),
+      Number(req.params.bookId),
+    ];
 
+    if (type === 'other') {
+      const response = await Book.update({
+        where: { id: bookId },
+        data: { stacks: { connect: { id: stackId } } },
+      });
+
+      return res.status(200).send(response);
+    }
+
+    const book = await Book.findFirst({
+      where: { id: bookId },
+      include: { stacks: { select: { id: true, type: true } } },
+    });
+
+    if (!book) return res.status(400).send();
+    const currentStacks = book.stacks;
+
+    const newStacks = currentStacks
+      .filter((stack) => stack.type === 'other')
+      .concat([{ id: stackId, type }]);
+
+    const response = await Book.update({
+      where: { id: bookId },
+      data: { stacks: { set: newStacks } },
+    });
+
+    res.status(200).send(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}

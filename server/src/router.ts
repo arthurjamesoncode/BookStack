@@ -21,7 +21,7 @@ router
 
 router
   .route('/stacks/:type/:stackId/:bookId')
-  /* .get(Book.addExistingBookToStack) */
+  .post(Book.addExistingBookToStack)
   .delete(Book.deleteBookFromStack);
 
 export default router;
