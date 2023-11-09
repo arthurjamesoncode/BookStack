@@ -3,6 +3,7 @@ import StackList from './components/StackList';
 import StackView from './components/StackView';
 import { getBooksInStack } from './services/APIClient';
 import AddBookForm from './components/AddBookForm';
+import BookDetails from './components/BookDetails';
 
 const router = createBrowserRouter([
   {
@@ -10,15 +11,16 @@ const router = createBrowserRouter([
     element: <StackList />,
   },
   {
-    path: '/stacks/:stackId',
+    path: '/view/stack',
     element: <StackView />,
-    loader: async ({params}) => {
-      return await getBooksInStack(Number(params.stackId))
-    }
   },
   {
     path: '/stacks/:stackId/add',
     element: <AddBookForm />
+  },
+  {
+    path: '/books/:bookId',
+    element: <BookDetails />
   }
 ]);
 

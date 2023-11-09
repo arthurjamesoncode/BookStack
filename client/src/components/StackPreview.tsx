@@ -11,7 +11,7 @@ type StackComponentProps = {
   stack: Stack;
 };
 
-export default function StackComponent({ stack }: StackComponentProps) {
+export default function StackPreview({ stack }: StackComponentProps) {
   const [books, setBooks] = useState([] as Book[]);
   const [index, setIndex] = useState(0);
 
@@ -25,15 +25,17 @@ export default function StackComponent({ stack }: StackComponentProps) {
     setIndex(index + diff);
   }
 
-  
-    
-
-
   return (
     <div className='container stack-container'>
       <div className='stack-header'>
         <h2>{stack.title}</h2>
-        <button onClick={() => navigate(`/stacks/${stack.id}`)}>View Stack</button>
+        <button
+          onClick={() =>
+            navigate(`/view/stack`, { state: { stack, books } })
+          }
+        >
+          View Stack
+        </button>
       </div>
       <div className='grid'>
         {books.length > 0 && <BookPreview book={books[index]} />}
@@ -49,7 +51,9 @@ export default function StackComponent({ stack }: StackComponentProps) {
               {'->'}
             </button>
           </div>
-          <button onClick={() => navigate(`/stacks/${stack.id}/add`)}>Add Book</button>
+          <button onClick={() => navigate(`/stacks/${stack.id}/add`)}>
+            Add Book
+          </button>
         </div>
       </div>
     </div>

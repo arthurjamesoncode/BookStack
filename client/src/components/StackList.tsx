@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Stack } from '../types';
 import { getUserStacks } from '../services/APIClient';
-import StackComponent from './StackComponent';
+import StackComponent from './StackPreview';
 
 import '../styles/StackList.css'
 
