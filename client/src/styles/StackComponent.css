@@ -39,6 +39,14 @@
 
 .description {
   margin-top: 0.5rem;
+  max-width: 150px;
+  overflow-wrap: break-word;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: flex-end;
+  height: 100%
 }
 
 .movement-buttons {
