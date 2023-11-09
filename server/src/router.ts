@@ -5,24 +5,23 @@ import * as Stack from './controllers/stack';
 
 const router = Router();
 
-router.route('/users').get(User.getAllUsers).post(User.createUser);
+router.get('/users', User.getAllUsers);
+router.post('/users', User.createUser);
 
-router.route('/users/:userId/stacks').get(Stack.getUserStacks);
+router.get('/users/:userId/stacks', Stack.getUserStacks);
 
-router.route('/books').get(Book.getAllBooks);
-router.route('/books/:bookId').put(Book.editBook);
+router.get('/books', Book.getAllBooks);
+router.put('/books/:bookId', Book.editBook); //behind auth middleware
+router.get('/books/stacks/:bookId', Stack.getStacksWithBook)
 
-router.route('/stacks').get(Stack.getAllStacks).post(Stack.addStack);
+router.get('/stacks', Stack.getAllStacks);
+router.post('/stacks', Stack.addStack); //behind auth middleware
 
-router
-  .route('/stacks/:stackId')
-  .get(Book.getBooksInStack)
-  .post(Book.addNewBookToStack);
+router.get('/stacks/:stackId', Book.getBooksInStack);
+router.post('/stacks/:type/:stackId', Book.addNewBookToStack); //behind auth middleware
 
-router
-  .route('/stacks/:type/:stackId/:bookId')
-  .post(Book.addExistingBookToStack)
-  .delete(Book.deleteBookFromStack);
+router.post('/stacks/:type/:stackId/:bookId', Book.addExistingBookToStack); //behind auth middleware
+router.delete('/stacks/:type/:stackId/:bookId', Book.deleteBookFromStack); //behind auth middleware
 
 export default router;
 
