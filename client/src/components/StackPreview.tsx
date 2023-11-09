@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Book, Stack } from '../types';
-import { getBooksInStack } from '../services/APIClient';
+import { deleteBookFromStack, getBooksInStack } from '../services/APIClient';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -29,6 +29,10 @@ export default function StackPreview({ stack }: StackComponentProps) {
     navigate('forms/book', { state: { stack, book } });
   }
 
+  function deleteBook(bookId : number) {
+    deleteBookFromStack(bookId, stack.id, stack.type);
+  }
+
   return (
     <div className='container stack-container'>
       <div className='stack-header'>
@@ -41,7 +45,7 @@ export default function StackPreview({ stack }: StackComponentProps) {
       </div>
       <div className='grid'>
         {books.length > 0 && (
-          <BookPreview goToEditBook={goToEditBook} book={books[index]} />
+          <BookPreview deleteBook={deleteBook} goToEditBook={goToEditBook} book={books[index]} />
         )}
         <div className='stack-buttons'>
           <div className='movement-buttons'>

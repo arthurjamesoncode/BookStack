@@ -47,6 +47,21 @@ export async function editBook(book: Book) {
   });
 
   const updatedBook = await response.json();
-  console.log(updatedBook)
+  console.log(updatedBook);
   return updatedBook;
+}
+
+export async function deleteBookFromStack(
+  bookId: number,
+  stackId: number,
+  stackType: string
+) {
+  const response = await fetch(
+    `${url}/stacks/${stackType}/${stackId}/${bookId}`,
+    {
+      method: 'DELETE',
+    }
+  );
+
+  return await response.json()
 }

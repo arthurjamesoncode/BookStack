@@ -2,7 +2,7 @@ export type Stack = {
   id: number;
   title: string;
   userId: number;
-  type: String;
+  type: string;
 };
 
 export type Book = {

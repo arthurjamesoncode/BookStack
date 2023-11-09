@@ -3,6 +3,7 @@ import { Book, Stack } from '../types';
 import BookPreview from './BookPreview';
 
 import '../styles/StackView.css';
+import { deleteBookFromStack } from '../services/APIClient';
 
 export default function StackView() {
   const location = useLocation();
@@ -14,6 +15,10 @@ export default function StackView() {
     navigate('forms/book', { state: { stack, book } });
   }
 
+  function deleteBook(bookId: number) {
+    deleteBookFromStack(bookId, stack.id, stack.type);
+  }
+
   return (
     <div className='stack-view-container'>
       <h2>{stack.title}</h2>
@@ -21,7 +26,11 @@ export default function StackView() {
         {books.map((book) => {
           return (
             <div key={book.id} className='book-list-item'>
-              <BookPreview goToEditBook={goToEditBook} book={book} />
+              <BookPreview
+                deleteBook={deleteBook}
+                goToEditBook={goToEditBook}
+                book={book}
+              />
             </div>
           );
         })}
