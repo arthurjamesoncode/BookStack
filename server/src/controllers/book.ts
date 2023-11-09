@@ -18,15 +18,15 @@ export async function addNewBookToStack(req: Request, res: Response) {
 
     const bookData = req.body;
 
-    const stacks : {[key : string]: number | string}[] = [{ id: stackId }]
+    const stacks: { [key: string]: number | string }[] = [{ id: stackId }];
 
     if (type === 'other') {
-      const tbr = await Stack.findFirst({where: {userId, type: 'tbr'}});
-      stacks.push({id: tbr!.id});
-    };
+      const tbr = await Stack.findFirst({ where: { userId, type: 'tbr' } });
+      stacks.push({ id: tbr!.id });
+    }
 
     const newBook = await Book.create({
-      data: { ...bookData, stacks: { connect: stacks} },
+      data: { ...bookData, stacks: { connect: stacks } },
     });
 
     res.status(201).send(newBook);
@@ -79,30 +79,27 @@ export async function deleteBookFromStack(req: Request, res: Response) {
       Number(req.params.bookId),
     ];
 
-    let response: Object;
-    if (type === 'other') {
-      const book = await Book.findFirst({
-        where: { id: bookId },
-        include: {
-          stacks: { select: { id: true } },
-        },
-      });
+    if (type !== 'other') {
+      const deletedBook = await Book.delete({ where: { id: bookId } });
 
-      const updatedBook = await Book.update({
-        where: { id: bookId },
-        data: {
-          stacks: { set: book!.stacks.filter((stack) => stack.id != stackId) },
-        },
-      });
-
-      console.log('woof');
-
-      response = updatedBook;
-    } else {
-      response = await Book.delete({ where: { id: bookId } });
+      return res.status(200).send();
     }
 
-    res.status(200).send(response);
+    const book = await Book.findFirst({
+      where: { id: bookId },
+      include: {
+        stacks: { select: { id: true } },
+      },
+    });
+
+    const updatedBook = await Book.update({
+      where: { id: bookId },
+      data: {
+        stacks: { set: book!.stacks.filter((stack) => stack.id != stackId) },
+      },
+    });
+
+    res.status(201).send(updatedBook);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);

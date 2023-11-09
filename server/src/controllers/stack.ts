@@ -15,8 +15,10 @@ export async function addStack(req: Request, res: Response) {
   try {
     const userId = 1; //placeholder will be taken from a jwt/session after I do auth
     const stackData = { ...req.body, userId };
-    console.log(stackData);
-    const newStack = await Stack.create({ data: stackData });
+    
+    const newStack = await Stack.create({
+      data: { ...stackData, type: 'other' },
+    });
 
     res.status(201).send(newStack);
   } catch (error) {
@@ -28,6 +30,7 @@ export async function addStack(req: Request, res: Response) {
 export async function getUserStacks(req: Request, res: Response) {
   try {
     const userId = Number(req.params.userId);
+
     const stacks = await Stack.findMany({ where: { userId } });
 
     res.status(201).send(stacks);
@@ -40,6 +43,7 @@ export async function getUserStacks(req: Request, res: Response) {
 export async function getStacksWithBook(req: Request, res: Response) {
   try {
     const bookId = Number(req.params.bookId);
+
     const stacks = await Stack.findMany({
       where: { books: { some: { id: bookId } } },
     });
@@ -70,11 +74,13 @@ export async function editStack(req: Request, res: Response) {
 
 export async function deleteStack(req: Request, res: Response) {
   try {
-    const stackId = Number(req.params.stackId)
+    const stackId = Number(req.params.stackId);
 
-    const response = await Stack.delete({where: {id: stackId, type: 'other'}})
+    const deletedStack = await Stack.delete({
+      where: { id: stackId, type: 'other' },
+    });
 
-    res.status(203).send(response);
+    res.status(203).send(deletedStack);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
