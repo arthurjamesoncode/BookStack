@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import StackList from './components/StackList';
 import StackView from './components/StackView';
 import { getBooksInStack } from './services/APIClient';
+import AddBookForm from './components/AddBookForm';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
     loader: async ({params}) => {
       return await getBooksInStack(Number(params.stackId))
     }
+  },
+  {
+    path: '/stacks/:stackId/add',
+    element: <AddBookForm />
   }
 ]);
 

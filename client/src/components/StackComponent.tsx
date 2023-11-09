@@ -25,15 +25,15 @@ export default function StackComponent({ stack }: StackComponentProps) {
     setIndex(index + diff);
   }
 
-  function goToStackView() {
-    navigate(`/stacks/${stack.id}`);
-  }
+  
+    
+
 
   return (
     <div className='container stack-container'>
       <div className='stack-header'>
         <h2>{stack.title}</h2>
-        <button onClick={goToStackView}>View Stack</button>
+        <button onClick={() => navigate(`/stacks/${stack.id}`)}>View Stack</button>
       </div>
       <div className='grid'>
         {books.length > 0 && <BookPreview book={books[index]} />}
@@ -49,7 +49,7 @@ export default function StackComponent({ stack }: StackComponentProps) {
               {'->'}
             </button>
           </div>
-          <button>Add Book</button>
+          <button onClick={() => navigate(`/stacks/${stack.id}/add`)}>Add Book</button>
         </div>
       </div>
     </div>

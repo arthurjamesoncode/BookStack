@@ -1,0 +1,22 @@
+.form-container {
+  padding: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 0
+}
+
+button {
+  width: 100%;
+}
+
+textarea {
+  height: 4rem;
+}
+
+.book-type {
+  display: flex;
+  justify-content: space-around;
+}
