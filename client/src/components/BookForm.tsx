@@ -1,11 +1,11 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FormEvent, useState } from 'react';
 
 import '../styles/AddBookForm.css';
-import { addNewBookToStack } from '../services/APIClient';
-import { Book } from '../types';
+import { addNewBookToStack, editBook } from '../services/APIClient';
+import { Book, Stack } from '../types';
 
-const initialFormVals = {
+const blankFormVals = {
   title: '',
   author: '',
   totalPages: 0,
@@ -16,9 +16,22 @@ const initialFormVals = {
   description: '',
 } as { [key: string]: number | string };
 
-export default function AddBookForm() {
-  const { stackId } = useParams();
+export default function BookForm() {
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const { stack, book } = location.state as {
+    stack: Stack;
+    book: { [key: string]: number | string };
+  };
+
+  let initialFormVals: { [key: string]: number | string } = blankFormVals;
+  let edit = false;
+
+  if (book) {
+    initialFormVals = book;
+    edit = true;
+  }
 
   const [formVals, setFormVals] = useState(initialFormVals);
 
@@ -37,13 +50,17 @@ export default function AddBookForm() {
 
     const book = formVals as unknown as Book;
 
-    addNewBookToStack(stackId!, 'current', book);
+    console.log(edit);
+
+    if (!edit) addNewBookToStack(stack.id, 'current', book);
+    else editBook(book).then(result => console.log(result));
+
     navigate(-1);
   }
 
   return (
     <div className='form-container'>
-      <h2>Add New Book To {stackId}</h2>
+      <h2>Add New Book To {stack.title}</h2>
       <form onSubmit={submitBook}>
         <div className='field'>
           <label htmlFor='title'>Title:</label>
@@ -72,7 +89,7 @@ export default function AddBookForm() {
         <div className='field'>
           <label htmlFor='totalPages'>Total Pages:</label>
           <input
-            value={formVals.pages}
+            value={formVals.totalPages}
             onChange={onFormChange}
             type='number'
             id='totalPages'

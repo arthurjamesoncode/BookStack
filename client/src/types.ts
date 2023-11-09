@@ -12,8 +12,8 @@ export type Book = {
   totalPages: number;
   currentPage: number;
   bookType: string;
-  publisher: string | null;
-  ISBN: string | null;
-  OLID: string | null;
-  description: String | null;
+  publisher: string;
+  ISBN: string;
+  OLID: string;
+  description: String;
 };

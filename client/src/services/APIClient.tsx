@@ -1,4 +1,4 @@
-import { Book } from "../types";
+import { Book } from '../types';
 
 const url = 'http://localhost:3000';
 
@@ -19,17 +19,34 @@ export async function getBooksInStack(stackId: number) {
 
   const books = await respsonse.json();
 
-  return books
+  return books;
 }
 
-export async function addNewBookToStack(stackId : string, stackType: string, book : Book) {
+export async function addNewBookToStack(
+  stackId: number,
+  stackType: string,
+  book: Book
+) {
   const response = await fetch(`${url}/stacks/${stackType}/${stackId}`, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(book)
-  })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(book),
+  });
 
   const newBook = await response.json();
 
   return newBook;
+}
+
+export async function editBook(book: Book) {
+  console.log(book);
+  const response = await fetch(`${url}/books/${book.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(book),
+  });
+
+  const updatedBook = await response.json();
+  console.log(updatedBook)
+  return updatedBook;
 }

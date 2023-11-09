@@ -2,9 +2,10 @@ import { Book } from '../types';
 
 type BookPreviewProps = {
   book: Book;
+  goToEditBook: Function
 };
 
-export default function BookPreview({ book}: BookPreviewProps) {
+export default function BookPreview({ book, goToEditBook}: BookPreviewProps) {
 
   return (
     <div className='book-container grid'>
@@ -22,8 +23,8 @@ export default function BookPreview({ book}: BookPreviewProps) {
         </div>
         <div className='action-buttons'>
           <button>View</button>
-          <button>Edit</button>
-          <button >Delete</button>
+          <button onClick={() => goToEditBook(book)}>Edit</button>
+          <button>Delete</button>
         </div>
       </div>
     </div>

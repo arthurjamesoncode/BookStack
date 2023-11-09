@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Book, Stack } from '../types';
 import BookPreview from './BookPreview';
 
@@ -6,8 +6,13 @@ import '../styles/StackView.css';
 
 export default function StackView() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const { stack, books } = location.state as { stack: Stack; books: Book[] };
+
+  function goToEditBook(book: Book) {
+    navigate('forms/book', { state: { stack, book } });
+  }
 
   return (
     <div className='stack-view-container'>
@@ -15,8 +20,8 @@ export default function StackView() {
       <div className='book-list'>
         {books.map((book) => {
           return (
-            <div className='book-list-item'>
-              <BookPreview book={book} />
+            <div key={book.id} className='book-list-item'>
+              <BookPreview goToEditBook={goToEditBook} book={book} />
             </div>
           );
         })}
