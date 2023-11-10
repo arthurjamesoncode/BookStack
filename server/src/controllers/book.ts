@@ -11,6 +11,18 @@ export async function getAllBooks(req: Request, res: Response) {
   }
 }
 
+export async function getBookById(req: Request, res: Response) {
+  try {
+    const bookId = Number(req.params.bookId);
+    const book = await Book.findUnique({ where: {id: bookId} });
+
+    res.status(200).send(book)
+  } catch (error) {
+    console.log(error);
+    res.status(500).send();
+  }
+}
+
 export async function addNewBookToStack(req: Request, res: Response) {
   try {
     const [type, stackId] = [req.params.type, Number(req.params.stackId)];

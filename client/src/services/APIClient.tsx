@@ -8,7 +8,6 @@ export async function getUserStacks(userId: number) {
   });
 
   const stacks = await response.json();
-
   return stacks;
 }
 
@@ -18,7 +17,6 @@ export async function getBooksInStack(stackId: number) {
   });
 
   const books = await respsonse.json();
-
   return books;
 }
 
@@ -34,7 +32,6 @@ export async function addNewBookToStack(
   });
 
   const newBook = await response.json();
-
   return newBook;
 }
 
@@ -64,4 +61,16 @@ export async function deleteBookFromStack(
   );
 
   return await response.json()
+}
+
+export async function getBookById(bookId: number) {
+  console.log(`${url}/books/${bookId}`)
+  const response = await fetch(`${url}/books/${bookId}`, {
+    method: 'GET'
+  })
+
+  console.log(response)
+  const book = await response.json();
+
+  return book;
 }

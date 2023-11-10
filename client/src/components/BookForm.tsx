@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FormEvent, useState } from 'react';
 
 import '../styles/AddBookForm.css';
@@ -20,7 +20,7 @@ export default function BookForm() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { stack, book } = location.state as {
+  const { stack, book} = location.state as {
     stack: Stack;
     book: { [key: string]: number | string };
   };
@@ -53,14 +53,14 @@ export default function BookForm() {
     console.log(edit);
 
     if (!edit) addNewBookToStack(stack.id, 'current', book);
-    else editBook(book).then(result => console.log(result));
+    else editBook(book).then((result) => console.log(result));
 
-    navigate(-1);
+    navigate(-1)
   }
 
   return (
     <div className='form-container'>
-      <h2>Add New Book To {stack.title}</h2>
+      <h2>{edit ? 'Edit Book' :`Add New Book To ${stack.title}`}</h2>
       <form onSubmit={submitBook}>
         <div className='field'>
           <label htmlFor='title'>Title:</label>
@@ -180,7 +180,7 @@ export default function BookForm() {
           />
         </div>
 
-        <button type='submit'>Add Book</button>
+        <button type='submit'>{edit ? 'Edit Book' : 'Add Book'}</button>
       </form>
     </div>
   );

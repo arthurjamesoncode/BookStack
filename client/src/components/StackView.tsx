@@ -1,23 +1,20 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Book, Stack } from '../types';
 import BookPreview from './BookPreview';
 
 import '../styles/StackView.css';
-import { deleteBookFromStack } from '../services/APIClient';
+import { getBooksInStack } from '../services/APIClient';
 
 export default function StackView() {
   const location = useLocation();
-  const navigate = useNavigate();
 
-  const { stack, books } = location.state as { stack: Stack; books: Book[] };
+  const { stack } = location.state as { stack: Stack };
+  const [books, setBooks] = useState([] as Book[]);
 
-  function goToEditBook(book: Book) {
-    navigate('forms/book', { state: { stack, book } });
-  }
-
-  function deleteBook(bookId: number) {
-    deleteBookFromStack(bookId, stack.id, stack.type);
-  }
+  useEffect(() => {
+    getBooksInStack(stack.id).then((newBooks) => setBooks(newBooks));
+  }, []);
 
   return (
     <div className='stack-view-container'>
@@ -26,11 +23,7 @@ export default function StackView() {
         {books.map((book) => {
           return (
             <div key={book.id} className='book-list-item'>
-              <BookPreview
-                deleteBook={deleteBook}
-                goToEditBook={goToEditBook}
-                book={book}
-              />
+              <BookPreview viewedFrom={stack} book={book} />
             </div>
           );
         })}

@@ -11,6 +11,7 @@ router.post('/users', User.createUser);
 router.get('/users/:userId/stacks', Stack.getUserStacks);
 
 router.get('/books', Book.getAllBooks);
+router.get('/books/:bookId', Book.getBookById)
 router.put('/books/:bookId', Book.editBook); //behind auth middleware
 router.get('/books/stacks/:bookId', Stack.getStacksWithBook)
 

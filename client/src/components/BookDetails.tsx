@@ -1,11 +1,42 @@
-import { useLocation } from 'react-router-dom';
-import { Book } from '../types';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Book, Stack } from '../types';
 
 import '../styles/BookDetails.css';
+import { getBookById } from '../services/APIClient';
+
+const blankBook: Book = {
+  id: -1,
+  title: '',
+  author: '',
+  totalPages: 0,
+  bookType: 'paper',
+  currentPage: 0,
+  publisher: '',
+  ISBN: '',
+  OLID: '',
+  description: '',
+};
 
 export default function BookDetails() {
   const location = useLocation();
-  const { book } = location.state as { book: Book };
+  const navigate = useNavigate();
+
+  const { bookId, viewedFrom } = location.state as {
+    bookId: number;
+    viewedFrom: Stack;
+  };
+  const [book, setBook] = useState(blankBook);
+
+  useEffect(() => {
+    getBookById(bookId).then((newBook) => setBook(newBook));
+  }, []);
+
+  function goToEditBook() {
+    navigate('/forms/book', {
+      state: { stack: viewedFrom, book, cameFrom: 'book' },
+    });
+  }
 
   return (
     <div className='container'>
@@ -38,7 +69,7 @@ export default function BookDetails() {
         </div>
         <div className='action-container'>
           <button>View</button>
-          <button>Edit</button>
+          <button onClick={goToEditBook}>Edit</button>
           <button>Delete</button>
           <button>
             {book.currentPage <= 1 ? 'Start Reading' : 'Update Progress'}

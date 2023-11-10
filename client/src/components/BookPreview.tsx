@@ -1,19 +1,22 @@
 import { useNavigate } from 'react-router-dom';
-import { Book } from '../types';
+import { Book, Stack } from '../types';
+import { deleteBookFromStack } from '../services/APIClient';
 
 type BookPreviewProps = {
   book: Book;
-  goToEditBook: Function;
-  deleteBook: Function;
+  viewedFrom: Stack;
 };
 
-export default function BookPreview({
-  book,
-  goToEditBook,
-  deleteBook,
-}: BookPreviewProps) {
+export default function BookPreview({ book, viewedFrom }: BookPreviewProps) {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  function onDelete() {
+    deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
+  }
+
+  function goToEditBook() {
+    navigate('/forms/book', { state: { stack: viewedFrom, book } });
+  }
 
   return (
     <div className='book-container grid'>
@@ -30,9 +33,11 @@ export default function BookPreview({
           </p>
         </div>
         <div className='action-buttons'>
-          <button onClick={() => navigate('/book', {state: {book}})}>View</button>
-          <button onClick={() => goToEditBook(book)}>Edit</button>
-          <button onClick={() => deleteBook(book.id)}>Delete</button>
+          <button onClick={() => navigate('/book', { state: { bookId: book.id } })}>
+            View
+          </button>
+          <button onClick={goToEditBook}>Edit</button>
+          <button onClick={onDelete}>Delete</button>
         </div>
       </div>
     </div>
