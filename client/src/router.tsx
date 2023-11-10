@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import StackList from './components/StackList';
 import StackView from './components/StackView';
-import BookForm from './components/BookForm';
+import BookForm from './components/forms/BookForm';
 import BookDetails from './components/BookDetails';
 
 

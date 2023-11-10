@@ -60,16 +60,14 @@ export async function deleteBookFromStack(
     }
   );
 
-  return await response.json()
+  return await response.json();
 }
 
 export async function getBookById(bookId: number) {
-  console.log(`${url}/books/${bookId}`)
   const response = await fetch(`${url}/books/${bookId}`, {
-    method: 'GET'
-  })
+    method: 'GET',
+  });
 
-  console.log(response)
   const book = await response.json();
 
   return book;

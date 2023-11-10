@@ -16,7 +16,7 @@ textarea {
   height: 4rem;
 }
 
-.book-type {
+.radio-group {
   display: flex;
   justify-content: space-around;
 }
