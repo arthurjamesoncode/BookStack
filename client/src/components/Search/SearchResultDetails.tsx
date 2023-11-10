@@ -4,7 +4,7 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import { SearchResult, SearchResultDetails } from '../../types';
+import { SearchResult, SearchResultDetails, Stack } from '../../types';
 
 import defaultBookIcon from '../../assets/default-book-icon.png';
 
@@ -15,7 +15,8 @@ export default function SearchResultDetails() {
   const navigate = useNavigate();
 
   const { olid } = useParams();
-  const { result, imgUrl, hasImg } = location.state as {
+  const { stack, result, imgUrl, hasImg } = location.state as {
+    stack: Stack
     result: SearchResult;
     imgUrl: string;
     hasImg: boolean;
@@ -35,7 +36,7 @@ export default function SearchResultDetails() {
     };
 
     navigate('/forms/book', {
-      state: { stack: { title: 'To Read', id: 4 }, book, edit: false },
+      state: { stack, book, edit: false },
     });
   }
 

@@ -15,13 +15,15 @@ export default function RadioButtonField({
   options,
   groupLabel,
 }: RadioButtonFieldProps) {
+  let radioId = -1;
   return (
     <div className='field'>
       <label>{groupLabel}</label>
       <div className='radio-group'>
         {options.map((option) => {
+          radioId++
           return (
-            <div className='radio-button'>
+            <div key={radioId} className='radio-button'>
               <label htmlFor={option.value}>{option.label}</label>
               <input
                 checked={formVals[group] === option.value}
