@@ -1,0 +1,9 @@
+.search-result-details {
+  padding: 1rem;
+}
+
+.description-container {
+  font-size: 0.8rem;
+  height: 6rem;
+  overflow: scroll;
+}

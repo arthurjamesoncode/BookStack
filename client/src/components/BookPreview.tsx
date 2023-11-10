@@ -15,7 +15,7 @@ export default function BookPreview({ book, viewedFrom }: BookPreviewProps) {
   }
 
   function goToEditBook() {
-    navigate('/forms/book', { state: { stack: viewedFrom, book } });
+    navigate('/forms/book', { state: { stack: viewedFrom, book, edit: true} });
   }
 
   return (

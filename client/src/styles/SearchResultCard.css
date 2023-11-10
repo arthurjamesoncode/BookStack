@@ -7,9 +7,17 @@
 }
 
 .search-cover-img {
+  grid-column: 1/5;
   height: 180px;
   width: 90px;
   object-fit: contain;
   z-index: 2;
+}
+
+.result-info-container {
+  grid-column: 5/13;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 

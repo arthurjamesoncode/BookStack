@@ -28,13 +28,6 @@
   grid-column: 1/13
 }
 
-.large-cover-img {
-  grid-column: 1/7;
-  height: 220px;
-  width: 145px;
-  background-color: lightgray;
-}
-
 .book-info {
   grid-column: 7/13;
   display: flex;

@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { addNewBookToStack, editBook } from '../services/APIClient';
-import { Book, Stack } from '../types';
+import { Book } from '../types';
 
 import { BookFormFields } from './forms/formFieldProps';
 import GenericForm from './forms/GenericForm';
@@ -10,26 +10,26 @@ import '../styles/BookForm.css';
 
 const blankForm = {
   title: '',
-    author: '',
-    totalPages: 0,
-    bookType: 'paper',
-    publisher: '',
-    ISBN: '',
-    OLID: '',
-    description: '',
-  } as { [key: string]: number | string }
+  author: '',
+  totalPages: 0,
+  bookType: 'paper',
+  publisher: '',
+  ISBN: '',
+  OLID: '',
+  description: '',
+} as { [key: string]: number | string };
 
 export default function BookForm() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { stack, book } = location.state as {
-    stack: Stack;
+  const { stack, book, edit } = location.state as {
+    stack: { title: string; id: number };
     book: { [key: string]: number | string };
+    edit: boolean;
   };
 
-  let initialFormVals = book || blankForm
-  const edit = book != null;
+  let initialFormVals = book || blankForm;
 
   function submitBook(values: { [key: string]: string | number }) {
     const book = values as unknown as Book;

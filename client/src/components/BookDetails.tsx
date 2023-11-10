@@ -34,7 +34,7 @@ export default function BookDetails() {
 
   function goToEditBook() {
     navigate('/forms/book', {
-      state: { stack: viewedFrom, book, cameFrom: 'book' },
+      state: { stack: {title: viewedFrom.title, id: viewedFrom.id}, book, edit: true },
     });
   }
 

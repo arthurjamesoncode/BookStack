@@ -14,3 +14,11 @@ p {
   grid-template-columns: repeat(12, 1fr);
   gap: 0.5rem
 }
+
+.large-cover-img {
+  grid-column: 1/7;
+  height: 220px;
+  width: 145px;
+  object-fit: contain;
+  background-color: lightgray;
+}

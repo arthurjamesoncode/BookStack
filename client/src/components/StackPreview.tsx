@@ -54,7 +54,7 @@ export default function StackPreview({ stack }: StackComponentProps) {
               {'->'}
             </button>
           </div>
-          <button onClick={() => navigate(`forms/book`, { state: { stack, cameFrom: '/'} })}>
+          <button onClick={() => navigate(`forms/book`, { state: { stack, edit: false} })}>
             Add Book
           </button>
         </div>
