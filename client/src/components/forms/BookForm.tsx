@@ -8,6 +8,17 @@ import GenericForm from './GenericForm';
 
 import '../../styles/BookForm.css';
 
+const blankForm = {
+  title: '',
+    author: '',
+    totalPages: 0,
+    bookType: 'paper',
+    publisher: '',
+    ISBN: '',
+    OLID: '',
+    description: '',
+  } as { [key: string]: number | string }
+
 export default function BookForm() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -17,27 +28,14 @@ export default function BookForm() {
     book: { [key: string]: number | string };
   };
 
-  let initialFormVals =
-    book != null
-      ? book
-      : ({
-          title: '',
-          author: '',
-          totalPages: 0,
-          bookType: 'paper',
-          publisher: '',
-          ISBN: '',
-          OLID: '',
-          description: '',
-        } as { [key: string]: number | string });
-
+  let initialFormVals = book || blankForm
   const edit = book != null;
 
   function submitBook(values: { [key: string]: string | number }) {
     const book = values as unknown as Book;
 
     if (!edit) addNewBookToStack(stack.id, 'current', book);
-    else editBook(book).then((result) => console.log(result));
+    else editBook(book);
 
     navigate(-1);
   }

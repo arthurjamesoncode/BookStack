@@ -1,9 +1,9 @@
-import { FormEvent } from 'react';
+import { FormEvent } from "react";
 
-export type TextFieldProps = {
+type TextFieldProps = {
   formVals: { [key: string]: string | number };
   onFormChange: (
-    event: FormEvent<HTMLInputElement>
+    event: FormEvent<HTMLTextAreaElement>
   ) => void;
   id: string;
   placeholder: string;
@@ -11,7 +11,7 @@ export type TextFieldProps = {
   label: string;
 };
 
-export default function TextField({
+export default function TextareaField({
   formVals,
   onFormChange,
   id,
@@ -22,10 +22,9 @@ export default function TextField({
   return (
     <div className='field'>
       <label htmlFor={id}>{label}</label>
-      <input
+      <textarea
         value={formVals[id]}
         onChange={onFormChange}
-        type='text'
         id={id}
         placeholder={placeholder}
         required={required}

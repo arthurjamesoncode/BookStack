@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react';
 import RadioButtonField from './RadioButtonField';
 import TextField from './TextField';
 import { FormField } from '../../types';
+import TextareaField from './TextareaFeild';
 
 type GenericFormProps = {
   formTitle: string;
@@ -54,14 +55,24 @@ export default function GenericForm({
                 key={fieldId}
               />
             );
+          } else if (field.type === 'textarea') {
+            <TextareaField
+              formVals={formVals}
+              onFormChange={onFormChange}
+              id={field.id!}
+              placeholder={field.placeholder!}
+              required={field.required!}
+              label={field.label}
+              key={fieldId}
+            />;
           }
+          
           return (
             <TextField
               formVals={formVals}
               onFormChange={onFormChange}
               id={field.id!}
               placeholder={field.placeholder!}
-              textarea={field.type === 'textarea'}
               required={field.required!}
               label={field.label}
               key={fieldId}
