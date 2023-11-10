@@ -1,0 +1,15 @@
+.book-details-container {
+  padding: 1rem;
+}
+
+.book-details-container > * {
+  margin-bottom: 1rem;
+}
+
+.main-info {
+  grid-column: 7/13;
+}
+
+.description-container {
+  align-self: flex-start;
+}

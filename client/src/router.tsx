@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import StackList from './components/StackList';
 import StackView from './components/StackView';
 import BookForm from './components/BookForm';
+import BookDetails from './components/BookDetails';
 
 
 const router = createBrowserRouter([
@@ -14,8 +15,12 @@ const router = createBrowserRouter([
     element: <StackView />,
   },
   {
-    path: 'forms/book',
+    path: '/forms/book',
     element: <BookForm />
+  },
+  {
+    path: '/book',
+    element: <BookDetails />
   }
 ]);
 

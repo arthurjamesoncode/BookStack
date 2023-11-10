@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Book } from '../types';
 
 type BookPreviewProps = {
@@ -11,6 +12,9 @@ export default function BookPreview({
   goToEditBook,
   deleteBook,
 }: BookPreviewProps) {
+
+  const navigate = useNavigate()
+
   return (
     <div className='book-container grid'>
       <img className='large-cover-img' alt={`The cover of ${book.title}`} />
@@ -26,7 +30,7 @@ export default function BookPreview({
           </p>
         </div>
         <div className='action-buttons'>
-          <button>View</button>
+          <button onClick={() => navigate('/book', {state: {book}})}>View</button>
           <button onClick={() => goToEditBook(book)}>Edit</button>
           <button onClick={() => deleteBook(book.id)}>Delete</button>
         </div>
