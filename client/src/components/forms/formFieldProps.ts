@@ -1,6 +1,6 @@
-import { FormField } from "../../types";
+import { FormField } from '../../types';
 
-export const BookFormFields : FormField[] = [
+export const BookFormFields: FormField[] = [
   {
     type: 'text',
     id: 'title',
@@ -60,5 +60,15 @@ export const BookFormFields : FormField[] = [
     placeholder: 'Enter description: ',
     required: false,
     label: 'Description: ',
+  },
+];
+
+export const SearchFormFields: FormField[] = [
+  {
+    type: 'text',
+    id: 'searchText',
+    placeholder: 'search for a book',
+    required: false,
+    label: '',
   },
 ];

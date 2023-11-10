@@ -1,8 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 import StackList from './components/StackList';
 import StackView from './components/StackView';
-import BookForm from './components/forms/BookForm';
+import BookForm from './components/BookForm';
 import BookDetails from './components/BookDetails';
+import Search from './components/Search/Search';
 
 
 const router = createBrowserRouter([
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: '/book',
     element: <BookDetails />
+  },
+  {
+    path: '/search',
+    element: <Search />
   }
 ]);
 

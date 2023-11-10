@@ -18,6 +18,21 @@ export type Book = {
   description: String;
 };
 
+export type SearchResult = {
+  title: string;
+  edition_count: number;
+  edition_key: string[];
+  cover_edition_key: string;
+  author_name: string[];
+}
+
+export type SearchResponse = {
+  numFound: number;
+  start: number;
+  numFoundExact: boolean;
+  docs: SearchResult[]
+}
+
 export type RadioFormField = {
   type: 'radio';
   group: string;

@@ -1,0 +1,15 @@
+.result-card-container {
+  padding: 0.5rem;
+  background-color: blanchedalmond;
+  margin: 0.5rem;
+  border-radius: 10px;
+  position: relative;
+}
+
+.search-cover-img {
+  height: 180px;
+  width: 90px;
+  object-fit: contain;
+  z-index: 2;
+}
+
