@@ -1,14 +1,14 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { addNewBookToStack, editBook } from '../services/APIClient';
-import { Book } from '../types';
+import { Book } from '../utils/types';
 
-import { BookFormFields } from './forms/formFieldProps';
+import { BookFormFields } from '../utils/formFields';
 import GenericForm from './forms/GenericForm';
 
 import '../styles/BookForm.css';
 
-const blankForm = {
+const blankForm: Record<string, number | string> = {
   title: '',
   author: '',
   totalPages: 0,
@@ -17,27 +17,29 @@ const blankForm = {
   ISBN: '',
   OLID: '',
   description: '',
-} as { [key: string]: number | string };
+};
 
 export default function BookForm() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { stack, book, edit } = location.state as {
+  const { stack, book, edit, hasImg} = location.state as {
     stack: { title: string; id: number };
-    book: { [key: string]: number | string };
+    book: Record<string, string | number>;
     edit: boolean;
+    hasImg: boolean | undefined
   };
 
   const initialFormVals = book || blankForm;
 
-  function submitBook(values: { [key: string]: string | number }) {
-    const book = values as unknown as Book;
+  function submitBook(values: Record<string, number | string>) {
+    const book = values as unknown as Book; //guaranteed to have all necessary fields for adding a new book
+    book.hasImg = hasImg || false
 
     if (!edit) addNewBookToStack(stack.id, 'current', book);
     else editBook(book);
 
-    navigate(-1);
+    navigate('/');
   }
 
   const fields = BookFormFields;
@@ -47,6 +49,7 @@ export default function BookForm() {
 
   return (
     <GenericForm
+      formName='book-form'
       formFields={fields}
       formTitle={title}
       submitText={submitText}

@@ -1,7 +1,8 @@
 import { FormEvent } from 'react';
 
 export type TextFieldProps = {
-  formVals: { [key: string]: string | number };
+  formName: string
+  formVals: Record<string, string | number>;
   onFormChange: (
     event: FormEvent<HTMLInputElement>
   ) => void;
@@ -12,6 +13,7 @@ export type TextFieldProps = {
 };
 
 export default function TextField({
+  formName,
   formVals,
   onFormChange,
   id,
@@ -20,9 +22,10 @@ export default function TextField({
   label,
 }: TextFieldProps) {
   return (
-    <div className='field'>
+    <div className={`${formName}__field`}>
       <label htmlFor={id}>{label}</label>
       <input
+        className={`${formName}__text-input`}
         value={formVals[id]}
         onChange={onFormChange}
         type='text'

@@ -1,4 +1,4 @@
-import { SearchResult } from '../../types';
+import { SearchResult } from '../../utils/types';
 import SearchResultCard from './SearchResultCard';
 
 type SearchResultsPageProps = {

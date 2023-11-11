@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Stack } from '../types';
+import { Stack } from '../utils/types';
 import { getUserStacks } from '../services/APIClient';
 import StackComponent from './StackPreview';
 

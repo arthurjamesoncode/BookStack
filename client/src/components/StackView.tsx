@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Book, Stack } from '../types';
+import { Book, Stack } from '../utils/types';
 import BookPreview from './BookPreview';
 
 import '../styles/StackView.css';

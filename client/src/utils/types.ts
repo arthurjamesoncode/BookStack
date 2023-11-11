@@ -16,6 +16,7 @@ export type Book = {
   ISBN: string;
   OLID: string;
   description: string;
+  hasImg: boolean
 };
 
 export type SearchResult = {

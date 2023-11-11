@@ -1,4 +1,4 @@
-import { Book } from '../types';
+import { Book } from '../utils/types';
 
 const url = 'http://localhost:3000';
 
@@ -35,7 +35,7 @@ export async function addNewBookToStack(
   return newBook;
 }
 
-export async function editBook(book: Book) {
+export async function editBook(book: Partial<Book>) {
   console.log(book);
   const response = await fetch(`${url}/books/${book.id}`, {
     method: 'PUT',

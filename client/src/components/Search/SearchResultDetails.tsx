@@ -4,7 +4,7 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import { SearchResult, SearchResultDetails, Stack } from '../../types';
+import { SearchResult, SearchResultDetails, Stack } from '../../utils/types';
 
 import defaultBookIcon from '../../assets/default-book-icon.png';
 
@@ -36,7 +36,7 @@ export default function SearchResultDetails() {
     };
 
     navigate('/forms/book', {
-      state: { stack, book, edit: false },
+      state: { stack, book, edit: false, hasImg },
     });
   }
 

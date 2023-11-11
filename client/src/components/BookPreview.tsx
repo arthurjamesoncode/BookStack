@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { Book, Stack } from '../types';
+import { Book, Stack } from '../utils/types';
 import { deleteBookFromStack } from '../services/APIClient';
+import defaultIcon from '../assets/default-book-icon.png'
+import { getCoverUrl } from '../services/OpenLibrary';
 
 type BookPreviewProps = {
   book: Book;
@@ -18,9 +20,14 @@ export default function BookPreview({ book, viewedFrom }: BookPreviewProps) {
     navigate('/forms/book', { state: { stack: viewedFrom, book, edit: true} });
   }
 
+  let imgUrl = defaultIcon;
+  if (book.hasImg) {
+    imgUrl = getCoverUrl('olid', book.OLID) + '-M.jpg'; 
+  }
+
   return (
     <div className='book-container grid'>
-      <img className='large-cover-img' alt={`The cover of ${book.title}`} />
+      <img className='large-cover-img' src={imgUrl} alt={`The cover of ${book.title}`} />
       <div className='book-info'>
         <h3>{book.title}</h3>
         <h4>by {book.author}</h4>

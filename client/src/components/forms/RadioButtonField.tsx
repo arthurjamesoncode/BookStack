@@ -1,14 +1,16 @@
 import { FormEvent } from 'react';
 
 export type RadioButtonFieldProps = {
-  formVals: { [key: string]: string | number };
+  formVals: Record<string, number | string>;
   onFormChange: (event: FormEvent<HTMLInputElement>) => void;
   group: string;
   options: { value: string; label: string }[];
   groupLabel: string;
+  formName: string
 };
 
 export default function RadioButtonField({
+  formName,
   formVals,
   onFormChange,
   group,
@@ -17,13 +19,13 @@ export default function RadioButtonField({
 }: RadioButtonFieldProps) {
   let radioId = -1;
   return (
-    <div className='field'>
+    <div className={`${formName}__field`}>
       <label>{groupLabel}</label>
-      <div className='radio-group'>
+      <div className={`${formName}__radio-group`}>
         {options.map((option) => {
           radioId++
           return (
-            <div key={radioId} className='radio-button'>
+            <div key={radioId} className={`${formName}__radio-button`}>
               <label htmlFor={option.value}>{option.label}</label>
               <input
                 checked={formVals[group] === option.value}

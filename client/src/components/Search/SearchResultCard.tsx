@@ -1,4 +1,4 @@
-import { SearchResult, Stack } from '../../types';
+import { SearchResult, Stack } from '../../utils/types';
 
 import { useEffect, useState } from 'react';
 import { getCoverUrl, hasCover } from '../../services/OpenLibrary';
@@ -16,7 +16,6 @@ export default function SearchResultCard({ result }: SearchResultCardProps) {
   const navigate = useNavigate();
   const location = useLocation()
   const { stack } = location.state as {stack: Stack}
-  console.log(stack)
 
   let olid = result.cover_edition_key;
   if (!olid) olid = result.edition_key[0];

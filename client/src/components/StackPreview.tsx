@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Book, Stack } from '../types';
+import { Book, Stack } from '../utils/types';
 import { getBooksInStack } from '../services/APIClient';
 
 import { useNavigate } from 'react-router-dom';

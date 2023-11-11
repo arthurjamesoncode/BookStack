@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Book, Stack } from '../types';
+import { Book, Stack } from '../utils/types';
 
 import '../styles/BookDetails.css';
 import { getBookById } from '../services/APIClient';
@@ -16,6 +16,7 @@ const blankBook: Book = {
   ISBN: '',
   OLID: '',
   description: '',
+  hasImg: false
 };
 
 export default function BookDetails() {

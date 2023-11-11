@@ -1,4 +1,4 @@
-import { FormField } from '../../types';
+import { FormField } from './types';
 
 export const BookFormFields: FormField[] = [
   {

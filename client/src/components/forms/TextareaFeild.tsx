@@ -1,10 +1,9 @@
-import { FormEvent } from "react";
+import { FormEvent } from 'react';
 
 type TextFieldProps = {
-  formVals: { [key: string]: string | number };
-  onFormChange: (
-    event: FormEvent<HTMLTextAreaElement>
-  ) => void;
+  formName: string;
+  formVals: Record<string, string | number>;
+  onFormChange: (event: FormEvent<HTMLTextAreaElement>) => void;
   id: string;
   placeholder: string;
   required: boolean;
@@ -12,6 +11,7 @@ type TextFieldProps = {
 };
 
 export default function TextareaField({
+  formName,
   formVals,
   onFormChange,
   id,
@@ -20,9 +20,12 @@ export default function TextareaField({
   label,
 }: TextFieldProps) {
   return (
-    <div className='field'>
-      <label htmlFor={id}>{label}</label>
+    <div className={`${formName}__field`}>
+      <label htmlFor={id}>
+        {label}
+      </label>
       <textarea
+        className={`${formName}__text-area`}
         value={formVals[id]}
         onChange={onFormChange}
         id={id}

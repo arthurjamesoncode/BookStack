@@ -1,19 +1,26 @@
-import GenericForm from "../forms/GenericForm"
-import { SearchFormFields } from "../forms/formFieldProps"
-
+import GenericForm from '../forms/GenericForm';
+import { SearchFormFields } from '../../utils/formFields';
 
 type SearchFormProps = {
-  onSearch: (values: {[key: string] : string | number}) => void
-}
+  onSearch: (values: { [key: string]: string | number }) => void;
+};
 
-export default function SearchForm ({onSearch} : SearchFormProps) {
-
+export default function SearchForm({ onSearch }: SearchFormProps) {
   const initialValues = {
-    searchText: ''
-  }
-  const searchFields = SearchFormFields
-  const title= 'Search: '; 
-  const submitText = 'search 🔍'
+    searchText: '',
+  };
+  const searchFields = SearchFormFields;
+  const title = 'Search: ';
+  const submitText = 'search 🔍';
 
-  return <GenericForm formFields={searchFields} formTitle={title} submitText={submitText} initialValues={initialValues} onFormSubmit={onSearch}/>
+  return (
+    <GenericForm
+      formName='search-form'
+      formFields={searchFields}
+      formTitle={title}
+      submitText={submitText}
+      initialValues={initialValues}
+      onFormSubmit={onSearch}
+    />
+  );
 }
