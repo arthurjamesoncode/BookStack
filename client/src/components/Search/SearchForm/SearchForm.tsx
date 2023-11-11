@@ -1,6 +1,8 @@
 import GenericForm from '../../forms/GenericForm';
 import { SearchFormFields } from '../../../utils/formFields';
 
+import './SearchForm.css'
+
 type SearchFormProps = {
   onSearch: (values: { [key: string]: string | number }) => void;
 };

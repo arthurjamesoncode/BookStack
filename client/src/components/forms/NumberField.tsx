@@ -1,33 +1,34 @@
 import { FormEvent } from 'react';
 
-type TextFieldProps = {
+export type NumberFieldProps = {
   formName: string;
   formVals: Record<string, string | number>;
-  onFormChange: (event: FormEvent<HTMLTextAreaElement>) => void;
+  onFormChange: (event: FormEvent<HTMLInputElement>) => void;
   id: string;
-  placeholder: string;
+  min: number;
   required: boolean;
   label: string;
 };
 
-export default function TextareaField({
+export default function NumberField({
   formName,
   formVals,
   onFormChange,
   id,
-  placeholder,
+  min,
   required,
   label,
-}: TextFieldProps) {
+}: NumberFieldProps) {
   return (
     <div className={`${formName}__field`}>
       <label htmlFor={id}>{label}</label>
-      <textarea
-        className={`${formName}__textarea`}
+      <input
+        className={`${formName}__number-input`}
         value={formVals[id]}
         onChange={onFormChange}
+        type='number'
         id={id}
-        placeholder={placeholder}
+        min={min}
         required={required}
       />
     </div>

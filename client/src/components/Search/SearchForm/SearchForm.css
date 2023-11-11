@@ -1,0 +1,12 @@
+.search-form {
+  padding: 0.5rem
+}
+
+.search-form__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-form__submit {
+  width: 100%;
+}

@@ -3,6 +3,7 @@ import RadioButtonField from './RadioButtonField';
 import TextField from './TextField';
 import { FormField } from '../../utils/types';
 import TextareaField from './TextareaFeild';
+import NumberField from './NumberField';
 
 type GenericFormProps = {
   formTitle: string;
@@ -10,7 +11,7 @@ type GenericFormProps = {
   onFormSubmit: (values: Record<string, number | string>) => void;
   initialValues: Record<string, number | string>;
   submitText: string;
-  formName : string
+  formName: string;
 };
 
 export default function GenericForm({
@@ -19,7 +20,7 @@ export default function GenericForm({
   onFormSubmit,
   initialValues,
   submitText,
-  formName
+  formName,
 }: GenericFormProps) {
   const [formVals, setFormVals] = useState(initialValues);
 
@@ -45,6 +46,7 @@ export default function GenericForm({
         }}
       >
         {formFields.map((field) => {
+          console.log(field);
           fieldId++;
           if (field.type === 'radio') {
             return (
@@ -59,16 +61,31 @@ export default function GenericForm({
               />
             );
           } else if (field.type === 'textarea') {
-            <TextareaField
-              formName={formName}
-              formVals={formVals}
-              onFormChange={onFormChange}
-              id={field.id!}
-              placeholder={field.placeholder!}
-              required={field.required!}
-              label={field.label}
-              key={fieldId}
-            />;
+            return (
+              <TextareaField
+                formName={formName}
+                formVals={formVals}
+                onFormChange={onFormChange}
+                id={field.id!}
+                placeholder={field.placeholder!}
+                required={field.required!}
+                label={field.label}
+                key={fieldId}
+              />
+            );
+          } else if (field.type === 'number') {
+            return (
+              <NumberField
+                formName={formName}
+                formVals={formVals}
+                onFormChange={onFormChange}
+                id={field.id!}
+                min={field.min!}
+                required={field.required!}
+                label={field.label}
+                key={fieldId}
+              />
+            );
           }
           return (
             <TextField
@@ -83,7 +100,9 @@ export default function GenericForm({
             />
           );
         })}
-        <button type='submit'>{submitText}</button>
+        <button className={`${formName}__submit`} type='submit'>
+          {submitText}
+        </button>
       </form>
     </div>
   );
