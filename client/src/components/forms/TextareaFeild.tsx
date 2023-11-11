@@ -21,9 +21,7 @@ export default function TextareaField({
 }: TextFieldProps) {
   return (
     <div className={`${formName}__field`}>
-      <label htmlFor={id}>
-        {label}
-      </label>
+      <label htmlFor={id}>{label}</label>
       <textarea
         className={`${formName}__text-area`}
         value={formVals[id]}

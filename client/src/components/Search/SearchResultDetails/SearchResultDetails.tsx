@@ -4,11 +4,11 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import { SearchResult, SearchResultDetails, Stack } from '../../utils/types';
+import { SearchResult, SearchResultDetails, Stack } from '../../../utils/types';
 
-import defaultBookIcon from '../../assets/default-book-icon.png';
+import defaultBookIcon from '../../../assets/default-book-icon.png';
 
-import '../../styles/SearchResultDetails.css';
+import './SearchResultDetails.css';
 
 export default function SearchResultDetails() {
   const location = useLocation();

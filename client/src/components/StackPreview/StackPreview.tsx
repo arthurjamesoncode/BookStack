@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Book, Stack } from '../utils/types';
-import { getBooksInStack } from '../services/APIClient';
+import { Book, Stack } from '../../utils/types';
+import { getBooksInStack } from '../../services/APIClient';
 
 import { useNavigate } from 'react-router-dom';
 
-import '../styles/StackComponent.css';
-import BookPreview from './BookPreview';
+import './StackPreview.css';
+import BookPreview from '../BookPreview/BookPreview';
 
 type StackComponentProps = {
   stack: Stack;

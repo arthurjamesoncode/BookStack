@@ -1,10 +1,10 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Book, Stack } from '../utils/types';
-import BookPreview from './BookPreview';
+import { Book, Stack } from '../../utils/types';
+import BookPreview from '../BookPreview/BookPreview';
 
-import '../styles/StackView.css';
-import { getBooksInStack } from '../services/APIClient';
+import './StackView.css';
+import { getBooksInStack } from '../../services/APIClient';
 
 export default function StackView() {
   const location = useLocation();

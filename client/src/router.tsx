@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
-import StackList from './components/StackList';
-import StackView from './components/StackView';
-import BookForm from './components/BookForm';
-import BookDetails from './components/BookDetails';
+import StackList from './components/StackList/StackList';
+import StackView from './components/StackView/StackView';
+import BookForm from './components/BookForm/BookForm';
+import BookDetails from './components/BookDetails/BookDetails';
 import Search from './components/Search/Search';
-import SearchResultDetails from './components/Search/SearchResultDetails';
+import SearchResultDetails from './components/Search/SearchResultDetails/SearchResultDetails';
 import { getEdition } from './services/OpenLibrary';
 
 

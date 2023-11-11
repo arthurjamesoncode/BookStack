@@ -70,7 +70,6 @@ export default function GenericForm({
               key={fieldId}
             />;
           }
-          
           return (
             <TextField
               formName={formName}
@@ -84,7 +83,6 @@ export default function GenericForm({
             />
           );
         })}
-
         <button type='submit'>{submitText}</button>
       </form>
     </div>

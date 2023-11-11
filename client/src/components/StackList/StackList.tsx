@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Stack } from '../utils/types';
-import { getUserStacks } from '../services/APIClient';
-import StackComponent from './StackPreview';
+import { Stack } from '../../utils/types';
+import { getUserStacks } from '../../services/APIClient';
+import StackComponent from '../StackPreview/StackPreview';
 
-import '../styles/StackList.css'
+import './StackList.css'
 
 export default function StackList() {
   const [stacks, setStacks] = useState([] as Stack[]);

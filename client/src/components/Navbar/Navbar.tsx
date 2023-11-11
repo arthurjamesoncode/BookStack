@@ -1,5 +1,5 @@
-import logoIcon from '../assets/book-stack-icon.png';
-import '../styles/Navbar.css'
+import logoIcon from '../../assets/book-stack-icon.png';
+import './Navbar.css'
 
 export default function Navbar() {
   return (

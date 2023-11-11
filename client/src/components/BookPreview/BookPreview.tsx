@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { Book, Stack } from '../utils/types';
-import { deleteBookFromStack } from '../services/APIClient';
-import defaultIcon from '../assets/default-book-icon.png'
-import { getCoverUrl } from '../services/OpenLibrary';
+import { Book, Stack } from '../../utils/types';
+import { deleteBookFromStack } from '../../services/APIClient';
+import defaultIcon from '../../assets/default-book-icon.png'
+import { getCoverUrl } from '../../services/OpenLibrary';
 
 type BookPreviewProps = {
   book: Book;

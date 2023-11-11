@@ -1,5 +1,5 @@
-import { SearchResult } from '../../utils/types';
-import SearchResultCard from './SearchResultCard';
+import { SearchResult } from '../../../utils/types';
+import SearchResultCard from '../SearchResultCard/SearchResultCard';
 
 type SearchResultsPageProps = {
   page: SearchResult[];

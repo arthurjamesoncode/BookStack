@@ -1,10 +1,10 @@
-import { SearchResult, Stack } from '../../utils/types';
+import { SearchResult, Stack } from '../../../utils/types';
 
 import { useEffect, useState } from 'react';
-import { getCoverUrl, hasCover } from '../../services/OpenLibrary';
+import { getCoverUrl, hasCover } from '../../../services/OpenLibrary';
 
-import defaultBookIcon from '../../assets/default-book-icon.png';
-import '../../styles/SearchResultCard.css';
+import defaultBookIcon from '../../../assets/default-book-icon.png';
+import './SearchResultCard.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 type SearchResultCardProps = {

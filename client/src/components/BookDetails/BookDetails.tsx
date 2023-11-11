@@ -1,9 +1,9 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Book, Stack } from '../utils/types';
+import { Book, Stack } from '../../utils/types';
 
-import '../styles/BookDetails.css';
-import { getBookById } from '../services/APIClient';
+import './BookDetails.css';
+import { getBookById } from '../../services/APIClient';
 
 const blankBook: Book = {
   id: -1,

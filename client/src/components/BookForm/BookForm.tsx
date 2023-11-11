@@ -1,12 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { addNewBookToStack, editBook } from '../services/APIClient';
-import { Book } from '../utils/types';
+import { addNewBookToStack, editBook } from '../../services/APIClient';
+import { Book } from '../../utils/types';
 
-import { BookFormFields } from '../utils/formFields';
-import GenericForm from './forms/GenericForm';
+import { BookFormFields } from '../../utils/formFields';
+import GenericForm from '../forms/GenericForm';
 
-import '../styles/BookForm.css';
+import './BookForm.css';
 
 const blankForm: Record<string, number | string> = {
   title: '',
