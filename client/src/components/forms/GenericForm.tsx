@@ -26,7 +26,7 @@ export default function GenericForm({
   ) {
     let key: string = event.currentTarget.id;
     let value: string | number = event.currentTarget.value;
-    if (event.currentTarget.type === 'radio') key = 'bookType';
+    if (event.currentTarget.type === 'radio') key = event.currentTarget.name;
     if (event.currentTarget.type === 'number') value = Number(value);
 
     setFormVals({ ...formVals, [key]: value });
