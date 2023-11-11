@@ -1,6 +1,6 @@
 export type Stack = {
   id: number;
-  title: string;
+  name: string;
   userId: number;
   type: string;
 };

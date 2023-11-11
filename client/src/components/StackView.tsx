@@ -18,7 +18,7 @@ export default function StackView() {
 
   return (
     <div className='stack-view-container'>
-      <h2>{stack.title}</h2>
+      <h2>{stack.name}</h2>
       <div className='book-list'>
         {books.map((book) => {
           return (

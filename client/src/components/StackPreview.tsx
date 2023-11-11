@@ -28,7 +28,7 @@ export default function StackPreview({ stack }: StackComponentProps) {
   return (
     <div className='container stack-container'>
       <div className='stack-header'>
-        <h2>{stack.title}</h2>
+        <h2>{stack.name}</h2>
         <button
           onClick={() => navigate(`/view/stack`, { state: { stack, books } })}
         >

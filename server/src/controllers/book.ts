@@ -14,9 +14,9 @@ export async function getAllBooks(req: Request, res: Response) {
 export async function getBookById(req: Request, res: Response) {
   try {
     const bookId = Number(req.params.bookId);
-    const book = await Book.findUnique({ where: {id: bookId} });
+    const book = await Book.findUnique({ where: { id: bookId } });
 
-    res.status(200).send(book)
+    res.status(200).send(book);
   } catch (error) {
     console.log(error);
     res.status(500).send();
@@ -30,15 +30,15 @@ export async function addNewBookToStack(req: Request, res: Response) {
 
     const bookData = req.body;
 
-    const stacks: { [key: string]: number | string }[] = [{ id: stackId }];
+    const stacks: { [key: string]: number | string }[] = [{ stackId }];
 
     if (type === 'other') {
       const tbr = await Stack.findFirst({ where: { userId, type: 'tbr' } });
-      stacks.push({ id: tbr!.id });
+      stacks.push({ stackId: tbr!.id });
     }
 
     const newBook = await Book.create({
-      data: { ...bookData, stacks: { connect: stacks } },
+      data: { ...bookData, stacks: { create: stacks } },
     });
 
     res.status(201).send(newBook);
@@ -56,7 +56,7 @@ export async function getBooksInStack(req: Request, res: Response) {
       where: {
         stacks: {
           some: {
-            id: stackId,
+            stackId,
           },
         },
       },
@@ -100,14 +100,24 @@ export async function deleteBookFromStack(req: Request, res: Response) {
     const book = await Book.findFirst({
       where: { id: bookId },
       include: {
-        stacks: { select: { id: true } },
+        stacks: {
+          select: {
+            stackId: true,
+            addedAt: true,
+          },
+        },
       },
     });
+
+    const newStacks = book!.stacks.filter((stack) => stack.stackId != stackId);
 
     const updatedBook = await Book.update({
       where: { id: bookId },
       data: {
-        stacks: { set: book!.stacks.filter((stack) => stack.id != stackId) },
+        stacks: {
+          set: [],
+          createMany: { data: newStacks },
+        },
       },
     });
 
@@ -129,7 +139,7 @@ export async function addExistingBookToStack(req: Request, res: Response) {
     if (type === 'other') {
       const response = await Book.update({
         where: { id: bookId },
-        data: { stacks: { connect: { id: stackId } } },
+        data: { stacks: { create: { stackId } } },
       });
 
       return res.status(200).send(response);
@@ -137,19 +147,39 @@ export async function addExistingBookToStack(req: Request, res: Response) {
 
     const book = await Book.findFirst({
       where: { id: bookId },
-      include: { stacks: { select: { id: true, type: true } } },
+      include: {
+        stacks: {
+          select: {
+            stack: { select: { id: true, type: true } },
+            addedAt: true,
+          },
+        },
+      },
     });
 
     if (!book) return res.status(400).send();
-    const currentStacks = book.stacks;
+    const currentStackRelations = book.stacks.map((stack) => ({
+      stack: stack.stack,
+      addedAt: stack.addedAt,
+    }));
 
-    const newStacks = currentStacks
-      .filter((stack) => stack.type === 'other')
-      .concat([{ id: stackId, type }]);
+    const newStackRelations = currentStackRelations
+      .filter((relation) => relation.stack.type === 'other')
+      .map((relation) => ({
+        stackId: relation.stack.id,
+        addedAt: relation.addedAt,
+      }));
+
+    newStackRelations.push({ stackId, addedAt: new Date() });
 
     const response = await Book.update({
       where: { id: bookId },
-      data: { stacks: { set: newStacks } },
+      data: {
+        stacks: {
+          set: [],
+          createMany: { data: newStackRelations },
+        },
+      },
     });
 
     res.status(200).send(response);

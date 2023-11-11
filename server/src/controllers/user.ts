@@ -30,9 +30,9 @@ export async function createUser(req: Request, res: Response) {
         stacks: {
           createMany: {
             data: [
-              { title: 'Currently Reading', type: 'current' },
-              { title: 'To Read', type: 'tbr' },
-              { title: 'Finished', type: 'finished'}
+              { name: 'Currently Reading', type: 'current' },
+              { name: 'To Read', type: 'tbr' },
+              { name: 'Finished', type: 'finished'}
             ],
           },
         },

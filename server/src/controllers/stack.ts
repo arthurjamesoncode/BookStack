@@ -15,7 +15,7 @@ export async function addStack(req: Request, res: Response) {
   try {
     const userId = 1; //placeholder will be taken from a jwt/session after I do auth
     const stackData = { ...req.body, userId };
-    
+
     const newStack = await Stack.create({
       data: { ...stackData, type: 'other' },
     });
@@ -45,7 +45,9 @@ export async function getStacksWithBook(req: Request, res: Response) {
     const bookId = Number(req.params.bookId);
 
     const stacks = await Stack.findMany({
-      where: { books: { some: { id: bookId } } },
+      where: {
+        books: { some: { bookId: bookId } },
+      },
     });
 
     res.status(200).send(stacks);
