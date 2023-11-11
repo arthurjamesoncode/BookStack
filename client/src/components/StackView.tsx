@@ -14,7 +14,7 @@ export default function StackView() {
 
   useEffect(() => {
     getBooksInStack(stack.id).then((newBooks) => setBooks(newBooks));
-  }, []);
+  }, [stack.id]);
 
   return (
     <div className='stack-view-container'>

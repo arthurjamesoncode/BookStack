@@ -29,7 +29,7 @@ export default function BookForm() {
     edit: boolean;
   };
 
-  let initialFormVals = book || blankForm;
+  const initialFormVals = book || blankForm;
 
   function submitBook(values: { [key: string]: string | number }) {
     const book = values as unknown as Book;

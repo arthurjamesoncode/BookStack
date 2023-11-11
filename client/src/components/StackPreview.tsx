@@ -19,7 +19,7 @@ export default function StackPreview({ stack }: StackComponentProps) {
 
   useEffect(() => {
     getBooksInStack(stack.id).then((result) => setBooks(result));
-  }, []);
+  }, [stack.id]);
 
   function changeIndex(diff: number) {
     setIndex(index + diff);

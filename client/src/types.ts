@@ -15,7 +15,7 @@ export type Book = {
   publisher: string;
   ISBN: string;
   OLID: string;
-  description: String;
+  description: string;
 };
 
 export type SearchResult = {

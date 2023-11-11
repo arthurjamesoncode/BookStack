@@ -30,7 +30,7 @@ export default function SearchResultCard({ result }: SearchResultCardProps) {
 
   useEffect(() => {
     hasCover(imgUrl).then((result) => setHasImg(result));
-  }, []);
+  }, [imgUrl]);
 
   function goToResultInfo() {
     navigate(`/search/details/${olid}`, { state: { stack, result, imgUrl, hasImg } });

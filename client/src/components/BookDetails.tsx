@@ -30,7 +30,7 @@ export default function BookDetails() {
 
   useEffect(() => {
     getBookById(bookId).then((newBook) => setBook(newBook));
-  }, []);
+  }, [bookId]);
 
   function goToEditBook() {
     navigate('/forms/book', {
