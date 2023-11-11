@@ -24,6 +24,10 @@
   overflow-wrap: break-word;
 }
 
+.menu-dots {
+  max-height: 30px;
+}
+
 .book-container {
   grid-column: 1/13
 }

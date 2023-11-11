@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Book, Stack } from '../../utils/types';
 import { getBooksInStack } from '../../services/APIClient';
-
 import { useNavigate } from 'react-router-dom';
-
-import './StackPreview.css';
 import BookPreview from '../BookPreview/BookPreview';
+
+import menuDots from '../../assets/menu-dots.svg';
+import './StackPreview.css';
 
 type StackComponentProps = {
   stack: Stack;
+  openMenu: Function;
 };
 
-export default function StackPreview({ stack }: StackComponentProps) {
+export default function StackPreview({ stack, openMenu }: StackComponentProps) {
   const [books, setBooks] = useState([] as Book[]);
   const [index, setIndex] = useState(0);
 
@@ -25,17 +26,17 @@ export default function StackPreview({ stack }: StackComponentProps) {
     setIndex(index + diff);
   }
 
+  function goToStackView() {
+    navigate(`/view/stack`, { state: { stack, books } });
+  }
+
   return (
     <div className='container stack-container'>
       <div className='stack-header'>
         <h2>{stack.name}</h2>
-        <button
-          onClick={() => navigate(`/view/stack`, { state: { stack, books } })}
-        >
-          View Stack
-        </button>
+        <img className='menu-dots' onClick={() => openMenu()} src={menuDots} />
       </div>
-      <div className='grid'>
+      <div onClick={goToStackView} className='grid'>
         {books.length > 0 && (
           <BookPreview viewedFrom={stack} book={books[index]} />
         )}
@@ -59,7 +60,7 @@ export default function StackPreview({ stack }: StackComponentProps) {
             >
               Add Book
             </button>
-            <button onClick={() => navigate('/search', {state: {stack}})}>
+            <button onClick={() => navigate('/search', { state: { stack } })}>
               Add From Search
             </button>
           </div>
