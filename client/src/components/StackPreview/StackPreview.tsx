@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Book, Stack } from '../../utils/types';
 import { getBooksInStack } from '../../services/APIClient';
-import { useNavigate } from 'react-router-dom';
 import BookPreview from '../BookPreview/BookPreview';
 
 import menuDots from '../../assets/menu-dots.svg';
@@ -9,36 +8,44 @@ import './StackPreview.css';
 
 type StackComponentProps = {
   stack: Stack;
-  openMenu: Function;
+  openStackMenu: Function;
+  openAddBookMenu: Function;
 };
 
-export default function StackPreview({ stack, openMenu }: StackComponentProps) {
-  const [books, setBooks] = useState([] as Book[]);
+export default function StackPreview({
+  stack,
+  openStackMenu,
+  openAddBookMenu,
+}: StackComponentProps) {
+  const [books, setBooks] = useState<Book[]>([]);
   const [index, setIndex] = useState(0);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
-    getBooksInStack(stack.id).then((result) => setBooks(result));
+    getBooks();
   }, [stack.id]);
 
   function changeIndex(diff: number) {
     setIndex(index + diff);
   }
 
-  function goToStackView() {
-    navigate(`/view/stack`, { state: { stack, books } });
+  async function getBooks() {
+    const newBooks = await getBooksInStack(stack.id)
+    setBooks(newBooks)
   }
 
   return (
     <div className='container stack-container'>
       <div className='stack-header'>
         <h2>{stack.name}</h2>
-        <img className='menu-dots' onClick={() => openMenu()} src={menuDots} />
+        <img
+          className='menu-dots'
+          onClick={() => openStackMenu()}
+          src={menuDots}
+        />
       </div>
-      <div onClick={goToStackView} className='grid'>
+      <div className='grid'>
         {books.length > 0 && (
-          <BookPreview viewedFrom={stack} book={books[index]} />
+          <BookPreview getBooks={getBooks} viewedFrom={stack} book={books[index]} />
         )}
         <div className='stack-buttons'>
           <div className='movement-buttons'>
@@ -53,16 +60,7 @@ export default function StackPreview({ stack, openMenu }: StackComponentProps) {
             </button>
           </div>
           <div className='stack-buttons'>
-            <button
-              onClick={() =>
-                navigate(`forms/book`, { state: { stack, edit: false } })
-              }
-            >
-              Add Book
-            </button>
-            <button onClick={() => navigate('/search', { state: { stack } })}>
-              Add From Search
-            </button>
+            <button onClick={() => openAddBookMenu(stack)}>Add Book</button>
           </div>
         </div>
       </div>

@@ -60,7 +60,7 @@ export async function deleteBookFromStack(
     }
   );
 
-  return await response.json();
+  return response
 }
 
 export async function getBookById(bookId: number) {
@@ -71,4 +71,12 @@ export async function getBookById(bookId: number) {
   const book = await response.json();
 
   return book;
+}
+
+export async function deleteStack(stackId : number) {
+  const response = await fetch(`${url}/stacks/${stackId}`, {
+    method: 'DELETE'
+  })
+
+  return response
 }

@@ -5,7 +5,7 @@ import { searchFor } from '../../services/OpenLibrary';
 import SearchResultsPage from './SearchResultPage/SearchResultPage';
 
 export default function Search() {
-  const [results, setResults] = useState([] as SearchResult[]);
+  const [results, setResults] = useState<SearchResult[]>([]);
 
   async function onSearch(values: Record<string, string | number>) {
     const { searchText } = values as { searchText: string };

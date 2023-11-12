@@ -21,10 +21,11 @@ export default function SearchResultDetails() {
     imgUrl: string;
     hasImg: boolean;
   };
+  console.log()
   const data = useLoaderData() as SearchResultDetails;
 
   function goToAddBook() {
-    const book: { [key: string]: string | number } = {
+    const book: Record<string, string | number> = {
       title: result.title,
       author: result.author_name ? result.author_name.join('') : '',
       totalPages: data.number_of_pages ? data.number_of_pages : 0,

@@ -7,13 +7,16 @@ import { getCoverUrl } from '../../services/OpenLibrary';
 type BookPreviewProps = {
   book: Book;
   viewedFrom: Stack;
+  getBooks: Function;
 };
 
-export default function BookPreview({ book, viewedFrom }: BookPreviewProps) {
+export default function BookPreview({ book, viewedFrom, getBooks }: BookPreviewProps) {
   const navigate = useNavigate();
 
-  function onDelete() {
-    deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
+  async function onDelete() {
+    await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
+    console.log('getBooks')
+    getBooks()
   }
 
   function goToEditBook() {

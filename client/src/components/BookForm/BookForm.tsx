@@ -23,8 +23,9 @@ export default function BookForm() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  console.log(location.state)
   const { stack, book, edit, hasImg} = location.state as {
-    stack: { title: string; id: number };
+    stack: { name: string; id: number };
     book: Record<string, string | number>;
     edit: boolean;
     hasImg: boolean | undefined
@@ -44,7 +45,7 @@ export default function BookForm() {
 
   const fields = BookFormFields;
 
-  const title = edit ? 'Edit Book' : `Add New Book To ${stack.title}`;
+  const title = edit ? 'Edit Book' : `Add New Book To ${stack.name}`;
   const submitText = edit ? 'Edit Book' : `Add Book`;
 
   return (
