@@ -6,6 +6,7 @@ import BookDetails from './components/BookDetails/BookDetails';
 import Search from './components/Search/Search';
 import SearchResultDetails from './components/Search/SearchResultDetails/SearchResultDetails';
 import { getEdition } from './services/OpenLibrary';
+import Library from './components/Library/Library';
 
 
 const router = createBrowserRouter([
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
     loader: async ({params}) => {
       return await getEdition(params.olid!)
     }
+  },
+  {
+    path: 'library',
+    element: <Library />
   }
 ]);
 

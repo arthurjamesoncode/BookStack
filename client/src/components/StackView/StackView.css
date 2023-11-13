@@ -1,5 +1,5 @@
 .book-list-item {
   margin: 0.5rem 0;
   padding: 1rem;
-  background-color: aliceblue;
+  background-color: var(--primary-color-1);
 }

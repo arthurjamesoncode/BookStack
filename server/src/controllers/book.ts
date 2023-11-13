@@ -134,8 +134,6 @@ export async function getBooksByUser(req: Request, res: Response) {
 
     const books = await Book.findMany({ where: { userId } });
 
-    console.log(books);
-
     res.status(200).send(books);
   } catch (error) {
     console.log(error);
@@ -150,6 +148,8 @@ export async function addExistingBookToStack(req: Request, res: Response) {
       Number(req.params.stackId),
       Number(req.params.bookId),
     ];
+
+    console.log(req.params);
 
     if (type === 'other') {
       const response = await Book.update({
@@ -167,32 +167,31 @@ export async function addExistingBookToStack(req: Request, res: Response) {
           select: {
             stack: { select: { id: true, type: true } },
             addedAt: true,
+            stackId: true,
+            bookId: true,
           },
         },
       },
     });
 
     if (!book) return res.status(400).send();
-    const currentStackRelations = book.stacks.map((stack) => ({
-      stack: stack.stack,
-      addedAt: stack.addedAt,
-    }));
+    const currentPrimaryStackId = book.stacks.find(
+      (stack) => stack.stack.type !== 'other'
+    )!.stackId;
 
-    const newStackRelations = currentStackRelations
-      .filter((relation) => relation.stack.type === 'other')
-      .map((relation) => ({
-        stackId: relation.stack.id,
-        addedAt: relation.addedAt,
-      }));
-
-    newStackRelations.push({ stackId, addedAt: new Date() });
+    console.log(book);
+    const newStackRelation = { stackId, addedAt: new Date() };
 
     const response = await Book.update({
       where: { id: bookId },
       data: {
         stacks: {
-          set: [],
-          createMany: { data: newStackRelations },
+          delete: {
+            bookId_stackId: { stackId: currentPrimaryStackId, bookId }
+          },
+          create: {
+            stackId
+          }
         },
       },
     });

@@ -23,7 +23,6 @@ export default function BookForm() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log(location.state);
   const { stack, book, edit, hasImg } = location.state as {
     stack: { name: string; id: number };
     book: Record<string, string | number>;

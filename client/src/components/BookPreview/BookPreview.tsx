@@ -20,6 +20,8 @@ export default function BookPreview({
 }: BookPreviewProps) {
   const navigate = useNavigate();
 
+  console.log(book)
+
   async function onDelete() {
     await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
     resetStack();

@@ -11,6 +11,15 @@ export async function getUserStacks(userId: number) {
   return stacks;
 }
 
+export async function getUserBooks(userId: number) {
+  const response = await fetch(`${url}/users/${userId}/books`, {
+    method: 'Get'
+  })
+
+  const books = await response.json()
+  return books
+}
+
 export async function getBooksInStack(stackId: number) {
   const respsonse = await fetch(`${url}/stacks/${stackId}`, {
     method: 'GET',
@@ -97,6 +106,14 @@ export async function editStack(name: string, stackId: number): Promise<Stack> {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name }),
   });
+
+  return await response.json();
+}
+
+export async function addExistingBookToStack(bookId: number, stackType: string, stackId: number) {
+  const response = await fetch(`${url}/stacks/${stackType}/${stackId}/${bookId}`, {
+    method: 'POST'
+  })
 
   return await response.json();
 }
