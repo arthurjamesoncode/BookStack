@@ -58,7 +58,7 @@ export default function SearchResultDetails() {
           : 'No description available'}
       </div>
       <h4>ISBN: </h4>
-      <p>{data.isbn_13[0]}</p>
+      <p>{data.isbn_13 ? data.isbn_13[0] : 'No ISBN'}</p>
       <h4>OLID: </h4>
       <p>{olid}</p>
 
