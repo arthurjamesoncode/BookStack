@@ -1,4 +1,4 @@
-import { Book } from '../utils/types';
+import { Book, Stack } from '../utils/types';
 
 const url = 'http://localhost:3000';
 
@@ -60,7 +60,7 @@ export async function deleteBookFromStack(
     }
   );
 
-  return response
+  return response;
 }
 
 export async function getBookById(bookId: number) {
@@ -73,10 +73,30 @@ export async function getBookById(bookId: number) {
   return book;
 }
 
-export async function deleteStack(stackId : number) {
+export async function deleteStack(stackId: number) {
   const response = await fetch(`${url}/stacks/${stackId}`, {
-    method: 'DELETE'
-  })
+    method: 'DELETE',
+  });
 
-  return response
+  return response;
+}
+
+export async function addStack(name: string): Promise<Stack> {
+  const response = await fetch(`${url}/stacks`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name }),
+  });
+
+  return await response.json();
+}
+
+export async function editStack(name: string, stackId: number): Promise<Stack> {
+  const response = await fetch(`${url}/stacks/${stackId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name }),
+  });
+
+  return await response.json();
 }

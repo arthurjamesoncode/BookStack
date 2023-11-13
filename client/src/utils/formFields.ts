@@ -73,7 +73,7 @@ export const SearchFormFields: FormField[] = [
   },
 ];
 
-export const AddStackFields: FormField[] = [
+export const StackFormFields: FormField[] = [
   {
     type: 'text',
     id: 'name',

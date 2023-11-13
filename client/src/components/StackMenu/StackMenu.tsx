@@ -2,14 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { Stack } from '../../utils/types';
 import Menu from '../Menu/menu';
 
-
-import { deleteStack } from '../../services/APIClient';
-
 type StackMenuProps = {
   isOpen: boolean;
   stack: Stack | null;
   openAddBookMenu: Function;
   closeMenu: Function;
+  deleteStack: Function;
+  showStackForm: Function;
 };
 
 export function StackMenu({
@@ -17,6 +16,8 @@ export function StackMenu({
   stack,
   openAddBookMenu,
   closeMenu,
+  deleteStack,
+  showStackForm
 }: StackMenuProps) {
   const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ export function StackMenu({
     { text: 'View Stack', onClick: goToStackView },
   ];
 
-  if (stack && stack.type === 'other')
+  if (stack && stack.type === 'other') {
     options.push({
       text: 'Delete Stack',
       onClick: () => {
@@ -39,6 +40,14 @@ export function StackMenu({
         closeMenu();
       },
     });
+    options.push({
+      text: 'Edit Stack:',
+      onClick: () => {
+        showStackForm(true);
+        closeMenu();
+      }
+    })
+  }
 
   return <Menu menuType='bottom-menu' options={options} isOpen={isOpen} />;
 }
