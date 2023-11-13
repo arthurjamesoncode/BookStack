@@ -42,10 +42,11 @@ main {
 .img-button {
   background-color: inherit;
   pointer-events: all;
+  border-radius: 3px;
+  border: solid 2px black;
 }
 
 .img-button:hover,
 .img-button:focus {
   background-color:white;
-  
 }

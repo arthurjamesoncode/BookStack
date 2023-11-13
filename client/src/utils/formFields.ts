@@ -87,3 +87,14 @@ export const StackFormFields: FormField[] = [
     label: 'Name: '
   }
 ]
+
+export const PageFormFields: FormField[] = [
+  {
+    type: 'number',
+    id: 'pages',
+    placeholder: '',
+    min: 0,
+    required: true,
+    label: 'How many pages did you read?'
+  }
+]

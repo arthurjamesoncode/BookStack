@@ -10,6 +10,7 @@ import defaultIcon from '../../assets/default-book-icon.png';
 import editIcon from '../../assets/edit.svg';
 import deleteIcon from '../../assets/trash.svg';
 import readingIcon from '../../assets/book-open.svg';
+import ChangePageForm from '../ChangePageForm/ChangePageForm';
 
 const blankBook: Book = {
   id: -1,
@@ -29,6 +30,7 @@ export default function BookDetails() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [isHidden, setIsHidden] = useState(true);
   const { bookId, viewedFrom } = location.state as {
     bookId: number;
     viewedFrom: Stack;
@@ -36,8 +38,24 @@ export default function BookDetails() {
   const [book, setBook] = useState(blankBook);
 
   useEffect(() => {
-    getBookById(bookId).then((newBook) => setBook(newBook));
+    getBook();
   }, [bookId]);
+
+  // function showPageForm() {
+  //   setIsHidden(false);
+  // }
+  // function hidePageForm() {
+  //   setIsHidden(true);
+  // }
+
+  function togglePageForm() {
+    setIsHidden(prev => !prev)
+  }
+
+  async function getBook() {
+    const newBook = await getBookById(bookId);
+    setBook(newBook);
+  }
 
   function goToEditBook() {
     navigate('/forms/book', {
@@ -59,48 +77,58 @@ export default function BookDetails() {
     : defaultIcon;
 
   return (
-    <div className='container'>
-      <h2 className='book-title'>{book.title}</h2>
-      <div className='book-details-container'>
-        <div className='grid'>
-          <img
-            className='large-cover-img'
-            src={imgUrl}
-            alt={`The cover of ${book.title}`}
-          />
-          <div className='main-info'>
-            <h4>Author:</h4>
-            <p>{book.author}</p>
-            <h4>Publisher:</h4>
-            <p>{book.publisher || 'No publisher saved'}</p>
-            <h4>Type of Book:</h4>
-            <p>{book.bookType}</p>
-            <h4>Identifiers:</h4>
-            <h4>ISBN:</h4>
-            <p>{book.ISBN || 'No ISBN saved'}</p>
-            <h4>OLID:</h4>
-            <p>{book.ISBN || 'No OLID saved'}</p>
+    <>
+      <div className='container'>
+        <h2 className='book-title'>{book.title}</h2>
+        <div className='book-details-container'>
+          <div className='grid'>
+            <img
+              className='large-cover-img'
+              src={imgUrl}
+              alt={`The cover of ${book.title}`}
+            />
+            <div className='main-info'>
+              <h4>Author:</h4>
+              <p>{book.author}</p>
+              <h4>Publisher:</h4>
+              <p>{book.publisher || 'No publisher saved'}</p>
+              <h4>Type of Book:</h4>
+              <p>{book.bookType}</p>
+              <h4>Identifiers:</h4>
+              <h4>ISBN:</h4>
+              <p>{book.ISBN || 'No ISBN saved'}</p>
+              <h4>OLID:</h4>
+              <p>{book.ISBN || 'No OLID saved'}</p>
+            </div>
+          </div>
+          <div className='progress-container'>
+            {book.currentPage <= 1
+              ? "You haven't started reading yet"
+              : `Page: ${book.currentPage}/${book.totalPages}`}
+          </div>
+          <div className='description-container'>
+            <h4>Description:</h4>
+            <p>{book.description}</p>
+          </div>
+          <div className='action-container'>
+            <img className='img-button' onClick={goToEditBook} src={editIcon} />
+            <img
+              className='img-button'
+              onClick={() => onDelete()}
+              src={deleteIcon}
+            />
+            <img className='img-button' src={readingIcon} onClick={togglePageForm}/>
           </div>
         </div>
-        <div className='progress-container'>
-          {book.currentPage <= 1
-            ? "You haven't started reading yet"
-            : `Page: ${book.currentPage}/${book.totalPages}`}
-        </div>
-        <div className='description-container'>
-          <h4>Description:</h4>
-          <p>{book.description}</p>
-        </div>
-        <div className='action-container'>
-          <img className='img-button' onClick={goToEditBook} src={editIcon} />
-          <img
-            className='img-button'
-            onClick={() => onDelete()}
-            src={deleteIcon}
-          />
-          <img className='img-button' src={readingIcon} />
-        </div>
       </div>
-    </div>
+
+      <ChangePageForm
+        hidePrompt={togglePageForm}
+        isHidden={isHidden}
+        bookId={book.id}
+        currentPages={book.currentPage}
+        refresh={getBook}
+      />
+    </>
   );
 }
