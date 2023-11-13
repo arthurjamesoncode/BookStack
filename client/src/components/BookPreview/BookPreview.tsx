@@ -7,7 +7,7 @@ import { getCoverUrl } from '../../services/OpenLibrary';
 type BookPreviewProps = {
   book: Book;
   viewedFrom: Stack;
-  getBooks: Function;
+  getBooks: () => void;
 };
 
 export default function BookPreview({ book, viewedFrom, getBooks }: BookPreviewProps) {
@@ -15,7 +15,6 @@ export default function BookPreview({ book, viewedFrom, getBooks }: BookPreviewP
 
   async function onDelete() {
     await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
-    console.log('getBooks')
     getBooks()
   }
 

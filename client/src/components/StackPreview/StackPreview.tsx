@@ -8,8 +8,8 @@ import './StackPreview.css';
 
 type StackComponentProps = {
   stack: Stack;
-  openStackMenu: Function;
-  openAddBookMenu: Function;
+  openStackMenu: () => void;
+  openAddBookMenu: (stack : Stack) => void;
 };
 
 export default function StackPreview({

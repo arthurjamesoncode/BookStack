@@ -5,10 +5,10 @@ import Menu from '../Menu/menu';
 type StackMenuProps = {
   isOpen: boolean;
   stack: Stack | null;
-  openAddBookMenu: Function;
-  closeMenu: Function;
-  deleteStack: Function;
-  showStackForm: Function;
+  openAddBookMenu: (stack: Stack) => void;
+  closeMenu: (stack: Stack) => void;
+  deleteStack: (id: number) => void;
+  showStackForm: (edit: boolean) => void;
 };
 
 export function StackMenu({
@@ -17,7 +17,7 @@ export function StackMenu({
   openAddBookMenu,
   closeMenu,
   deleteStack,
-  showStackForm
+  showStackForm,
 }: StackMenuProps) {
   const navigate = useNavigate();
 
@@ -28,8 +28,8 @@ export function StackMenu({
   }
 
   const options = [
-    { text: 'Add Book', onClick: openAddBookMenu },
-    { text: 'View Stack', onClick: goToStackView },
+    { text: 'Add Book', onClick: () => openAddBookMenu(stack!) },
+    { text: 'View Stack', onClick: () => goToStackView() },
   ];
 
   if (stack && stack.type === 'other') {
@@ -37,16 +37,16 @@ export function StackMenu({
       text: 'Delete Stack',
       onClick: () => {
         deleteStack(stack.id);
-        closeMenu();
+        closeMenu(stack);
       },
     });
     options.push({
       text: 'Edit Stack:',
       onClick: () => {
         showStackForm(true);
-        closeMenu();
-      }
-    })
+        closeMenu(stack);
+      },
+    });
   }
 
   return <Menu menuType='bottom-menu' options={options} isOpen={isOpen} />;

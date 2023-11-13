@@ -5,8 +5,8 @@ import './StackForm.css';
 
 type StackFormProps = {
   hidden: boolean;
-  hideStackForm: Function;
-  addOrEditStack: Function;
+  hideStackForm: () => void;
+  addOrEditStack: (name: string) => void;
   edit: boolean;
 };
 
@@ -23,7 +23,7 @@ export default function StackForm({
   };
 
   function onFormSubmit(values: Record<string, string | number>) {
-    const { name } = values;
+    const { name } = values as {name : string};
 
     addOrEditStack(name);
     hideStackForm();
