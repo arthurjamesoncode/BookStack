@@ -8,6 +8,7 @@ export type TextFieldProps = {
   placeholder: string;
   required: boolean;
   label: string;
+  maxlength: number
 };
 
 export default function TextField({ props }: { props: TextFieldProps }) {
@@ -22,6 +23,7 @@ export default function TextField({ props }: { props: TextFieldProps }) {
         id={props.id}
         placeholder={props.placeholder}
         required={props.required}
+        maxLength={props.maxlength}
       />
     </div>
   );

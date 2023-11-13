@@ -20,8 +20,6 @@ export default function BookPreview({
 }: BookPreviewProps) {
   const navigate = useNavigate();
 
-  console.log(book)
-
   async function onDelete() {
     await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
     resetStack();
@@ -47,8 +45,14 @@ export default function BookPreview({
         alt={`The cover of ${book.title}`}
       />
       <div className='book-info'>
-        <h3>{book.title}</h3>
-        <h4>by {book.author}</h4>
+        <h3>
+          {book.title != null && book.title!.length > 20
+            ? `${book.title?.substring(0, 30)}...`
+            : book.title}
+        </h3>
+        <h4>by {book.author != null && book.author!.length > 30
+              ? `${book.author?.substring(0, 30)}...`
+              : book.author}</h4>
         <div className='description'>
           <h5>Description:</h5>
           <p>

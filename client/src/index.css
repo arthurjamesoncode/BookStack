@@ -40,8 +40,6 @@ main {
 }
 
 .img-button {
-  border: solid 1px black;
-  color: white;
   background-color: inherit;
   pointer-events: all;
 }

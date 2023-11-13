@@ -7,6 +7,7 @@ export const BookFormFields: FormField[] = [
     placeholder: 'Enter the title: ',
     required: true,
     label: 'Title: ',
+    maxlength:255
   },
   {
     type: 'text',
@@ -14,11 +15,12 @@ export const BookFormFields: FormField[] = [
     placeholder: 'Enter the author: ',
     required: true,
     label: 'Author: ',
+    maxlength: 255,
   },
   {
     type: 'number',
     id: 'totalPages',
-    placeholder: '0',
+    placeholder: '',
     min: 1,
     required: true,
     label: 'Total Pages: ',
@@ -29,6 +31,7 @@ export const BookFormFields: FormField[] = [
     placeholder: 'Enter publisher: ',
     required: false,
     label: 'Publisher: ',
+    maxlength: 255
   },
   {
     type: 'radio',
@@ -46,6 +49,7 @@ export const BookFormFields: FormField[] = [
     placeholder: 'Enter ISBN: ',
     required: false,
     label: 'ISBN: ',
+    maxlength: 13
   },
   {
     type: 'text',
@@ -53,6 +57,7 @@ export const BookFormFields: FormField[] = [
     placeholder: 'Enter the title: ',
     required: false,
     label: 'OLID: ',
+    maxlength: 15,
   },
   {
     type: 'textarea',

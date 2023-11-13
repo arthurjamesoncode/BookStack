@@ -26,12 +26,12 @@ export default function SearchResultDetails() {
 
   function goToAddBook() {
     const book: Record<string, string | number> = {
-      title: result.title,
-      author: result.author_name ? result.author_name.join('') : '',
+      title: result.title.substring(0, 255),
+      author: result.author_name ? result.author_name.join('').substring(0, 255) : '',
       totalPages: data.number_of_pages ? data.number_of_pages : 0,
       bookType: 'paper',
-      publisher: data.publishers ? data.publishers.join(', ') : '',
-      ISBN: data.isbn_13[0],
+      publisher: data.publishers ? data.publishers.join(', ').substring(0, 255) : '',
+      ISBN: data.isbn_13 ? data.isbn_13[0] : '',
       OLID: olid!,
       description: data.description ? data.description.value : '',
     };

@@ -54,6 +54,7 @@ export type TextFormField = {
   placeholder: string;
   required: boolean;
   label: string;
+  maxlength?: number
 };
 
 export type NumberFormField = {
