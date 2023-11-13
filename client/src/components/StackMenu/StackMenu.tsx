@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Stack } from '../../utils/types';
 import Menu from '../Menu/menu';
 
-import './StackMenu.css';
+
 import { deleteStack } from '../../services/APIClient';
 
 type StackMenuProps = {
@@ -40,5 +40,5 @@ export function StackMenu({
       },
     });
 
-  return <Menu menuName='stack-menu' options={options} isOpen={isOpen} />;
+  return <Menu menuType='bottom-menu' options={options} isOpen={isOpen} />;
 }

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Menu from '../Menu/menu';
 
-import './AddBookMenu.css';
 import { Stack } from '../../utils/types';
 
 type AddBookMenuProps = {
@@ -26,5 +25,5 @@ export default function AddBookMenu({ isOpen, stack }: AddBookMenuProps) {
     { text: 'Add new book', onClick:  goToBookForm},
   ];
 
-  return <Menu menuName='add-book-menu' options={options} isOpen={isOpen} />;
+  return <Menu menuType='bottom-menu' options={options} isOpen={isOpen} />;
 }

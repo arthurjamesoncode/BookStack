@@ -1,19 +1,1 @@
-.stack-menu {
-  position: fixed;
-  width: 100%;
-  bottom: -100%;
-  transition: bottom 0.2s;
-}
 
-.stack-menu.open {
-  bottom: 0;
-}
-
-.stack-menu__option {
-  height: 8vh;
-  background-color: aliceblue;
-  border: 1px solid black;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}

@@ -1,15 +1,18 @@
+
+import './menu.css'
+
 type MenuProps = {
-  menuName: string;
+  menuType: string;
   isOpen: boolean;
   options: { text: string; onClick: Function }[];
   state?: Record<string, any>
 };
 
-export default function Menu({ menuName, isOpen, options, state }: MenuProps) {
+export default function Menu({ menuType, isOpen, options, state }: MenuProps) {
   return (
-    <ul className={`${menuName} ${isOpen ? 'open' : ''}`}>
+    <ul className={`${menuType} ${isOpen ? 'open' : ''}`}>
       {options.map((option) => {
-        return <li className={`${menuName}__option`} onClick={() => option.onClick(state)}>{option.text}</li>;
+        return <li className={`${menuType}__option`} onClick={() => option.onClick(state)}>{option.text}</li>;
       })}
     </ul>
   );
