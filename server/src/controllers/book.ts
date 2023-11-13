@@ -128,6 +128,19 @@ export async function deleteBookFromStack(req: Request, res: Response) {
   }
 }
 
+export async function getBooksByUser(req: Request, res: Response) {
+  try{
+    const userId = Number(req.params.userId)
+
+    const books = Book.findMany({where: {userId}})
+
+    res.status(200).send(books);
+  } catch (error) {
+    console.log(error)
+    res.status(500).send(error)
+  }
+}
+
 export async function addExistingBookToStack(req: Request, res: Response) {
   try {
     const [type, stackId, bookId] = [
