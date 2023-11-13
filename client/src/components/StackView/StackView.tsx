@@ -13,8 +13,13 @@ export default function StackView() {
   const [books, setBooks] = useState([] as Book[]);
 
   useEffect(() => {
-    getBooksInStack(stack.id).then((newBooks) => setBooks(newBooks));
+    getBooks()
   }, [stack.id]);
+
+  async function getBooks () {
+    const newBooks = await getBooksInStack(stack.id);
+    setBooks(newBooks)
+  }
 
   return (
     <div className='stack-view-container'>
@@ -23,7 +28,7 @@ export default function StackView() {
         {books.map((book) => {
           return (
             <div key={book.id} className='book-list-item'>
-              <BookPreview viewedFrom={stack} book={book} />
+              <BookPreview resetStack={getBooks} viewedFrom={stack} book={book} />
             </div>
           );
         })}

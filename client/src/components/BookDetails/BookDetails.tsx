@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react';
 import { Book, Stack } from '../../utils/types';
 
 import './BookDetails.css';
-import { getBookById } from '../../services/APIClient';
+import deaultIcon from '../../assets/default-book-icon.png'
+import { deleteBookFromStack, getBookById } from '../../services/APIClient';
+import { getCoverUrl } from '../../services/OpenLibrary';
 
 const blankBook: Book = {
   id: -1,
@@ -39,12 +41,19 @@ export default function BookDetails() {
     });
   }
 
+  async function onDelete() {
+    await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
+    navigate(-1)
+  }
+
+  const imgUrl = book.hasImg ? getCoverUrl('olid', book.OLID) + '-L.jpg' : deaultIcon
+
   return (
     <div className='container'>
       <h2 className='book-title'>{book.title}</h2>
       <div className='book-details-container'>
         <div className='grid'>
-          <img className='large-cover-img' alt={`The cover of ${book.title}`} />
+          <img className='large-cover-img' src={imgUrl} alt={`The cover of ${book.title}`} />
           <div className='main-info'>
             <h4>Author:</h4>
             <p>{book.author}</p>
@@ -69,9 +78,8 @@ export default function BookDetails() {
           <p>{book.description}</p>
         </div>
         <div className='action-container'>
-          <button>View</button>
           <button onClick={goToEditBook}>Edit</button>
-          <button>Delete</button>
+          <button onClick={() => onDelete()}>Delete</button>
           <button>
             {book.currentPage <= 1 ? 'Start Reading' : 'Update Progress'}
           </button>

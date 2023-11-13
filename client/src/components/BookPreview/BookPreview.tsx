@@ -7,15 +7,15 @@ import { getCoverUrl } from '../../services/OpenLibrary';
 type BookPreviewProps = {
   book: Book;
   viewedFrom: Stack;
-  getBooks: () => void;
+  resetStack: () => void;
 };
 
-export default function BookPreview({ book, viewedFrom, getBooks }: BookPreviewProps) {
+export default function BookPreview({ book, viewedFrom, resetStack }: BookPreviewProps) {
   const navigate = useNavigate();
 
   async function onDelete() {
     await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
-    getBooks()
+    resetStack()
   }
 
   function goToEditBook() {
@@ -42,7 +42,7 @@ export default function BookPreview({ book, viewedFrom, getBooks }: BookPreviewP
           </p>
         </div>
         <div className='action-buttons'>
-          <button onClick={() => navigate('/book', { state: { bookId: book.id } })}>
+          <button onClick={() => navigate('/book', { state: { bookId: book.id, viewedFrom } })}>
             View
           </button>
           <button onClick={goToEditBook}>Edit</button>

@@ -45,7 +45,7 @@ export default function StackPreview({
       </div>
       <div className='grid'>
         {books.length > 0 && (
-          <BookPreview getBooks={getBooks} viewedFrom={stack} book={books[index]} />
+          <BookPreview resetStack={getBooks} viewedFrom={stack} book={books[index]} />
         )}
         <div className='stack-buttons'>
           <div className='movement-buttons'>
