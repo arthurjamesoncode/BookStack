@@ -13,3 +13,8 @@
 .description-container {
   align-self: flex-start;
 }
+
+.action-container {
+  display: flex;
+  justify-content: space-around;
+}

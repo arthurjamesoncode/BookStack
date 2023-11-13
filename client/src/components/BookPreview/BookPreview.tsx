@@ -1,8 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { Book, Stack } from '../../utils/types';
 import { deleteBookFromStack } from '../../services/APIClient';
-import defaultIcon from '../../assets/default-book-icon.png'
 import { getCoverUrl } from '../../services/OpenLibrary';
+
+import defaultIcon from '../../assets/default-book-icon.png';
+import editIcon from '../../assets/edit.svg';
+import deleteIcon from '../../assets/trash.svg';
 
 type BookPreviewProps = {
   book: Book;
@@ -10,26 +13,37 @@ type BookPreviewProps = {
   resetStack: () => void;
 };
 
-export default function BookPreview({ book, viewedFrom, resetStack }: BookPreviewProps) {
+export default function BookPreview({
+  book,
+  viewedFrom,
+  resetStack,
+}: BookPreviewProps) {
   const navigate = useNavigate();
 
   async function onDelete() {
     await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
-    resetStack()
+    resetStack();
   }
 
   function goToEditBook() {
-    navigate('/forms/book', { state: { stack: viewedFrom, book, edit: true} });
+    navigate('/forms/book', { state: { stack: viewedFrom, book, edit: true } });
   }
 
   let imgUrl = defaultIcon;
   if (book.hasImg) {
-    imgUrl = getCoverUrl('olid', book.OLID) + '-M.jpg'; 
+    imgUrl = getCoverUrl('olid', book.OLID) + '-M.jpg';
   }
 
   return (
     <div className='book-container grid'>
-      <img className='large-cover-img' src={imgUrl} alt={`The cover of ${book.title}`} />
+      <img
+        onClick={() =>
+          navigate('/book', { state: { bookId: book.id, viewedFrom } })
+        }
+        className='large-cover-img'
+        src={imgUrl}
+        alt={`The cover of ${book.title}`}
+      />
       <div className='book-info'>
         <h3>{book.title}</h3>
         <h4>by {book.author}</h4>
@@ -42,11 +56,8 @@ export default function BookPreview({ book, viewedFrom, resetStack }: BookPrevie
           </p>
         </div>
         <div className='action-buttons'>
-          <button onClick={() => navigate('/book', { state: { bookId: book.id, viewedFrom } })}>
-            View
-          </button>
-          <button onClick={goToEditBook}>Edit</button>
-          <button onClick={onDelete}>Delete</button>
+          <img className='img-button' onClick={goToEditBook} src={editIcon} />
+          <img className='img-button' onClick={onDelete} src={deleteIcon} />
         </div>
       </div>
     </div>

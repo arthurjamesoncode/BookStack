@@ -4,6 +4,7 @@ import * as apiClient from '../../services/APIClient';
 import StackComponent from '../StackPreview/StackPreview';
 
 import './StackList.css';
+import plusCircle from '../../assets/plus-circle.svg';
 import { StackMenu } from '../StackMenu/StackMenu';
 import AddBookMenu from '../AddBookMenu/AddBookMenu';
 import StackForm from '../StackForm/StackForm';
@@ -60,7 +61,7 @@ export default function StackList() {
   }
 
   return (
-    <main>
+    <>
       <StackForm
         hideStackForm={hideStackForm}
         addOrEditStack={addOrEditStack}
@@ -75,9 +76,12 @@ export default function StackList() {
           stack={stack}
         />
       ))}
-      <button onClick={() => showStackForm(false)} id='new-stack'>
-        Add New Stack
-      </button>
+      <img
+        className='img-button'
+        id='new-stack'
+        onClick={() => showStackForm(false)}
+        src={plusCircle}
+      />
       <StackMenu
         showStackForm={showStackForm}
         stack={currentStack}
@@ -87,6 +91,6 @@ export default function StackList() {
         deleteStack={deleteStack}
       />
       <AddBookMenu stack={currentStack} isOpen={addBookMenuOpen} />
-    </main>
+    </>
   );
 }

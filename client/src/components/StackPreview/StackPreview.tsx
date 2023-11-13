@@ -3,13 +3,17 @@ import { Book, Stack } from '../../utils/types';
 import { getBooksInStack } from '../../services/APIClient';
 import BookPreview from '../BookPreview/BookPreview';
 
-import menuDots from '../../assets/menu-dots.svg';
 import './StackPreview.css';
+
+import menuDots from '../../assets/menu-dots.svg';
+import plusCircle from '../../assets/plus-circle.svg';
+import leftArrow from '../../assets/arrow-left.svg';
+import rightArrow from '../../assets/arrow-right.svg';
 
 type StackComponentProps = {
   stack: Stack;
   openStackMenu: () => void;
-  openAddBookMenu: (stack : Stack) => void;
+  openAddBookMenu: (stack: Stack) => void;
 };
 
 export default function StackPreview({
@@ -29,8 +33,8 @@ export default function StackPreview({
   }
 
   async function getBooks() {
-    const newBooks = await getBooksInStack(stack.id)
-    setBooks(newBooks)
+    const newBooks = await getBooksInStack(stack.id);
+    setBooks(newBooks);
   }
 
   return (
@@ -44,23 +48,39 @@ export default function StackPreview({
         />
       </div>
       <div className='grid'>
-        {books.length > 0 && (
-          <BookPreview resetStack={getBooks} viewedFrom={stack} book={books[index]} />
+        {books.length > 0 ? (
+          <BookPreview
+            resetStack={getBooks}
+            viewedFrom={stack}
+            book={books[index]}
+          />
+        ) : (
+          <div className='book-container'>
+            <h3>You don't have any books in this stack. Add one now!</h3>
+          </div>
         )}
         <div className='stack-buttons'>
           <div className='movement-buttons'>
-            <button disabled={index === 0} onClick={() => changeIndex(-1)}>
-              {'<-'}
-            </button>
-            <button
-              disabled={index === books.length - 1}
-              onClick={() => changeIndex(1)}
-            >
-              {'->'}
-            </button>
+            <img
+              className='img-button'
+              onClick={() => {
+                if (index !== 0) changeIndex(-1);
+              }}
+              src={leftArrow}
+            />
+            <img className='img-button'
+              onClick={() => {
+                if (index < books.length - 1) changeIndex(1);
+              }}
+              src={rightArrow}
+            />
           </div>
           <div className='stack-buttons'>
-            <button onClick={() => openAddBookMenu(stack)}>Add Book</button>
+            <img
+              className='img-button'
+              onClick={() => openAddBookMenu(stack)}
+              src={plusCircle}
+            />
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ header {
   padding: 1rem;
   align-items: center;
   border-bottom: solid black 1px;
+  background-color: var(--primary-color-2);
 }
 
 .heading-container {

@@ -8,9 +8,10 @@
 }
 
 .stack-container{
-  border: solid 1px black;
+  border: solid 3px var(--highlight-1);
   border-radius: 1.5rem;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-color: var(--primary-color-1);
 }
 
 .stack-header {
@@ -29,7 +30,11 @@
 }
 
 .book-container {
-  grid-column: 1/13
+  grid-column: 1/13;
+  padding: 1rem 0.3rem;
+  background-color: var(--primary-color-2);
+  border-radius: 1.5rem;
+  border: solid 3px var(--highlight-1);
 }
 
 .book-info {

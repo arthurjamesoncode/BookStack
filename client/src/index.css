@@ -5,14 +5,31 @@
   font-family: sans-serif;
 }
 
+:root {
+  --primary-color-1: #5d5d81;
+  --primary-color-2: #fde794;
+
+  --secondary-color-1: #3bee55;
+
+  --background-color-1: #bfcde0;
+
+  --highlight-1: #000505;
+}
+
 p {
   font-size: 0.8rem;
+}
+
+main {
+  background-color: var(--background-color-1);
+  padding-top: 1rem;
+  min-height: 90vh;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 0.5rem
+  gap: 0.5rem;
 }
 
 .large-cover-img {
@@ -20,5 +37,17 @@ p {
   height: 220px;
   width: 145px;
   object-fit: contain;
-  background-color: lightgray;
+}
+
+.img-button {
+  border: solid 1px black;
+  color: white;
+  background-color: inherit;
+  pointer-events: all;
+}
+
+.img-button:hover,
+.img-button:focus {
+  background-color:white;
+  
 }
