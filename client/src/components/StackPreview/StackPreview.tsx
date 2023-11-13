@@ -56,7 +56,10 @@ export default function StackPreview({
           />
         ) : (
           <div className='book-container'>
-            <h3>You don't have any books in this stack. Add one now!</h3>
+            <div className='empty-message'>
+              <h3>You don't have any books in this stack. </h3>
+              <h3>Add one now!</h3>
+            </div>
           </div>
         )}
         <div className='stack-buttons'>
@@ -68,20 +71,19 @@ export default function StackPreview({
               }}
               src={leftArrow}
             />
-            <img className='img-button'
+            <img
+              className='img-button'
               onClick={() => {
                 if (index < books.length - 1) changeIndex(1);
               }}
               src={rightArrow}
             />
           </div>
-          <div className='stack-buttons'>
-            <img
-              className='img-button'
-              onClick={() => openAddBookMenu(stack)}
-              src={plusCircle}
-            />
-          </div>
+          <img
+            className='img-button'
+            onClick={() => openAddBookMenu(stack)}
+            src={plusCircle}
+          />
         </div>
       </div>
     </div>

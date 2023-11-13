@@ -1,6 +1,6 @@
 .result-card-container {
   padding: 0.5rem;
-  background-color: blanchedalmond;
+  background-color: var(--primary-color-2);
   margin: 0.5rem;
   border-radius: 10px;
   position: relative;

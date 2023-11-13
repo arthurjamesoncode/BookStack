@@ -3,6 +3,8 @@ import { Book, Stack } from '../../utils/types';
 import { deleteBookFromStack } from '../../services/APIClient';
 import { getCoverUrl } from '../../services/OpenLibrary';
 
+import './BookPreview.css';
+
 import defaultIcon from '../../assets/default-book-icon.png';
 import editIcon from '../../assets/edit.svg';
 import deleteIcon from '../../assets/trash.svg';
@@ -50,9 +52,12 @@ export default function BookPreview({
             ? `${book.title?.substring(0, 30)}...`
             : book.title}
         </h3>
-        <h4>by {book.author != null && book.author!.length > 30
-              ? `${book.author?.substring(0, 30)}...`
-              : book.author}</h4>
+        <h4>
+          by{' '}
+          {book.author != null && book.author!.length > 30
+            ? `${book.author?.substring(0, 30)}...`
+            : book.author}
+        </h4>
         <div className='description'>
           <h5>Description:</h5>
           <p>
@@ -61,10 +66,18 @@ export default function BookPreview({
               : book.description}
           </p>
         </div>
-        <div className='action-buttons'>
-          <img className='img-button' onClick={goToEditBook} src={editIcon} />
-          <img className='img-button' onClick={onDelete} src={deleteIcon} />
-        </div>
+      </div>
+      <div className='action-buttons'>
+        <img
+          className='img-button edit-button'
+          onClick={goToEditBook}
+          src={editIcon}
+        />
+        <img
+          className='img-button delete-button'
+          onClick={onDelete}
+          src={deleteIcon}
+        />
       </div>
     </div>
   );

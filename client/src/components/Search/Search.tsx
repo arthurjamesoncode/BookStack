@@ -4,7 +4,7 @@ import { SearchResponse, SearchResult } from '../../utils/types';
 import { searchFor } from '../../services/OpenLibrary';
 import SearchResultsPage from './SearchResultPage/SearchResultPage';
 
-import './Search.css'
+import './Search.css';
 
 import leftArrow from '../../assets/arrow-left.svg';
 import rightArrow from '../../assets/arrow-right.svg';
@@ -19,6 +19,7 @@ export default function Search() {
 
     const responseData: SearchResponse = await searchFor(searchText);
 
+    setIndex(0);
     setResults(responseData.docs);
     setResultCount(responseData.docs.length);
   }
@@ -27,7 +28,8 @@ export default function Search() {
     setIndex((prev) => prev + diff);
   }
 
-  const pageTotal = Math.floor(resultCount / 10) + 1;
+  let pageTotal = Math.floor(resultCount / 10);
+  if (resultCount % 10 > 0) pageTotal++ 
   const min = (index + 1) * 10 - 10;
   const max = (index + 1) * 10;
   return (
@@ -38,22 +40,22 @@ export default function Search() {
         <div className='page-controls'>
           Page {index + 1} out of {pageTotal}
           <div>
-          <img
-            onClick={() => {
-              if (index > 0) {
-                changeIndex(-1);
-              }
-            }}
-            src={leftArrow}
-          />
-          <img
-            onClick={() => {
-              if (index + 1 < pageTotal) {
-                changeIndex(1);
-              }
-            }}
-            src={rightArrow}
-          />
+            <img
+              onClick={() => {
+                if (index > 0) {
+                  changeIndex(-1);
+                }
+              }}
+              src={leftArrow}
+            />
+            <img
+              onClick={() => {
+                if (index + 1 < pageTotal) {
+                  changeIndex(1);
+                }
+              }}
+              src={rightArrow}
+            />
           </div>
         </div>
       )}
