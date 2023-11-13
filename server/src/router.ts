@@ -9,7 +9,7 @@ router.get('/users', User.getAllUsers);
 router.post('/users', User.createUser);
 
 router.get('/users/:userId/stacks', Stack.getUserStacks);
-router.get('/users/:userid/books', Book.getBooksByUser);
+router.get('/users/:userId/books', Book.getBooksByUser);
 
 router.get('/books', Book.getAllBooks);
 router.get('/books/:bookId', Book.getBookById)

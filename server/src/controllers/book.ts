@@ -28,7 +28,7 @@ export async function addNewBookToStack(req: Request, res: Response) {
     const [type, stackId] = [req.params.type, Number(req.params.stackId)];
     const userId = 1; //will take this from a token / session after doing auth
 
-    const bookData = req.body;
+    const bookData = { ...req.body, userId };
 
     const stacks: { [key: string]: number | string }[] = [{ stackId }];
 
@@ -94,7 +94,7 @@ export async function deleteBookFromStack(req: Request, res: Response) {
     if (type !== 'other') {
       const deletedBook = await Book.delete({ where: { id: bookId } });
 
-      return res.status(200).send();
+      return res.status(200).send(deletedBook);
     }
 
     const book = await Book.findFirst({
@@ -129,15 +129,17 @@ export async function deleteBookFromStack(req: Request, res: Response) {
 }
 
 export async function getBooksByUser(req: Request, res: Response) {
-  try{
-    const userId = Number(req.params.userId)
+  try {
+    const userId = Number(req.params.userId);
 
-    const books = Book.findMany({where: {userId}})
+    const books = await Book.findMany({ where: { userId } });
+
+    console.log(books);
 
     res.status(200).send(books);
   } catch (error) {
-    console.log(error)
-    res.status(500).send(error)
+    console.log(error);
+    res.status(500).send(error);
   }
 }
 
