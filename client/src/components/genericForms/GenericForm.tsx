@@ -6,7 +6,6 @@ import TextareaField from './TextareaFeild';
 import NumberField from './NumberField';
 
 type GenericFormProps = {
-  formTitle: string;
   formFields: FormField[];
   onFormSubmit: (values: Record<string, number | string>) => void;
   initialValues: Record<string, number | string>;
@@ -16,7 +15,6 @@ type GenericFormProps = {
 
 export default function GenericForm({
   formFields,
-  formTitle,
   onFormSubmit,
   initialValues,
   submitText,
@@ -37,9 +35,7 @@ export default function GenericForm({
 
   let fieldId = -1;
   return (
-    <div className={formName}>
-      <h2>{formTitle}</h2>
-      <form
+      <form className={formName}
         onSubmit={(event) => {
           event.preventDefault();
           onFormSubmit(formVals);
@@ -82,6 +78,5 @@ export default function GenericForm({
           {submitText}
         </button>
       </form>
-    </div>
   );
 }

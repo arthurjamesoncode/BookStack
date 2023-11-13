@@ -72,3 +72,13 @@ export const SearchFormFields: FormField[] = [
     label: '',
   },
 ];
+
+export const AddStackFields: FormField[] = [
+  {
+    type: 'text',
+    id: 'name',
+    placeholder: 'Enter a name for your stack',
+    required: true,
+    label: 'Name: '
+  }
+]
