@@ -10,25 +10,17 @@ type TextFieldProps = {
   label: string;
 };
 
-export default function TextareaField({
-  formName,
-  formVals,
-  onFormChange,
-  id,
-  placeholder,
-  required,
-  label,
-}: TextFieldProps) {
+export default function TextareaField({props}: {props: TextFieldProps}) {
   return (
-    <div className={`${formName}__field`}>
-      <label htmlFor={id}>{label}</label>
+    <div className={`${props.formName}__field`}>
+      <label htmlFor={props.id}>{props.label}</label>
       <textarea
-        className={`${formName}__textarea`}
-        value={formVals[id]}
-        onChange={onFormChange}
-        id={id}
-        placeholder={placeholder}
-        required={required}
+        className={`${props.formName}__textarea`}
+        value={props.formVals[props.id]}
+        onChange={props.onFormChange}
+        id={props.id}
+        placeholder={props.placeholder}
+        required={props.required}
       />
     </div>
   );

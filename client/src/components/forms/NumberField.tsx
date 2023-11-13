@@ -11,25 +11,19 @@ export type NumberFieldProps = {
 };
 
 export default function NumberField({
-  formName,
-  formVals,
-  onFormChange,
-  id,
-  min,
-  required,
-  label,
-}: NumberFieldProps) {
+  props
+}: {props : NumberFieldProps}) {
   return (
-    <div className={`${formName}__field`}>
-      <label htmlFor={id}>{label}</label>
+    <div className={`${props.formName}__field`}>
+      <label htmlFor={props.id}>{props.label}</label>
       <input
-        className={`${formName}__number-input`}
-        value={formVals[id]}
-        onChange={onFormChange}
+        className={`${props.formName}__number-input`}
+        value={props.formVals[props.id]}
+        onChange={props.onFormChange}
         type='number'
-        id={id}
-        min={min}
-        required={required}
+        id={props.id}
+        min={props.min}
+        required={props.required}
       />
     </div>
   );

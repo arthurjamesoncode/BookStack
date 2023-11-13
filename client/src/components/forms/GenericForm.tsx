@@ -46,59 +46,37 @@ export default function GenericForm({
         }}
       >
         {formFields.map((field) => {
-          console.log(field);
           fieldId++;
-          if (field.type === 'radio') {
-            return (
-              <RadioButtonField
-                formName={formName}
-                formVals={formVals}
-                onFormChange={onFormChange}
-                group={field.group!}
-                options={field.options!}
-                groupLabel={field.label!}
-                key={fieldId}
-              />
-            );
-          } else if (field.type === 'textarea') {
-            return (
-              <TextareaField
-                formName={formName}
-                formVals={formVals}
-                onFormChange={onFormChange}
-                id={field.id!}
-                placeholder={field.placeholder!}
-                required={field.required!}
-                label={field.label}
-                key={fieldId}
-              />
-            );
-          } else if (field.type === 'number') {
-            return (
-              <NumberField
-                formName={formName}
-                formVals={formVals}
-                onFormChange={onFormChange}
-                id={field.id!}
-                min={field.min!}
-                required={field.required!}
-                label={field.label}
-                key={fieldId}
-              />
-            );
+          switch (field.type) {
+            case 'radio':
+              return (
+                <RadioButtonField
+                  props={{ ...field, formName, formVals, onFormChange }}
+                  key={fieldId}
+                />
+              );
+            case 'textarea':
+              return (
+                <TextareaField
+                  props={{ ...field, formName, formVals, onFormChange }}
+                  key={fieldId}
+                />
+              );
+            case 'number':
+              return (
+                <NumberField
+                  props={{ ...field, formName, formVals, onFormChange }}
+                  key={fieldId}
+                />
+              );
+            default:
+              return (
+                <TextField
+                  props={{ ...field, formName, formVals, onFormChange }}
+                  key={fieldId}
+                />
+              );
           }
-          return (
-            <TextField
-              formName={formName}
-              formVals={formVals}
-              onFormChange={onFormChange}
-              id={field.id!}
-              placeholder={field.placeholder!}
-              required={field.required!}
-              label={field.label}
-              key={fieldId}
-            />
-          );
         })}
         <button className={`${formName}__submit`} type='submit'>
           {submitText}

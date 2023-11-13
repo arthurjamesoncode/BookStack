@@ -1,37 +1,27 @@
 import { FormEvent } from 'react';
 
 export type TextFieldProps = {
-  formName: string
+  formName: string;
   formVals: Record<string, string | number>;
-  onFormChange: (
-    event: FormEvent<HTMLInputElement>
-  ) => void;
+  onFormChange: (event: FormEvent<HTMLInputElement>) => void;
   id: string;
   placeholder: string;
   required: boolean;
   label: string;
 };
 
-export default function TextField({
-  formName,
-  formVals,
-  onFormChange,
-  id,
-  placeholder,
-  required,
-  label,
-}: TextFieldProps) {
+export default function TextField({ props }: { props: TextFieldProps }) {
   return (
-    <div className={`${formName}__field`}>
-      <label htmlFor={id}>{label}</label>
+    <div className={`${props.formName}__field`}>
+      <label htmlFor={props.id}>{props.label}</label>
       <input
-        className={`${formName}__text-input`}
-        value={formVals[id]}
-        onChange={onFormChange}
+        className={`${props.formName}__text-input`}
+        value={props.formVals[props.id]}
+        onChange={props.onFormChange}
         type='text'
-        id={id}
-        placeholder={placeholder}
-        required={required}
+        id={props.id}
+        placeholder={props.placeholder}
+        required={props.required}
       />
     </div>
   );

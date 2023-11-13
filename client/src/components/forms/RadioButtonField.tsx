@@ -5,35 +5,32 @@ export type RadioButtonFieldProps = {
   onFormChange: (event: FormEvent<HTMLInputElement>) => void;
   group: string;
   options: { value: string; label: string }[];
-  groupLabel: string;
-  formName: string
+  label: string;
+  formName: string;
 };
 
 export default function RadioButtonField({
-  formName,
-  formVals,
-  onFormChange,
-  group,
-  options,
-  groupLabel,
-}: RadioButtonFieldProps) {
+  props,
+}: {
+  props: RadioButtonFieldProps;
+}) {
   let radioId = -1;
   return (
-    <div className={`${formName}__field`}>
-      <label>{groupLabel}</label>
-      <div className={`${formName}__radio-group`}>
-        {options.map((option) => {
-          radioId++
+    <div className={`${props.formName}__field`}>
+      <label>{props.label}</label>
+      <div className={`${props.formName}__radio-group`}>
+        {props.options.map((option) => {
+          radioId++;
           return (
-            <div key={radioId} className={`${formName}__radio-button`}>
+            <div key={radioId} className={`${props.formName}__radio-button`}>
               <label htmlFor={option.value}>{option.label}</label>
               <input
-                checked={formVals[group] === option.value}
-                onChange={onFormChange}
+                checked={props.formVals[props.group] === option.value}
+                onChange={props.onFormChange}
                 type='radio'
                 id={option.value}
                 value={option.value}
-                name={group}
+                name={props.group}
               />
             </div>
           );
