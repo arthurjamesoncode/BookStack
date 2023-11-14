@@ -6,7 +6,7 @@
 }
 
 :root {
-  --primary-color-1: #5d5d81;
+  --primary-color-1: #6c6c7d;
   --primary-color-2: #ecdb9d;
 
   --secondary-color-1: #3bee55;
@@ -46,6 +46,10 @@ main {
   border: solid 2px black;
 }
 
+.img-button.white {
+  border: solid 2px white;
+}
+
 .img-button:hover,
 .img-button:focus {
   background-color:white;
@@ -58,7 +62,7 @@ main {
 
   width: 100%;
   background-color: var(--background-color-1);
-  border: black solid 1px;
+  border: black solid 3px;
   padding: 1rem;
 }
 

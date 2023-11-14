@@ -11,8 +11,7 @@ import Library from './components/Library/Library';
 
 export default function Router() {
   const location = useLocation();
-
-  console.log(location.key);
+  
   return (
     <TransitionGroup>
       <CSSTransition key={location.key} classNames='slide' timeout={300}>

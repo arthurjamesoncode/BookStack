@@ -3,6 +3,10 @@ import { Note } from '../../utils/types';
 import { getNotesByBook } from '../../services/APIClient';
 import NoteCard from '../NoteCard/NoteCard';
 
+import './NoteList.css'
+
+import plusCircle from '../../assets/plus-circle.svg'
+
 type NoteListProps = {
   bookId: number;
   openMenu: () => void;
@@ -18,6 +22,7 @@ export default function NoteList({ bookId, openMenu, refresh }: NoteListProps) {
 
   return (
     <div className='note-list-container'>
+      <h3>Your notes:</h3>
       {notes.length === 0 ? (
         <div className='No notes message'>No notes yet. Add one below.</div>
       ) : (
@@ -25,7 +30,7 @@ export default function NoteList({ bookId, openMenu, refresh }: NoteListProps) {
           return <NoteCard note={note} />;
         })
       )}
-      <button onClick={openMenu}>Add new note</button>
+      <img className='img-button' onClick={openMenu} src={plusCircle} />
     </div>
   );
 }

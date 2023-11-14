@@ -1,9 +1,11 @@
-import GenericForm from '../components/genericForms/GenericForm';
-import { addNoteToBook } from '../services/APIClient';
-import { NoteFormFields } from '../utils/formFields';
-import { Book } from '../utils/types';
+import GenericForm from '../genericForms/GenericForm';
+import { addNoteToBook } from '../../services/APIClient';
+import { NoteFormFields } from '../../utils/formFields';
+import { Book } from '../../utils/types';
 
 import './AddNoteForm.css'
+
+import xCircle from '../../assets/x-circle.svg'
 
 type AddNoteFormProps = {
   isOpen: boolean;
@@ -21,14 +23,14 @@ export default function AddNoteForm({ isOpen, closeMenu, book, refresh }: AddNot
 
   async function onSubmit(values : Record<string, string | number>) {
     const {text} = values as {text: string}
-    await addNoteToBook(book.id, {text})
+    await addNoteToBook(book.id, {text, page: book.currentPage})
     refresh();
     closeMenu();
   }
 
   return (
     <div className={`bottom-form-menu ${isOpen ? 'open' : ''}`}>
-      <button onClick={closeMenu}>Exit</button>
+      <img src={xCircle} onClick={closeMenu} />
       <h3>Add a note for {book.title} at page {book.currentPage}</h3>
       <GenericForm
         formFields={fields}

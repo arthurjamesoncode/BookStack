@@ -1,15 +1,10 @@
-.stack-prompt {
-  position: fixed;
-  height: 150px;
-  width: 250px;
-  top: calc((100vh - 150px ) / 2);
-  left: calc((100vw - 250px) / 2);
-  background-color: white;
-  border: black solid 1px;
-  padding: 1rem;
-  border-radius: 10px
+.add-stack-form {
+  display: flex;
+  flex-direction: column;
 }
 
-.hidden {
-  display: none;
+.add-stack-form__field {
+ display: flex;
+ flex-direction: column;
+ margin: 0.5rem 0; 
 }

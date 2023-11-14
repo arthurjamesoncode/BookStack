@@ -13,7 +13,7 @@ export default function StackList() {
   const [stacks, setStacks] = useState<Stack[]>([]);
   const [stackMenuOpen, setStackMenuOpen] = useState(false);
   const [addBookMenuOpen, setAddBookMenuOpen] = useState(false);
-  const [stackFormHidden, setStackFormHidden] = useState(true);
+  const [stackFormOpen, setStackFormOpen] = useState(false);
   const [currentStack, setCurrentStack] = useState<Stack | null>(null);
   const [editStack, setEditStack] = useState(false);
 
@@ -34,11 +34,11 @@ export default function StackList() {
   }
 
   function showStackForm(edit: boolean) {
-    setStackFormHidden(false);
+    setStackFormOpen(true);
     setEditStack(edit);
   }
   function hideStackForm() {
-    setStackFormHidden(true);
+    setStackFormOpen(false);
   }
 
   async function addOrEditStack(name: string) {
@@ -62,20 +62,14 @@ export default function StackList() {
 
   return (
     <div>
-      <StackForm
-        hideStackForm={hideStackForm}
-        addOrEditStack={addOrEditStack}
-        hidden={stackFormHidden}
-        edit={editStack}
-      />
       {stacks.map((stack) => (
         <StackComponent
-          openStackMenu={() => toggleStackMenu(stack)}
-          openAddBookMenu={() => toggleAddBookMenu(stack)}
-          key={stack.id}
-          stack={stack}
+        openStackMenu={() => toggleStackMenu(stack)}
+        openAddBookMenu={() => toggleAddBookMenu(stack)}
+        key={stack.id}
+        stack={stack}
         />
-      ))}
+        ))}
       <img
         className='img-button'
         id='new-stack'
@@ -91,6 +85,12 @@ export default function StackList() {
         deleteStack={deleteStack}
       />
       <AddBookMenu stack={currentStack} isOpen={addBookMenuOpen} />
+      <StackForm
+        hideStackForm={hideStackForm}
+        addOrEditStack={addOrEditStack}
+        open={stackFormOpen}
+        edit={editStack}
+      />
     </div>
   );
 }

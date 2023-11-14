@@ -18,7 +18,7 @@ import ChangePageForm from '../AddReadingSession/AddReadingSession';
 
 import { blankBook } from '../../utils/blanks';
 import NoteList from '../NoteList/NoteList';
-import AddNoteForm from '../../AddNoteForm/AddNoteForm';
+import AddNoteForm from '../AddNoteForm/AddNoteForm';
 
 export default function BookDetails() {
   const location = useLocation();
@@ -62,8 +62,8 @@ export default function BookDetails() {
   }
 
   async function refreshNotes() {
-    console.log(noteRefresh)
-    setNoteRefresh(prev => !prev)
+    console.log(noteRefresh);
+    setNoteRefresh((prev) => !prev);
   }
 
   async function onDelete() {
@@ -101,7 +101,7 @@ export default function BookDetails() {
       : `Page: ${book.currentPage}/${book.totalPages}.`;
 
   return (
-    <>
+    <div>
       <div className='container'>
         <h2 className='book-title'>{book.title}</h2>
         <div className='book-details-container'>
@@ -145,7 +145,13 @@ export default function BookDetails() {
           </div>
         </div>
       </div>
-      {book.id > -1 && <NoteList refresh={noteRefresh} openMenu={toggleNoteForm} bookId={book.id} />}
+      {book.id > -1 && (
+        <NoteList
+          refresh={noteRefresh}
+          openMenu={toggleNoteForm}
+          bookId={book.id}
+        />
+      )}
 
       <AddNoteForm
         book={book}
@@ -161,6 +167,6 @@ export default function BookDetails() {
         startReading={startReading}
         finishReading={finishReading}
       />
-    </>
+    </div>
   );
 }

@@ -106,6 +106,6 @@ export const NoteFormFields: FormField[] = [
     id: 'text',
     label: 'What\'s on your mind? ',
     placeholder: '',
-    required: false
+    required: true
   }
 ]

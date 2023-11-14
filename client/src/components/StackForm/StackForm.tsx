@@ -3,15 +3,17 @@ import GenericForm from '../genericForms/GenericForm';
 
 import './StackForm.css';
 
+import xCircle from '../../assets/x-circle.svg'
+
 type StackFormProps = {
-  hidden: boolean;
+  open: boolean;
   hideStackForm: () => void;
   addOrEditStack: (name: string) => void;
   edit: boolean;
 };
 
 export default function StackForm({
-  hidden,
+  open,
   hideStackForm,
   addOrEditStack,
   edit
@@ -30,8 +32,8 @@ export default function StackForm({
   }
 
   return (
-    <div className={`stack-prompt ${hidden ? 'hidden' : ''}`}>
-      <button onClick={() => hideStackForm()}>Exit</button>
+    <div className={`bottom-form-menu ${open ? 'open' : ''}`}>
+      <img src={xCircle}onClick={() => hideStackForm()} />
       <h2>{edit ? 'Edit Stack' : 'Add a new stack:'} </h2>
       <GenericForm
         formFields={fields}

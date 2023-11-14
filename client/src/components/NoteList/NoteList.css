@@ -1,0 +1,11 @@
+.note-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 320px;
+  margin: auto;
+}
+
+.note-list-container > * {
+  margin: 0.5rem 0;
+}
