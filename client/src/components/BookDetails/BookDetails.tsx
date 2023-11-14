@@ -10,7 +10,7 @@ import defaultIcon from '../../assets/default-book-icon.png';
 import editIcon from '../../assets/edit.svg';
 import deleteIcon from '../../assets/trash.svg';
 import readingIcon from '../../assets/book-open.svg';
-import ChangePageForm from '../ChangePageForm/ChangePageForm';
+import ChangePageForm from '../ChangePageForm/AddReadingSession';
 
 const blankBook: Book = {
   id: -1,
@@ -30,7 +30,7 @@ export default function BookDetails() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [isHidden, setIsHidden] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const { bookId, viewedFrom } = location.state as {
     bookId: number;
     viewedFrom: Stack;
@@ -41,15 +41,8 @@ export default function BookDetails() {
     getBook();
   }, [bookId]);
 
-  // function showPageForm() {
-  //   setIsHidden(false);
-  // }
-  // function hidePageForm() {
-  //   setIsHidden(true);
-  // }
-
   function togglePageForm() {
-    setIsHidden(prev => !prev)
+    setIsOpen(prev => !prev)
   }
 
   async function getBook() {
@@ -124,9 +117,10 @@ export default function BookDetails() {
 
       <ChangePageForm
         hidePrompt={togglePageForm}
-        isHidden={isHidden}
+        isOpen={isOpen}
         bookId={book.id}
         currentPages={book.currentPage}
+        max={book.totalPages - book.currentPage}
         refresh={getBook}
       />
     </>

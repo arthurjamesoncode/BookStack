@@ -16,7 +16,7 @@ export type Book = {
   ISBN: string;
   OLID: string;
   description: string;
-  hasImg: boolean
+  hasImg: boolean;
 };
 
 export type SearchResult = {
@@ -25,21 +25,21 @@ export type SearchResult = {
   edition_key: string[];
   cover_edition_key: string;
   author_name: string[];
-}
+};
 
 export type SearchResponse = {
   numFound: number;
   start: number;
   numFoundExact: boolean;
-  docs: SearchResult[]
-}
+  docs: SearchResult[];
+};
 
 export type SearchResultDetails = {
   publishers: string[];
-  description?: {value: string};
+  description?: { value: string };
   isbn_13: string[];
-  number_of_pages?: number,
-}
+  number_of_pages?: number;
+};
 
 export type RadioFormField = {
   type: 'radio';
@@ -54,16 +54,18 @@ export type TextFormField = {
   placeholder: string;
   required: boolean;
   label: string;
-  maxlength?: number
+  maxlength?: number;
 };
 
 export type NumberFormField = {
-  type: 'number',
-  id: string,
+  type: 'number' | 'range';
+  id: string;
   placeholder: string;
-  min: number,
-  required: boolean
-  label: string
-}
+  min: number;
+  max?: number;
+  required: boolean;
+  label: string;
+  step?: number;
+};
 
 export type FormField = RadioFormField | TextFormField | NumberFormField;

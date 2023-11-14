@@ -1,5 +1,6 @@
 .book-details-container {
   padding: 1rem;
+  border: 3px solid black;
   background-color: var(--primary-color-2);
   border-radius: 20px;
 }

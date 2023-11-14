@@ -1,0 +1,22 @@
+.reading-session-menu{
+  position: fixed;
+  bottom: -100%;
+  transition: bottom 0.3s;
+
+  width: 100%;
+  background-color: var(--background-color-1);
+  border: black solid 1px;
+  padding: 1rem;
+}
+
+.reading-session-menu.open {
+  bottom: 0;
+}
+
+.reading-session-form__range-input {
+  width: 100%
+}
+
+.reading-session-form__submit {
+  width: 100%;
+}
