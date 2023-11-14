@@ -1,4 +1,4 @@
-import { Book, Stack } from '../utils/types';
+import { Book, Note, Stack } from '../utils/types';
 
 const url = 'http://localhost:3000';
 
@@ -129,10 +129,35 @@ export async function switchPrimaryStack(
   fromStackType: string,
   toStackType: string
 ) {
-  const response = await fetch(`${url}/books/${bookId}/${fromStackType}/${toStackType}`, {
-    method: 'PUT'
-  })
+  const response = await fetch(
+    `${url}/books/${bookId}/${fromStackType}/${toStackType}`,
+    {
+      method: 'PUT',
+    }
+  );
 
-  const updatedBook = await response.json()
+  const updatedBook = await response.json();
   return updatedBook;
+}
+
+export async function getNotesByBook(bookId: number) {
+  const response = await fetch(`${url}/notes/${bookId}`, {
+    method: 'GET',
+  });
+
+  const notes = await response.json();
+
+  return notes;
+}
+
+export async function addNoteToBook(bookId: number, note: Partial<Note>) {
+  console.log('oof')
+  const response = await fetch(`${url}/notes/${bookId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(note)
+  });
+
+  const newNote = await response.json();
+  return(newNote)
 }

@@ -1,0 +1,9 @@
+.add-note-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-note-form__field {
+  display: flex;
+  flex-direction: column;
+}

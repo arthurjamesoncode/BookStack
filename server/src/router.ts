@@ -31,8 +31,8 @@ router.delete('/stacks/:type/:stackId/:bookId', Book.deleteBookFromStack); //beh
 
 router.get('/notes', Note.getAllNotes)
 
-router.post('/notes/:bookId', Note.addNote)
 router.get('/notes/:bookId', Note.getNotesByBook)
+router.post('/notes/:bookId', Note.addNote)
 
 export default router;
 

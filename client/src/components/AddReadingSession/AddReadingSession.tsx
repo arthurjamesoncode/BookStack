@@ -17,7 +17,7 @@ type ChangePageFormProps = {
 
 export default function ChangePageForm({
   refresh,
-  isOpen: isHidden,
+  isOpen,
   hidePrompt,
   book,
   finishReading,
@@ -48,7 +48,7 @@ export default function ChangePageForm({
   };
 
   return (
-    <div className={`reading-session-menu ${isHidden ? 'open' : ''}`}>
+    <div className={`bottom-form-menu ${isOpen ? 'open' : ''}`}>
       <h3>You have read {pagesSelected} pages?</h3>
       <GenericForm
         formName='reading-session-form'

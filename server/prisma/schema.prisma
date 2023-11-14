@@ -59,7 +59,7 @@ model BookStackJunction {
 }
 
 model Note {
-  id        Int      @id
+  id        Int      @id @default(autoincrement())
   book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
   bookId    Int
   text      String   @default("") @db.Text

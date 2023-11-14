@@ -20,6 +20,14 @@ export type Book = {
   hasImg: boolean;
 };
 
+export type Note = {
+  id: number;
+  bookId: number;
+  text: string;
+  page?: number;
+  createdAt: Date; 
+}
+
 export type SearchResult = {
   title: string;
   edition_count: number;

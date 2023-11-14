@@ -99,3 +99,13 @@ export const PageFormFields: FormField[] = [
     step: 1
   }
 ]
+
+export const NoteFormFields: FormField[] = [
+  {
+    type: 'textarea',
+    id: 'text',
+    label: 'What\'s on your mind? ',
+    placeholder: '',
+    required: false
+  }
+]

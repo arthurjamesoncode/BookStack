@@ -51,6 +51,21 @@ main {
   background-color:white;
 }
 
+.bottom-form-menu{
+  position: fixed;
+  bottom: -100%;
+  transition: bottom 0.3s;
+
+  width: 100%;
+  background-color: var(--background-color-1);
+  border: black solid 1px;
+  padding: 1rem;
+}
+
+.bottom-form-menu.open {
+  bottom: 0;
+}
+
 /* Route Transitions */
 
 .slide-enter {
