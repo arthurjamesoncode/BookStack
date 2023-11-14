@@ -2,6 +2,7 @@ import { Router } from 'express';
 import * as User from './controllers/user';
 import * as Book from './controllers/book';
 import * as Stack from './controllers/stack';
+import * as Note from './controllers/note';
 
 const router = Router();
 
@@ -28,7 +29,10 @@ router.post('/stacks/:type/:stackId', Book.addNewBookToStack); //behind auth mid
 router.post('/stacks/:type/:stackId/:bookId', Book.addExistingBookToStack); //behind auth middleware
 router.delete('/stacks/:type/:stackId/:bookId', Book.deleteBookFromStack); //behind auth middleware
 
-//there are no routes for dealing with notes because I want to make my app have good animations today and I was pretty slow sooooo...
+router.get('/notes', Note.getAllNotes)
+
+router.post('/notes/:bookId', Note.addNote)
+router.get('/notes/:bookId', Note.getNotesByBook)
 
 export default router;
 
