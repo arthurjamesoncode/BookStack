@@ -2,6 +2,9 @@
   padding: 1rem;
   background-color: var(--primary-color-2);
   border-radius: 20px;
+  width: 320px;
+  margin: auto;
+  border: solid 3px var(--highlight-1)
 }
 
 .book-form__field {

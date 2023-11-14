@@ -1,5 +1,10 @@
 .search-form {
-  padding: 0.5rem
+  padding: 0.5rem;
+  width: 320px;
+  margin: auto;
+  background-color: var(--primary-color-2);
+  border-radius: 20px;
+  border: solid 3px var(--highlight-1);
 }
 
 .search-form__field {

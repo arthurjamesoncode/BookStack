@@ -34,7 +34,7 @@ export default function BookForm() {
 
   function submitBook(values: Record<string, number | string>) {
     const book = values as unknown as Book; //guaranteed to have all necessary fields for adding a new book
-    book.hasImg = hasImg || false;
+    if (!book.hasImg) book.hasImg = hasImg || false;
 
     if (!edit) addNewBookToStack(stack.id, stack.type, book);
     else editBook(book);

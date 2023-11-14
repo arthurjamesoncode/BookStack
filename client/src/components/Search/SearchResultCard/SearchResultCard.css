@@ -4,6 +4,7 @@
   margin: 0.5rem;
   border-radius: 10px;
   position: relative;
+  border: solid 3px var(--highlight-1);
 }
 
 .search-cover-img {
