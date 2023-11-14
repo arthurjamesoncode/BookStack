@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Book, Stack } from '../../utils/types';
+import { Stack } from '../../utils/types';
 import { deleteBookFromStack, getBookById, switchPrimaryStack } from '../../services/APIClient';
 import { getCoverUrl } from '../../services/OpenLibrary';
 
@@ -12,20 +12,7 @@ import deleteIcon from '../../assets/trash.svg';
 import readingIcon from '../../assets/book-open.svg';
 import ChangePageForm from '../AddReadingSession/AddReadingSession';
 
-const blankBook: Book = {
-  id: -1,
-  primaryStack: 'tbr',
-  title: '',
-  author: '',
-  totalPages: 0,
-  bookType: 'paper',
-  currentPage: 0,
-  publisher: '',
-  ISBN: '',
-  OLID: '',
-  description: '',
-  hasImg: false,
-};
+import { blankBook } from '../../utils/blanks'; 
 
 export default function BookDetails() {
   const location = useLocation();
@@ -36,6 +23,7 @@ export default function BookDetails() {
     bookId: number;
     viewedFrom: Stack;
   };
+
   const [book, setBook] = useState(blankBook);
 
   useEffect(() => {

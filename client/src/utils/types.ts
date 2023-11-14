@@ -36,9 +36,9 @@ export type SearchResponse = {
 };
 
 export type SearchResultDetails = {
-  publishers: string[];
+  publishers?: string[];
   description?: { value: string };
-  isbn_13: string[];
+  isbn_13?: string[];
   number_of_pages?: number;
 };
 

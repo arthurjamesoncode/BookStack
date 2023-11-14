@@ -1,5 +1,7 @@
 .book-form-container {
   padding: 1rem;
+  background-color: var(--primary-color-2);
+  border-radius: 20px;
 }
 
 .book-form__field {

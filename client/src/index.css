@@ -50,3 +50,28 @@ main {
 .img-button:focus {
   background-color:white;
 }
+
+/* Route Transitions */
+
+.slide-enter {
+  position: fixed;
+  left: -100%;
+}
+
+.slide-enter.slide-enter-active {
+  position: fixed;
+  left: 0;
+  transition: left 0.3s ease-in;
+  
+}
+
+.slide-exit {
+  position: fixed;
+  left: 0;
+}
+
+.slide-exit.slide-exit-active {
+  position: fixed;
+  left: -100%;
+  transition: left 0.3s ease-out;
+}

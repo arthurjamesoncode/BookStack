@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import Menu from '../Menu/menu';
 
-import { Book, Stack } from '../../utils/types';
+import {Stack } from '../../utils/types';
 
 type AddBookMenuProps = {
   isOpen: boolean;
   stack: Stack | null;
-  books: Book[] | null;
 };
 
 export default function AddBookMenu({ isOpen, stack }: AddBookMenuProps) {

@@ -61,7 +61,7 @@ export default function StackList() {
   }
 
   return (
-    <>
+    <div>
       <StackForm
         hideStackForm={hideStackForm}
         addOrEditStack={addOrEditStack}
@@ -91,6 +91,6 @@ export default function StackList() {
         deleteStack={deleteStack}
       />
       <AddBookMenu stack={currentStack} isOpen={addBookMenuOpen} />
-    </>
+    </div>
   );
 }

@@ -28,6 +28,8 @@ router.post('/stacks/:type/:stackId', Book.addNewBookToStack); //behind auth mid
 router.post('/stacks/:type/:stackId/:bookId', Book.addExistingBookToStack); //behind auth middleware
 router.delete('/stacks/:type/:stackId/:bookId', Book.deleteBookFromStack); //behind auth middleware
 
+//there are no routes for dealing with notes because I want to make my app have good animations today and I was pretty slow sooooo...
+
 export default router;
 
 //ignore users until I do auth
