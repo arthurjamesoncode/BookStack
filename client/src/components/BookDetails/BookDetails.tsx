@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Book, Stack } from '../../utils/types';
-import { deleteBookFromStack, getBookById } from '../../services/APIClient';
+import { deleteBookFromStack, getBookById, switchPrimaryStack } from '../../services/APIClient';
 import { getCoverUrl } from '../../services/OpenLibrary';
 
 import './BookDetails.css';
@@ -10,10 +10,11 @@ import defaultIcon from '../../assets/default-book-icon.png';
 import editIcon from '../../assets/edit.svg';
 import deleteIcon from '../../assets/trash.svg';
 import readingIcon from '../../assets/book-open.svg';
-import ChangePageForm from '../ChangePageForm/AddReadingSession';
+import ChangePageForm from '../AddReadingSession/AddReadingSession';
 
 const blankBook: Book = {
   id: -1,
+  primaryStack: 'tbr',
   title: '',
   author: '',
   totalPages: 0,
@@ -42,7 +43,7 @@ export default function BookDetails() {
   }, [bookId]);
 
   function togglePageForm() {
-    setIsOpen(prev => !prev)
+    setIsOpen((prev) => !prev);
   }
 
   async function getBook() {
@@ -65,9 +66,26 @@ export default function BookDetails() {
     navigate(-1);
   }
 
+  async function finishReading () {
+    const updatedBook = await switchPrimaryStack(book.id, book.primaryStack, 'finished');
+    setBook(updatedBook)
+  }
+
+  async function startReading () {
+    const updatedBook = await switchPrimaryStack(book.id, book.primaryStack, 'current');
+    setBook(updatedBook)
+  }
+
   const imgUrl = book.hasImg
     ? getCoverUrl('olid', book.OLID) + '-L.jpg'
     : defaultIcon;
+
+  const progresMessage =
+    book.primaryStack === 'finished'
+      ? 'You have finished this book!'
+      : book.currentPage < 1
+      ? "You haven't started reading yet."
+      : `Page: ${book.currentPage}/${book.totalPages}.`;
 
   return (
     <>
@@ -94,11 +112,7 @@ export default function BookDetails() {
               <p>{book.ISBN || 'No OLID saved'}</p>
             </div>
           </div>
-          <div className='progress-container'>
-            {book.currentPage <= 1
-              ? "You haven't started reading yet"
-              : `Page: ${book.currentPage}/${book.totalPages}`}
-          </div>
+          <div className='progress-container'>{progresMessage}</div>
           <div className='description-container'>
             <h4>Description:</h4>
             <p>{book.description}</p>
@@ -110,7 +124,11 @@ export default function BookDetails() {
               onClick={() => onDelete()}
               src={deleteIcon}
             />
-            <img className='img-button' src={readingIcon} onClick={togglePageForm}/>
+            <img
+              className='img-button'
+              src={readingIcon}
+              onClick={togglePageForm}
+            />
           </div>
         </div>
       </div>
@@ -118,10 +136,10 @@ export default function BookDetails() {
       <ChangePageForm
         hidePrompt={togglePageForm}
         isOpen={isOpen}
-        bookId={book.id}
-        currentPages={book.currentPage}
-        max={book.totalPages - book.currentPage}
         refresh={getBook}
+        book={book}
+        startReading={startReading}
+        finishReading={finishReading}
       />
     </>
   );

@@ -27,18 +27,19 @@ export async function addNewBookToStack(req: Request, res: Response) {
   try {
     const [type, stackId] = [req.params.type, Number(req.params.stackId)];
     const userId = 1; //will take this from a token / session after doing auth
+    let primaryStack = type;
 
     const bookData = { ...req.body, userId };
-
     const stacks: { [key: string]: number | string }[] = [{ stackId }];
 
     if (type === 'other') {
       const tbr = await Stack.findFirst({ where: { userId, type: 'tbr' } });
+      primaryStack = 'tbr';
       stacks.push({ stackId: tbr!.id });
     }
 
     const newBook = await Book.create({
-      data: { ...bookData, stacks: { create: stacks } },
+      data: { ...bookData, primaryStack, stacks: { create: stacks } },
     });
 
     res.status(201).send(newBook);
@@ -158,22 +159,20 @@ export async function addExistingBookToStack(req: Request, res: Response) {
       return res.status(200).send(response);
     }
 
-    const book = await Book.findFirst({
+    const book = await Book.findUnique({
       where: { id: bookId },
       include: {
         stacks: {
           select: {
             stack: { select: { id: true, type: true } },
-            addedAt: true,
             stackId: true,
-            bookId: true,
           },
         },
       },
     });
 
     if (!book) return res.status(400).send();
-    
+
     const currentPrimaryStackId = book.stacks.find(
       (stack) => stack.stack.type !== 'other'
     )!.stackId;
@@ -183,16 +182,56 @@ export async function addExistingBookToStack(req: Request, res: Response) {
       data: {
         stacks: {
           delete: {
-            bookId_stackId: { stackId: currentPrimaryStackId, bookId }
+            bookId_stackId: { stackId: currentPrimaryStackId, bookId },
           },
           create: {
-            stackId
-          }
+            stackId,
+          },
         },
       },
     });
 
     res.status(200).send(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}
+
+export async function switchPrimaryStack(req: Request, res: Response) {
+  try {
+    const [bookId, fromStackType, toStackType] = [
+      Number(req.params.bookId),
+      req.params.fromStackType,
+      req.params.toStackType,
+    ];
+
+    const userId = 1;
+
+    const fromStack = await Stack.findFirst({
+      where: { userId, type: fromStackType },
+    });
+    const toStack = await Stack.findFirst({
+      where: { userId, type: toStackType },
+    });
+
+    const updatedBook = await Book.update({
+      where: { id: bookId },
+      data: {
+        primaryStack: toStackType,
+        stacks: {
+          delete: {
+            bookId_stackId: {
+              bookId,
+              stackId: fromStack!.id,
+            },
+          },
+          create: { stackId: toStack!.id },
+        },
+      },
+    });
+
+    res.status(200).send(updatedBook);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);

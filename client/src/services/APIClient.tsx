@@ -13,11 +13,11 @@ export async function getUserStacks(userId: number) {
 
 export async function getUserBooks(userId: number) {
   const response = await fetch(`${url}/users/${userId}/books`, {
-    method: 'Get'
-  })
+    method: 'Get',
+  });
 
-  const books = await response.json()
-  return books
+  const books = await response.json();
+  return books;
 }
 
 export async function getBooksInStack(stackId: number) {
@@ -53,7 +53,6 @@ export async function editBook(book: Partial<Book>) {
   });
 
   const updatedBook = await response.json();
-  console.log(updatedBook);
   return updatedBook;
 }
 
@@ -110,10 +109,30 @@ export async function editStack(name: string, stackId: number): Promise<Stack> {
   return await response.json();
 }
 
-export async function addExistingBookToStack(bookId: number, stackType: string, stackId: number) {
-  const response = await fetch(`${url}/stacks/${stackType}/${stackId}/${bookId}`, {
-    method: 'POST'
-  })
+export async function addExistingBookToStack(
+  bookId: number,
+  stackType: string,
+  stackId: number
+) {
+  const response = await fetch(
+    `${url}/stacks/${stackType}/${stackId}/${bookId}`,
+    {
+      method: 'POST',
+    }
+  );
 
   return await response.json();
+}
+
+export async function switchPrimaryStack(
+  bookId: number,
+  fromStackType: string,
+  toStackType: string
+) {
+  const response = await fetch(`${url}/books/${bookId}/${fromStackType}/${toStackType}`, {
+    method: 'PUT'
+  })
+
+  const updatedBook = await response.json()
+  return updatedBook;
 }

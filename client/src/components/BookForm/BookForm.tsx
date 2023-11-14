@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { addNewBookToStack, editBook } from '../../services/APIClient';
-import { Book } from '../../utils/types';
+import { Book, Stack } from '../../utils/types';
 
 import { BookFormFields } from '../../utils/formFields';
 import GenericForm from '../genericForms/GenericForm';
@@ -24,7 +24,7 @@ export default function BookForm() {
   const navigate = useNavigate();
 
   const { stack, book, edit, hasImg } = location.state as {
-    stack: { name: string; id: number };
+    stack: Stack;
     book: Record<string, string | number>;
     edit: boolean;
     hasImg: boolean | undefined;
@@ -36,7 +36,7 @@ export default function BookForm() {
     const book = values as unknown as Book; //guaranteed to have all necessary fields for adding a new book
     book.hasImg = hasImg || false;
 
-    if (!edit) addNewBookToStack(stack.id, 'current', book);
+    if (!edit) addNewBookToStack(stack.id, stack.type, book);
     else editBook(book);
 
     navigate('/');

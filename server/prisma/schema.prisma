@@ -36,7 +36,6 @@ model Book {
   notes        Note[]
 
   stacks BookStackJunction[]
-  @@unique([userId, primaryStack])
 }
 
 model Stack {

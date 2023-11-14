@@ -7,6 +7,7 @@ export type Stack = {
 
 export type Book = {
   id: number;
+  primaryStack: 'tbr' | 'current' | 'finished';
   title: string;
   author: string;
   totalPages: number;

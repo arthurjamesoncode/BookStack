@@ -4,23 +4,24 @@ import { PageFormFields } from '../../utils/formFields';
 import GenericForm from '../genericForms/GenericForm';
 
 import './AddReadingSession.css';
+import { Book } from '../../utils/types';
 
 type ChangePageFormProps = {
-  currentPages: number;
-  bookId: number;
   refresh: () => void;
   isOpen: boolean;
   hidePrompt: () => void;
-  max: number;
+  book: Book
+  finishReading: () => void;
+  startReading: () => void;
 };
 
 export default function ChangePageForm({
-  currentPages,
-  bookId,
   refresh,
   isOpen: isHidden,
   hidePrompt,
-  max,
+  book,
+  finishReading,
+  startReading
 }: ChangePageFormProps) {
   const [pagesSelected, setPagesSelected] = useState(0);
 
@@ -29,18 +30,20 @@ export default function ChangePageForm({
   };
 
   const fields = PageFormFields;
-  if (fields[0].type == 'range') fields[0].max = max;
+  if (fields[0].type == 'range') fields[0].max = book.totalPages - book.currentPage;
 
   async function onFormSubmit(values: Record<string, string | number>) {
     const { pages } = values as { pages: number };
 
-    await editBook({ id: bookId, currentPage: currentPages + pages });
+    if (book.currentPage + pages === book.totalPages) finishReading();
+    else if (book.primaryStack != 'current') startReading()
+
+    await editBook({ id: book.id, currentPage: book.currentPage + pages });
     hidePrompt();
     refresh();
   }
 
   function onFormChange(key: string, value: string | number) {
-
     if (key === 'pages') setPagesSelected(value as number)
   };
 
