@@ -1,9 +1,15 @@
 .search-result-details {
   padding: 1rem;
+  width: 320px;
+  margin: auto;
+  background-color: var(--primary-color-2);
+  border: 3px solid var(--highlight-1);
+  border-radius: 20px;
 }
 
 .description-container {
   font-size: 0.8rem;
   height: 6rem;
+  max-width: 320px;
   overflow: scroll;
 }
