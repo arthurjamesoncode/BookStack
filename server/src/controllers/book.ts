@@ -110,14 +110,16 @@ export async function deleteBookFromStack(req: Request, res: Response) {
       },
     });
 
-    const newStacks = book!.stacks.filter((stack) => stack.stackId != stackId);
-
     const updatedBook = await Book.update({
       where: { id: bookId },
       data: {
         stacks: {
-          set: [],
-          createMany: { data: newStacks },
+          delete: {
+            bookId_stackId: {
+              bookId,
+              stackId,
+            },
+          },
         },
       },
     });
