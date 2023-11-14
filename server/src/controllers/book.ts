@@ -149,8 +149,6 @@ export async function addExistingBookToStack(req: Request, res: Response) {
       Number(req.params.bookId),
     ];
 
-    console.log(req.params);
-
     if (type === 'other') {
       const response = await Book.update({
         where: { id: bookId },
@@ -175,12 +173,10 @@ export async function addExistingBookToStack(req: Request, res: Response) {
     });
 
     if (!book) return res.status(400).send();
+    
     const currentPrimaryStackId = book.stacks.find(
       (stack) => stack.stack.type !== 'other'
     )!.stackId;
-
-    console.log(book);
-    const newStackRelation = { stackId, addedAt: new Date() };
 
     const response = await Book.update({
       where: { id: bookId },

@@ -19,21 +19,24 @@ model User {
 }
 
 model Book {
-  id          Int     @id @default(autoincrement())
-  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      Int
-  title       String  @db.VarChar(255)
-  author      String  @db.VarChar(255)
-  totalPages  Int
-  currentPage Int     @default(1)
-  bookType    String  @default("paper") @db.VarChar(10)
-  publisher   String  @default("") @db.VarChar(255)
-  ISBN        String  @default("") @db.VarChar(13)
-  OLID        String  @default("") @db.VarChar(15)
-  description String  @default("") @db.Text
-  hasImg      Boolean @default(false)
+  id           Int     @id @default(autoincrement())
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int
+  primaryStack String  @db.VarChar(8) //one of tbr, current, and finished
+  title        String  @db.VarChar(255)
+  author       String  @db.VarChar(255)
+  totalPages   Int
+  currentPage  Int     @default(0)
+  bookType     String  @default("paper") @db.VarChar(10)
+  publisher    String  @default("") @db.VarChar(255)
+  ISBN         String  @default("") @db.VarChar(13)
+  OLID         String  @default("") @db.VarChar(15)
+  description  String  @default("") @db.Text
+  hasImg       Boolean @default(false)
+  notes        Note[]
 
   stacks BookStackJunction[]
+  @@unique([userId, primaryStack])
 }
 
 model Stack {
@@ -54,4 +57,13 @@ model BookStackJunction {
   addedAt DateTime @default(now())
 
   @@id([bookId, stackId])
+}
+
+model Note {
+  id        Int      @id
+  book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  bookId    Int
+  text      String   @default("") @db.Text
+  page      Int?
+  createdAt DateTime @default(now())
 }
