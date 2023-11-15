@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { User } from '../models';
+import * as User from '../models/user'
 import bcrypt from 'bcrypt';
 
 export async function getAllUsers(req: Request, res: Response) {
   try {
-    const users = await User.findMany();
+    const users = await User.getAllUsers();
     res.status(200).send(users);
   } catch (error) {
     console.log(error);
@@ -16,28 +16,14 @@ export async function createUser(req: Request, res: Response) {
   try {
     const { username, password } = req.body;
 
-    const existingUser = await User.findFirst({ where: { username } });
+    const existingUser = await User.findByUsername(username);
 
     if (existingUser) return res.status(400).send('User Exists');
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
 
-    const newUser = await User.create({
-      data: {
-        username,
-        passwordHash,
-        stacks: {
-          createMany: {
-            data: [
-              { name: 'Currently Reading', type: 'current' },
-              { name: 'To Read', type: 'tbr' },
-              { name: 'Finished', type: 'finished'}
-            ],
-          },
-        },
-      },
-    });
+    const newUser = await User.create(username, passwordHash)
 
     res.status(201).send(newUser);
   } catch (error) {
