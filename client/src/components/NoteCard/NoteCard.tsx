@@ -14,7 +14,7 @@ export default function NoteCard({ note }: NoteCardProps) {
     <div className='note-card'>
       <div className='note-intro'>On {time} you wrote:</div>
       <div className='text-container'>{note.text}</div>
-      <div className='place-in-book'>{note.page && note.page > 0 && `Page ${note.page}.`}</div>
+      <div className='place-in-book'>{note.page != null && note.page > 0 && `Page ${note.page}.`}</div>
     </div>
   );
 }

@@ -33,7 +33,7 @@ export default function StackForm({
 
   return (
     <div className={`bottom-form-menu ${open ? 'open' : ''}`}>
-      <img src={xCircle}onClick={() => hideStackForm()} />
+      <img src={xCircle} onClick={() => hideStackForm()} />
       <h2>{edit ? 'Edit Stack' : 'Add a new stack:'} </h2>
       <GenericForm
         formFields={fields}
