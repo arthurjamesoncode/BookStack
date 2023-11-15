@@ -8,7 +8,23 @@ I'm just gonna tell you, you fucked up. This is a real annoying one to pick. My 
 
 ## For some reason you did tho
 
-So I'm gonna say some of the things that I wanted to do to this app, since there was a lot.
+So I'm gonna say some of the things that I wanted to do to this app, since there was a lot, but first what do you need to do
+
+- npm i should be all you need to install dependencies (run npm i from client and server)
+- You will also need a postgres database running on your system. 
+- You will need to include a .env file in your server folder with a line in this format
+DATABASE_URL="postgresql://username:password@localhost:5432/bookstack?schema=public" To act as link to your database
+- You will also need to run npx prisma migrate dev from the server folder in order to initialise the database (called bookstack in the db_url but you can change that if you want) and create the prisma client.
+
+- Then after doing all of that you should be able to run the server using npm start from the server folder and the client by using npm run dev in the client folder.
+
+### Quirks
+
+- The way the app is meant to work is there are primary stacks (To read, 'tbr'; Currently Reading, 'current'; and Finished, 'finsihed') Each book will always be in one of these stacks, and can only be in one of these stacks, but can also be in the other stacks that users create. 
+
+- E.g If a book is in currently reading it can't be in finished but can be in a different user-created stack.
+
+## What could you do?
 
 Refactoring
 
