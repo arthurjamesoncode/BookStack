@@ -8,18 +8,22 @@ export async function getAllBooks() {
   return books;
 }
 
-export async function getBookById(
-  id: number,
-  includeStackId: boolean = false,
-  includeStackType: boolean = false
-) {
+export async function getBookById(id: number) {
+  const book = await prisma.book.findUnique({
+    where: { id },
+  });
+
+  return book;
+}
+
+export async function getBookByIdIncludeStacks(id: number) {
   const book = await prisma.book.findUnique({
     where: { id },
     include: {
       stacks: {
         select: {
-          stack: { select: { type: includeStackType } },
-          stackId: includeStackId,
+          stack: { select: { type: true } },
+          stackId: true,
         },
       },
     },
@@ -98,7 +102,12 @@ export async function addBookToStack(bookId: number, stackId: number) {
   return updatedBook;
 }
 
-export async function switchStacks(bookId: number, fromStackId : number, toStackId: number, toStackType : string) {
+export async function switchStacks(
+  bookId: number,
+  fromStackId: number,
+  toStackId: number,
+  toStackType: string
+) {
   const updatedBook = await prisma.book.update({
     where: { id: bookId },
     data: {

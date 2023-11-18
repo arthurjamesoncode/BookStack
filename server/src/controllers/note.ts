@@ -45,7 +45,7 @@ export async function getNotesByUser(req: Request, res: Response) {
     const books = await Book.getBooksByUser(userId);
 
     const notes = books.map((book) => {
-      return Note.getNotesByBook(book.id, true);
+      return Note.getNotesByBookWithBookTitle(book.id);
     });
 
     res.status(200).send(notes);

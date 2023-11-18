@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "test",
-    "start": "tsc && node dist/index.js",
+    "start": "tsc && nodemon dist/index.js",
     "lint" : "eslint"
   },
   "author": "",

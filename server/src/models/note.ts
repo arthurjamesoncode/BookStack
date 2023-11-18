@@ -12,13 +12,18 @@ export async function create(bookId: number, text: string) {
   return newNote;
 }
 
-export async function getNotesByBook(
-  bookId: number,
-  includeBookTitle: boolean = false
-) {
+export async function getNotesByBook(bookId: number) {
   const notes = await prisma.note.findMany({
     where: { bookId },
-    include: { book: { select: { title: includeBookTitle } } },
+  });
+
+  return notes;
+}
+
+export async function getNotesByBookWithBookTitle(bookId: number) {
+  const notes = await prisma.note.findMany({
+    where: { bookId },
+    include: { book: { select: { title: true } } },
   });
 
   return notes;

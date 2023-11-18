@@ -126,7 +126,7 @@ export async function addExistingBookToStack(req: Request, res: Response) {
       return res.status(200).send(response);
     }
 
-    const book = await Book.getBookById(bookId, true, true);
+    const book = await Book.getBookByIdIncludeStacks(bookId);
 
     if (!book) return res.status(400).send();
 
