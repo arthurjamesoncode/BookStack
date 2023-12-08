@@ -12,14 +12,12 @@ export default function SearchForm({ onSearch }: SearchFormProps) {
     searchText: '',
   };
   const searchFields = SearchFormFields;
-  const title = 'Search: ';
   const submitText = 'search 🔍';
 
   return (
     <GenericForm
       formName='search-form'
       formFields={searchFields}
-      formTitle={title}
       submitText={submitText}
       initialValues={initialValues}
       onFormSubmit={onSearch}

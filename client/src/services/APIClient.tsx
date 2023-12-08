@@ -45,7 +45,6 @@ export async function addNewBookToStack(
 }
 
 export async function editBook(book: Partial<Book>) {
-  console.log(book);
   const response = await fetch(`${url}/books/${book.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -151,7 +150,6 @@ export async function getNotesByBook(bookId: number) {
 }
 
 export async function addNoteToBook(bookId: number, note: Partial<Note>) {
-  console.log('oof')
   const response = await fetch(`${url}/notes/${bookId}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

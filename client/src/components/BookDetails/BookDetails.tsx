@@ -62,7 +62,6 @@ export default function BookDetails() {
   }
 
   async function refreshNotes() {
-    console.log(noteRefresh);
     setNoteRefresh((prev) => !prev);
   }
 

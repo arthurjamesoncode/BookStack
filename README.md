@@ -1,43 +1,44 @@
 # BookStack
 
-A digitized reading journal.
+## Summary:
 
-## Why did you pick this one?
+Bookstack is a application that users can use to track their reading habits. Users can create stacks (collections of books) and add books from their libraries filling in the relevant details. They can also search for books from the open library database to easily add them to their library. As well as track their progress with certain books. It is currently a work in progress.
 
-I'm just gonna tell you, you fucked up. This is a real annoying one to pick. My code is messy as fuck and picking through this if i wasn't already the one who wrote it would make me cry.
+![main page](/readme-images/main.png)
 
-## For some reason you did tho
+![search](/readme-images/search.png)
 
-So I'm gonna say some of the things that I wanted to do to this app, since there was a lot, but first what do you need to do
+![details](/readme-images/details.png)
 
-- npm i should be all you need to install dependencies (run npm i from client and server)
-- You will also need a postgres database running on your system. 
-- You will need to include a .env file in your server folder with a line in this format
-DATABASE_URL="postgresql://username:password@localhost:5432/bookstack?schema=public" To act as link to your database
-- You will also need to run npx prisma migrate dev from the server folder in order to initialise the database (called bookstack in the db_url but you can change that if you want) and create the prisma client.
+## Getting Started 
 
-- Then after doing all of that you should be able to run the server using npm start from the server folder and the client by using npm run dev in the client folder.
+To install this project first clone the repo onto your local machine.
 
-### Quirks
+After this open the repo in your terminal and execute these commands:
 
-- The way the app is meant to work is there are primary stacks (To read, 'tbr'; Currently Reading, 'current'; and Finished, 'finsihed') Each book will always be in one of these stacks, and can only be in one of these stacks, but can also be in the other stacks that users create. 
+    cd client
+    npm i
+    cd ../server 
+    npm i
 
-- E.g If a book is in currently reading it can't be in finished but can be in a different user-created stack.
+Then you can run the client with 
 
-## What could you do?
+    npm run dev
 
-Refactoring
+and the server with
+    
+    npm start
 
-- CSS. I am not good at it I very much want to go back over everything I've done and make it cleaner more modular (following BEM).
-- State. I did not use any kind of state management or context when I was building this app. There isn't technically a lot of prop drilling but I do pass state around using useNavigate and useLocation, a lot of this could probably be cleaned up if I was using context or redux but I was focused on sprinting to get features out sooo...
-- Forms. The forms I am using are terrible. I made them, they are annnoying to use and I had to keep editing them to account for different inputs. I really wanted to refactor to use a library like react-hook-form but I didn't beacause I had spent so much time on them and honestly the idea of not using them just hurt.
-- Theres also definitely more that could be made better if you wanted to but those are the 3 main things that I would change
+In order to for the app to work you will need a postgres database running on your local machine and to place the url to this in a .env file inside the server folder. If you install the app before I have to chance to add authentication and login a user will be created for you using the username "test" and the password "password"
 
-Features and Fixes
+## Tech Stack
 
-- Notes can currently only be added you may want to add routes for deleting and editing them and then implement this on the front end.
-- Authorization and login logout system for users would be a really good thing to add.
-- You could improve the search UI to show more information about the books and allow users to view different editions (looking at the edition_key[] that the api returns)
-- There are definitely bugs aswell that you could find and fix but that's your problem. Why did you pick this?
+This projects frontend tech stack includes:
+ 
+ - React (With helper libraries)
 
-### Overall you picked a bad project. I did a bad job but now it's your problem lmao.
+This projects backend tech stack includes:
+
+ - Postgres
+ - Prisma
+ - Express

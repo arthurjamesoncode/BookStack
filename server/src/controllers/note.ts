@@ -49,5 +49,8 @@ export async function getNotesByUser(req: Request, res: Response) {
     });
 
     res.status(200).send(notes);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
 }
