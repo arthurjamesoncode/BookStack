@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import RadioButtonField from './RadioButtonField';
 import TextField from './TextField';
-import { FormField } from '../../utils/types';
+import { FormField } from '../../../utils/types';
 import TextareaField from './TextareaFeild';
 import NumberField from './NumberField';
 

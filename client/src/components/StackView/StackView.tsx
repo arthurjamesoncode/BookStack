@@ -6,8 +6,8 @@ import { getBooksInStack } from '../../services/APIClient';
 
 import './StackView.css';
 
-import plusCircle from '../../assets/plus-circle.svg';
-import AddBookMenu from '../AddBookMenu/AddBookMenu';
+import plusCircle from '/assets/plus-circle.svg';
+import AddBookMenu from '../MenusAndForms/AddBookMenu/AddBookMenu';
 
 export default function StackView() {
   const location = useLocation();
@@ -51,7 +51,7 @@ export default function StackView() {
           src={plusCircle}
         />
       </div>
-      <AddBookMenu books={books} isOpen={addBookOpen} stack={stack}/>
+      <AddBookMenu isOpen={addBookOpen} stack={stack}/>
     </>
   );
 }

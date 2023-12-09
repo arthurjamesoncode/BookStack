@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Menu from '../Menu/menu';
 
-import {Stack } from '../../utils/types';
+import {Stack } from '../../../utils/types';
 
 type AddBookMenuProps = {
   isOpen: boolean;

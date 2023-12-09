@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 import './SearchResultDetails.css';
 
-import defaultBookIcon from '../../../assets/default-book-icon.png';
+import defaultBookIcon from '/assets/default-book-icon.png';
 
 import { getEdition } from '../../../services/OpenLibrary';
 

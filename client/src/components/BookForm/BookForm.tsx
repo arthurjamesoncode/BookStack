@@ -4,7 +4,7 @@ import { addNewBookToStack, editBook } from '../../services/APIClient';
 import { Book, Stack } from '../../utils/types';
 
 import { BookFormFields } from '../../utils/formFields';
-import GenericForm from '../genericForms/GenericForm';
+import GenericForm from '../MenusAndForms/genericForms/GenericForm';
 
 import './BookForm.css';
 

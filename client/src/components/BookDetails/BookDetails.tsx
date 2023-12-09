@@ -10,15 +10,15 @@ import { getCoverUrl } from '../../services/OpenLibrary';
 
 import './BookDetails.css';
 
-import defaultIcon from '../../assets/default-book-icon.png';
-import editIcon from '../../assets/edit.svg';
-import deleteIcon from '../../assets/trash.svg';
-import readingIcon from '../../assets/book-open.svg';
-import ChangePageForm from '../AddReadingSession/AddReadingSession';
+import defaultIcon from '/assets/default-book-icon.png';
+import editIcon from '/assets/edit.svg';
+import deleteIcon from '/assets/trash.svg';
+import readingIcon from '/assets/book-open.svg';
+import ChangePageForm from '../MenusAndForms/AddReadingSession/AddReadingSession';
 
 import { blankBook } from '../../utils/blanks';
 import NoteList from '../NoteList/NoteList';
-import AddNoteForm from '../AddNoteForm/AddNoteForm';
+import AddNoteForm from '../MenusAndForms/AddNoteForm/AddNoteForm';
 
 export default function BookDetails() {
   const location = useLocation();

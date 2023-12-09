@@ -1,8 +1,8 @@
 import { getCoverUrl } from '../../services/OpenLibrary';
 import { Book, Stack } from '../../utils/types';
 
-import defaultIcon from '../../assets/default-book-icon.png';
-import plusCircle from '../../assets/plus-circle.svg';
+import defaultIcon from '/assets/default-book-icon.png';
+import plusCircle from '/assets/plus-circle.svg';
 import { addExistingBookToStack } from '../../services/APIClient';
 import { useNavigate } from 'react-router-dom';
 

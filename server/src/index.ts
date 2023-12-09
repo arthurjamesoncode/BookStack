@@ -13,10 +13,10 @@ app.use(async (_, __, next) => {
   if (!(await User.getAllUsers()).length) {
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash('password', salt);
-
     await User.create('user', passwordHash);
-    next()
   }
+  
+  next()
 });
 
 app.use(router)

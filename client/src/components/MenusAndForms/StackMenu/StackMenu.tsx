@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Stack } from '../../utils/types';
+import { Stack } from '../../../utils/types';
 import Menu from '../Menu/menu';
 
 type StackMenuProps = {

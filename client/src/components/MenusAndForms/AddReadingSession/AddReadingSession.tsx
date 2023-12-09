@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { editBook } from '../../services/APIClient';
-import { PageFormFields } from '../../utils/formFields';
+import { editBook } from '../../../services/APIClient';
+import { PageFormFields } from '../../../utils/formFields';
 import GenericForm from '../genericForms/GenericForm';
 
 import './AddReadingSession.css';
-import { Book } from '../../utils/types';
+import { Book } from '../../../utils/types';
 
 type ChangePageFormProps = {
   refresh: () => void;

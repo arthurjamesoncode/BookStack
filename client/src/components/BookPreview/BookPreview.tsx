@@ -5,9 +5,9 @@ import { getCoverUrl } from '../../services/OpenLibrary';
 
 import './BookPreview.css';
 
-import defaultIcon from '../../assets/default-book-icon.png';
-import editIcon from '../../assets/edit.svg';
-import deleteIcon from '../../assets/trash.svg';
+import defaultIcon from '/assets/default-book-icon.png';
+import editIcon from '/assets/edit.svg';
+import deleteIcon from '/assets/trash.svg';
 
 type BookPreviewProps = {
   book: Book;

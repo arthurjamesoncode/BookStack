@@ -5,7 +5,7 @@ import NoteCard from '../NoteCard/NoteCard';
 
 import './NoteList.css';
 
-import plusCircle from '../../assets/plus-circle.svg';
+import plusCircle from '/assets/plus-circle.svg';
 
 type NoteListProps = {
   bookId: number;

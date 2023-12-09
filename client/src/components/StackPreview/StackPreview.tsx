@@ -5,10 +5,10 @@ import BookPreview from '../BookPreview/BookPreview';
 
 import './StackPreview.css';
 
-import menuDots from '../../assets/menu-dots.svg';
-import plusCircle from '../../assets/plus-circle.svg';
-import leftArrow from '../../assets/arrow-left.svg';
-import rightArrow from '../../assets/arrow-right.svg';
+import menuDots from '/assets/menu-dots.svg';
+import plusCircle from '/assets/plus-circle.svg';
+import leftArrow from '/assets/arrow-left.svg';
+import rightArrow from '/assets/arrow-right.svg';
 
 type StackComponentProps = {
   stack: Stack;
