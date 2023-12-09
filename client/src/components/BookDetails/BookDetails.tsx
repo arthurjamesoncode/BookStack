@@ -92,7 +92,7 @@ export default function BookDetails() {
     ? getCoverUrl('olid', book.OLID) + '-L.jpg'
     : defaultIcon;
 
-  const progresMessage =
+  const progressMessage =
     book.primaryStack === 'finished'
       ? 'You have finished this book!'
       : book.currentPage < 1
@@ -124,7 +124,7 @@ export default function BookDetails() {
               <p>{book.ISBN || 'No OLID saved'}</p>
             </div>
           </div>
-          <div className='progress-container'>{progresMessage}</div>
+          <div className='progress-container'>{progressMessage}</div>
           <div className='description-container'>
             <h4>Description:</h4>
             <p>{book.description}</p>

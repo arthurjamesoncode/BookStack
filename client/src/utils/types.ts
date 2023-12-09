@@ -1,3 +1,5 @@
+//TODO: change ids to uuids in schema
+
 export type Stack = {
   id: number;
   name: string;

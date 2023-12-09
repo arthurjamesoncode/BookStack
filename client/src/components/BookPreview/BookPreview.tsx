@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Book, Stack } from '../../utils/types';
+import { Stack } from '../../utils/types';
 import { deleteBookFromStack } from '../../services/APIClient';
 import { getCoverUrl } from '../../services/OpenLibrary';
 
@@ -8,19 +8,22 @@ import './BookPreview.css';
 import defaultIcon from '/assets/default-book-icon.png';
 import editIcon from '/assets/edit.svg';
 import deleteIcon from '/assets/trash.svg';
+import { useAppSelector } from '../../store';
 
 type BookPreviewProps = {
-  book: Book;
+  bookId: number;
   viewedFrom: Stack;
   resetStack: () => void;
 };
 
 export default function BookPreview({
-  book,
+  bookId,
   viewedFrom,
   resetStack,
 }: BookPreviewProps) {
   const navigate = useNavigate();
+
+  const book = useAppSelector((state) => state.user.books[bookId]);
 
   async function onDelete() {
     await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);

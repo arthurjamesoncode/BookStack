@@ -8,14 +8,18 @@ import plusCircle from '/assets/plus-circle.svg';
 import { StackMenu } from '../MenusAndForms/StackMenu/StackMenu';
 import AddBookMenu from '../MenusAndForms/AddBookMenu/AddBookMenu';
 import StackForm from '../MenusAndForms/StackForm/StackForm';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { editStack, setStacks } from '../../store/slices/userSlice';
 
 export default function StackList() {
-  const [stacks, setStacks] = useState<Stack[]>([]);
+  const dispatch = useAppDispatch();
+  const stacks = useAppSelector((state) => state.user.stacks);
+
   const [bottomMenu, setBottomMenu] = useState<
     'stackMenu' | 'bookMenu' | 'stackForm' | null
   >(null);
   const [currentStack, setCurrentStack] = useState<Stack | null>(null);
-  const [editStack, setEditStack] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     getStacks();
@@ -23,38 +27,33 @@ export default function StackList() {
 
   async function getStacks() {
     const stacks = await apiClient.getUserStacks(1); //1 is a placeholder until i do authenication
-    setStacks(stacks);
+    dispatch(setStacks(stacks));
   }
 
   function toggleMenu(menu: 'stackMenu' | 'bookMenu', stack: Stack) {
-    setBottomMenu((prev) => prev === menu ? null : menu);
+    setBottomMenu((prev) => (prev === menu ? null : menu));
     if (stack) setCurrentStack(stack);
   }
   function showStackForm(edit: boolean) {
-    setBottomMenu((prev) => prev === 'stackForm' ? null : 'stackForm');
-    setEditStack(edit);
+    setBottomMenu((prev) => (prev === 'stackForm' ? null : 'stackForm'));
+    setEdit(edit);
   }
   function hideStackForm() {
     setBottomMenu(null);
   }
 
   async function addOrEditStack(name: string) {
-    const newStack = editStack
+    const newStack = edit
       ? await apiClient.editStack(name, currentStack!.id)
       : await apiClient.addStack(name);
 
-    if (editStack) {
-      setStacks((prev) =>
-        prev.map((stack) => {
-          return stack.id === currentStack!.id ? newStack : stack;
-        })
-      );
-    } else setStacks((prev) => [...prev, newStack]);
+    if (edit) dispatch(editStack(newStack));
+    else dispatch(setStacks([...stacks, newStack]));
   }
 
   async function deleteStack(stackId: number) {
     await apiClient.deleteStack(stackId);
-    setStacks((prev) => prev.filter((stack) => stack.id !== stackId));
+    setStacks(stacks.filter((stack) => stack.id !== stackId));
   }
 
   return (
@@ -86,7 +85,7 @@ export default function StackList() {
         hideStackForm={hideStackForm}
         addOrEditStack={addOrEditStack}
         open={bottomMenu === 'stackForm'}
-        edit={editStack}
+        edit={edit}
       />
     </div>
   );
