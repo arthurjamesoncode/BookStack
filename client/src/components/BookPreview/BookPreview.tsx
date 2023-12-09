@@ -8,7 +8,8 @@ import './BookPreview.css';
 import defaultIcon from '/assets/default-book-icon.png';
 import editIcon from '/assets/edit.svg';
 import deleteIcon from '/assets/trash.svg';
-import { useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { setCurrentStack } from '../../store/slices/stackSlice';
 
 type BookPreviewProps = {
   bookId: number;
@@ -23,7 +24,8 @@ export default function BookPreview({
 }: BookPreviewProps) {
   const navigate = useNavigate();
 
-  const book = useAppSelector((state) => state.user.books[bookId]);
+  const dispatch = useAppDispatch();
+  const book = useAppSelector((state) => state.book.books[bookId]);
 
   async function onDelete() {
     await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
@@ -31,7 +33,13 @@ export default function BookPreview({
   }
 
   function goToEditBook() {
-    navigate('/forms/book', { state: { stack: viewedFrom, book, edit: true } });
+    dispatch(setCurrentStack(viewedFrom));
+    navigate('/forms/book', { state: { book, edit: true } });
+  }
+
+  function viewBook()  {
+    dispatch(setCurrentStack(viewedFrom));
+    navigate('/book', { state: { bookId: book.id } });
   }
 
   let imgUrl = defaultIcon;
@@ -42,9 +50,7 @@ export default function BookPreview({
   return (
     <div className='book-container grid'>
       <img
-        onClick={() =>
-          navigate('/book', { state: { bookId: book.id, viewedFrom } })
-        }
+        onClick={viewBook}
         className='large-cover-img'
         src={imgUrl}
         alt={`The cover of ${book.title}`}

@@ -1,6 +1,5 @@
-import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Book, Stack } from '../../utils/types';
+import { Book } from '../../utils/types';
 import BookPreview from '../BookPreview/BookPreview';
 import { getBooksInStack } from '../../services/APIClient';
 
@@ -9,16 +8,16 @@ import './StackView.css';
 import plusCircle from '/assets/plus-circle.svg';
 import AddBookMenu from '../MenusAndForms/AddBookMenu/AddBookMenu';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { addBooks, setBooksInStack } from '../../store/slices/userSlice';
+import { setBooksInStack } from '../../store/slices/stackSlice';
+import { addBooks } from '../../store/slices/bookSlice';
 
 export default function StackView() {
-  const location = useLocation();
-  const { stack } = location.state as { stack: Stack };
+  const stack = useAppSelector((state) => state.stack.currentStack!)
 
   const dispatch = useAppDispatch();
 
   const booksInStack = useAppSelector(
-    (state) => state.user.booksInStacks[stack.id]
+    (state) => state.stack.booksInStacks[stack.id]
   );
   const [addBookOpen, setAddBookOpen] = useState(false);
 
@@ -58,7 +57,7 @@ export default function StackView() {
             src={plusCircle}
           />
         </div>
-        <AddBookMenu isOpen={addBookOpen} stack={stack} />
+        <AddBookMenu isOpen={addBookOpen} />
       </>
     )
   );

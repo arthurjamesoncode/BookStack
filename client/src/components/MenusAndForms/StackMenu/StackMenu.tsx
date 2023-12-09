@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { Stack } from '../../../utils/types';
 import Menu from '../Menu/menu';
+import { useAppDispatch } from '../../../store';
+import { setCurrentStack } from '../../../store/slices/stackSlice';
 
 type StackMenuProps = {
   isOpen: boolean;
@@ -21,7 +23,10 @@ export function StackMenu({
 }: StackMenuProps) {
   const navigate = useNavigate();
 
+  const dispatch = useAppDispatch();
+  
   function goToStackView() {
+    dispatch(setCurrentStack(stack!));
     navigate(`/view/stack`, {
       state: { stack },
     });

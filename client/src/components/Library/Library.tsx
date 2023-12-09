@@ -1,36 +1,27 @@
-import { getBooksInStack, getUserBooks } from '../../services/APIClient';
-import { Book } from '../../utils/types';
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import BookCard from './BookCard';
+import { useAppSelector } from '../../store';
+import { useNavigate } from 'react-router-dom';
 
 export default function Library() {
-  const location = useLocation();
-  const { stack } = location.state;
+  const navigate = useNavigate();
 
-  const [books, setBooks] = useState<Book[]>([]);
-
-  async function reset() {
-    const allBooks: Book[] = await getUserBooks(1);
-    const stackBooks: Book[] = await getBooksInStack(stack.id);
-    const stackBookIds: number[] = stackBooks.map((book) => book.id);
-
-    setBooks(allBooks.filter((book) => !stackBookIds.includes(book.id)));
+  const stack = useAppSelector((state) => state.stack.currentStack!);
+  if(!stack) {
+    navigate('/')
+    return <></>
   }
-
-  useEffect(() => {
-    reset();
-  }, []);
+  const allBookIds = useAppSelector((state) => Object.keys(state.book.books));
+  const booksInStack = useAppSelector((state) => state.stack.booksInStacks[stack.id]);
+  const bookIds = allBookIds.filter((id) => !booksInStack.includes(parseInt(id)));
 
   return (
     <div>
-      {books.length > 0 ? (
-        books.map((book) => {
+      {bookIds.length > 0 ? (
+        bookIds.map((id, index) => {
           return (
             <BookCard
-              key={book.id}
-              book={book}
-              stack={stack}
+              key={index}
+              bookId={parseInt(id)}
             />
           );
         })

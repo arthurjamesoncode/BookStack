@@ -1,10 +1,12 @@
-import userReducer from './slices/userSlice';
+import stackReducer from './slices/stackSlice';
+import bookReducer from './slices/bookSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const store = configureStore({
   reducer: {
-    user: userReducer,
+    stack: stackReducer,
+    book: bookReducer
   },
 });
 

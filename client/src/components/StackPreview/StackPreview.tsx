@@ -10,7 +10,8 @@ import plusCircle from '/assets/plus-circle.svg';
 import leftArrow from '/assets/arrow-left.svg';
 import rightArrow from '/assets/arrow-right.svg';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { addBooks, setBooksInStack } from '../../store/slices/userSlice';
+import { setBooksInStack } from '../../store/slices/stackSlice';
+import { addBooks } from '../../store/slices/bookSlice';
 
 type StackPreview = {
   stack: Stack;
@@ -23,7 +24,7 @@ export default function StackPreview(props: StackPreview) {
 
   const dispatch = useAppDispatch();
   const booksInStack = useAppSelector(
-    (state) => state.user.booksInStacks[stack.id]
+    (state) => state.stack.booksInStacks[stack.id]
   );
   const [index, setIndex] = useState(0);
 

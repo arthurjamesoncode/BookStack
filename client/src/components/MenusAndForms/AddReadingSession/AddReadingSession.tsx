@@ -10,19 +10,15 @@ type ChangePageFormProps = {
   refresh: () => void;
   isOpen: boolean;
   hidePrompt: () => void;
-  book: Book
+  book: Book;
   finishReading: () => void;
   startReading: () => void;
 };
 
-export default function ChangePageForm({
-  refresh,
-  isOpen,
-  hidePrompt,
-  book,
-  finishReading,
-  startReading
-}: ChangePageFormProps) {
+export default function ChangePageForm(props: ChangePageFormProps) {
+  const { refresh, isOpen, hidePrompt, book, finishReading, startReading } =
+    props;
+  
   const [pagesSelected, setPagesSelected] = useState(0);
 
   const initialValues: Record<string, string | number> = {
@@ -30,13 +26,14 @@ export default function ChangePageForm({
   };
 
   const fields = PageFormFields;
-  if (fields[0].type == 'range') fields[0].max = book.totalPages - book.currentPage;
+  if (fields[0].type == 'range')
+    fields[0].max = book.totalPages - book.currentPage;
 
   async function onFormSubmit(values: Record<string, string | number>) {
     const { pages } = values as { pages: number };
 
     if (book.currentPage + pages === book.totalPages) finishReading();
-    else if (book.primaryStack != 'current') startReading()
+    else if (book.primaryStack != 'current') startReading();
 
     await editBook({ id: book.id, currentPage: book.currentPage + pages });
     hidePrompt();
@@ -44,8 +41,8 @@ export default function ChangePageForm({
   }
 
   function onFormChange(key: string, value: string | number) {
-    if (key === 'pages') setPagesSelected(value as number)
-  };
+    if (key === 'pages') setPagesSelected(value as number);
+  }
 
   return (
     <div className={`bottom-form-menu ${isOpen ? 'open' : ''}`}>

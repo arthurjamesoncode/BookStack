@@ -12,12 +12,8 @@ type StackFormProps = {
   edit: boolean;
 };
 
-export default function StackForm({
-  open,
-  hideStackForm,
-  addOrEditStack,
-  edit
-}: StackFormProps) {
+export default function StackForm(props: StackFormProps) {
+  const { open, hideStackForm, addOrEditStack, edit } = props;
   const fields = StackFormFields;
 
   const initialValues = {

@@ -9,16 +9,16 @@ import { StackMenu } from '../MenusAndForms/StackMenu/StackMenu';
 import AddBookMenu from '../MenusAndForms/AddBookMenu/AddBookMenu';
 import StackForm from '../MenusAndForms/StackForm/StackForm';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { editStack, setStacks } from '../../store/slices/userSlice';
+import { editStack, setCurrentStack, setStacks } from '../../store/slices/stackSlice';
 
 export default function StackList() {
   const dispatch = useAppDispatch();
-  const stacks = useAppSelector((state) => state.user.stacks);
+  const stacks = useAppSelector((state) => state.stack.stacks);
 
   const [bottomMenu, setBottomMenu] = useState<
     'stackMenu' | 'bookMenu' | 'stackForm' | null
   >(null);
-  const [currentStack, setCurrentStack] = useState<Stack | null>(null);
+  const currentStack = useAppSelector((state) => state.stack.currentStack);
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
@@ -32,12 +32,14 @@ export default function StackList() {
 
   function toggleMenu(menu: 'stackMenu' | 'bookMenu', stack: Stack) {
     setBottomMenu((prev) => (prev === menu ? null : menu));
-    if (stack) setCurrentStack(stack);
+    dispatch(setCurrentStack(stack));
   }
+
   function showStackForm(edit: boolean) {
     setBottomMenu((prev) => (prev === 'stackForm' ? null : 'stackForm'));
     setEdit(edit);
   }
+
   function hideStackForm() {
     setBottomMenu(null);
   }

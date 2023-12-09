@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Book, Stack } from '../../utils/types';
+import { Stack } from '../../utils/types';
 
 type userState = {
   stacks: Stack[];
-  books: Record<number, Book>;
   booksInStacks: Record<number, number[]>;
+  currentStack: Stack | null;
 };
 
 const initialState: userState = {
   stacks: [],
-  books: {},
   booksInStacks: {},
+  currentStack: null,
 };
 
 const userSlice = createSlice({
@@ -36,24 +36,6 @@ const userSlice = createSlice({
       state.stacks = state.stacks.filter(
         (stack) => stack.id !== action.payload
       );
-    },
-
-    addBook: (state, action: PayloadAction<Book>) => {
-      state.books[action.payload.id] = action.payload;
-    },
-
-    addBooks: (state, action: PayloadAction<Book[]>) => {
-      action.payload.forEach((book) => {
-        state.books[book.id] = book;
-      });
-    },
-
-    editBook: (state, action: PayloadAction<Book>) => {
-      state.books[action.payload.id] = action.payload;
-    },
-
-    deleteBook: (state, action: PayloadAction<number>) => {
-      delete state.books[action.payload];
     },
 
     addBookToStack: (
@@ -84,6 +66,9 @@ const userSlice = createSlice({
       const { bookIds, stackId } = action.payload;
       state.booksInStacks[stackId] = bookIds
     },
+    setCurrentStack: (state, action: PayloadAction<Stack>) => {
+      state.currentStack = action.payload;
+    }
   },
 });
 
@@ -92,12 +77,9 @@ export const {
   addStack,
   editStack,
   deleteStack,
-  addBook,
-  addBooks,
-  editBook,
-  deleteBook,
   addBookToStack,
   setBooksInStack,
+  setCurrentStack
 } = userSlice.actions;
 
 export default userSlice.reducer;
