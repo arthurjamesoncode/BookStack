@@ -1,4 +1,4 @@
-import GenericForm from '../../genericForms/GenericForm';
+import GenericForm from '../../MenusAndForms/genericForms/GenericForm';
 import { SearchFormFields } from '../../../utils/formFields';
 
 import './SearchForm.css'

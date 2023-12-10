@@ -1,11 +1,11 @@
-import { SearchResult, Stack } from '../../../utils/types';
+import { SearchResult } from '../../../utils/types';
 
 import { useEffect, useState } from 'react';
 import { getCoverUrl, hasCover } from '../../../services/OpenLibrary';
 
-import defaultBookIcon from '../../../assets/default-book-icon.png';
+import defaultBookIcon from '/assets/default-book-icon.png';
 import './SearchResultCard.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 type SearchResultCardProps = {
   result: SearchResult;
@@ -14,8 +14,6 @@ type SearchResultCardProps = {
 
 export default function SearchResultCard({ result }: SearchResultCardProps) {
   const navigate = useNavigate();
-  const location = useLocation()
-  const { stack } = location.state as {stack: Stack}
 
   let olid = result.cover_edition_key;
   if (!olid) olid = result.edition_key[0];
@@ -32,7 +30,7 @@ export default function SearchResultCard({ result }: SearchResultCardProps) {
   }, [imgUrl]);
 
   function goToResultInfo() {
-    navigate(`/search/details/${olid}`, { state: { stack, result, imgUrl, hasImg } });
+    navigate(`/search/details/${olid}`, { state: { result, imgUrl, hasImg } });
   }
 
   return (

@@ -1,11 +1,11 @@
 import GenericForm from '../genericForms/GenericForm';
-import { addNoteToBook } from '../../services/APIClient';
-import { NoteFormFields } from '../../utils/formFields';
-import { Book } from '../../utils/types';
+import { addNoteToBook } from '../../../services/APIClient';
+import { NoteFormFields } from '../../../utils/formFields';
+import { Book } from '../../../utils/types';
 
 import './AddNoteForm.css'
 
-import xCircle from '../../assets/x-circle.svg'
+import xCircle from '/assets/x-circle.svg'
 
 type AddNoteFormProps = {
   isOpen: boolean;

@@ -1,26 +1,35 @@
 import { useNavigate } from 'react-router-dom';
 import Menu from '../Menu/menu';
 
-import {Stack } from '../../utils/types';
+import { useAppSelector } from '../../../store';
 
 type AddBookMenuProps = {
   isOpen: boolean;
-  stack: Stack | null;
 };
 
-export default function AddBookMenu({ isOpen, stack }: AddBookMenuProps) {
+export default function AddBookMenu(props: AddBookMenuProps) {
+  const { isOpen } = props;
+
   const navigate = useNavigate();
 
+  const stack = useAppSelector((state) => state.stack.currentStack);
+
   function goToSearch() {
-    if (stack) navigate('/search', { state: { stack } });
+    if (stack) {
+      navigate('/search');
+    }
   }
 
   function goToBookForm() {
-    if (stack) navigate('/forms/book', { state: { stack, edit: false } });
+    if (stack) {
+      navigate('/forms/book', { state: { edit: false } });
+    }
   }
 
   function goToLibrary() {
-    navigate('/library', { state: { stack } });
+    if (stack) {
+      navigate('/library');
+    }
   }
 
   const options = [

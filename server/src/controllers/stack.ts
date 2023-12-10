@@ -28,7 +28,6 @@ export async function addStack(req: Request, res: Response) {
 export async function getUserStacks(req: Request, res: Response) {
   try {
     const userId = Number(req.params.userId);
-
     const stacks = await Stack.findByUser(userId);
 
     res.status(201).send(stacks);

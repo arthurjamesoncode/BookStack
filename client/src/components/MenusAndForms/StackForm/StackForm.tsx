@@ -1,9 +1,9 @@
-import { StackFormFields } from '../../utils/formFields';
+import { StackFormFields } from '../../../utils/formFields';
 import GenericForm from '../genericForms/GenericForm';
 
 import './StackForm.css';
 
-import xCircle from '../../assets/x-circle.svg'
+import xCircle from '/assets/x-circle.svg'
 
 type StackFormProps = {
   open: boolean;
@@ -12,12 +12,8 @@ type StackFormProps = {
   edit: boolean;
 };
 
-export default function StackForm({
-  open,
-  hideStackForm,
-  addOrEditStack,
-  edit
-}: StackFormProps) {
+export default function StackForm(props: StackFormProps) {
+  const { open, hideStackForm, addOrEditStack, edit } = props;
   const fields = StackFormFields;
 
   const initialValues = {

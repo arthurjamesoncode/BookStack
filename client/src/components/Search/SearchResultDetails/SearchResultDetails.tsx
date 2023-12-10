@@ -1,14 +1,10 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import {
-  SearchResult,
-  SearchResultDetails,
-  Stack,
-} from '../../../utils/types';
+import { SearchResult, SearchResultDetails } from '../../../utils/types';
 import { useEffect, useState } from 'react';
 
 import './SearchResultDetails.css';
 
-import defaultBookIcon from '../../../assets/default-book-icon.png';
+import defaultBookIcon from '/assets/default-book-icon.png';
 
 import { getEdition } from '../../../services/OpenLibrary';
 
@@ -17,8 +13,7 @@ export default function SearchResultDetails() {
   const navigate = useNavigate();
 
   const { olid } = useParams();
-  const { stack, result, imgUrl, hasImg } = location.state as {
-    stack: Stack;
+  const { result, imgUrl, hasImg } = location.state as {
     result: SearchResult;
     imgUrl: string;
     hasImg: boolean;
@@ -47,7 +42,7 @@ export default function SearchResultDetails() {
     };
 
     navigate('/forms/book', {
-      state: { stack, book, edit: false, hasImg },
+      state: { book, edit: false, hasImg },
     });
   }
 

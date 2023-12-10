@@ -6,8 +6,8 @@ import SearchResultsPage from './SearchResultPage/SearchResultPage';
 
 import './Search.css';
 
-import leftArrow from '../../assets/arrow-left.svg';
-import rightArrow from '../../assets/arrow-right.svg';
+import leftArrow from '/assets/arrow-left.svg';
+import rightArrow from '/assets/arrow-right.svg';
 import Spinner from '../Spinner/Spinner';
 
 export default function Search() {

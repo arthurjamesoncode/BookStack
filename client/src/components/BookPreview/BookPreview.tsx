@@ -5,30 +5,56 @@ import { getCoverUrl } from '../../services/OpenLibrary';
 
 import './BookPreview.css';
 
-import defaultIcon from '../../assets/default-book-icon.png';
-import editIcon from '../../assets/edit.svg';
-import deleteIcon from '../../assets/trash.svg';
+import defaultIcon from '/assets/default-book-icon.png';
+import editIcon from '/assets/edit.svg';
+import deleteIcon from '/assets/trash.svg';
+import { useAppDispatch, useAppSelector } from '../../store';
+import {
+  removeBookFromAllStacks,
+  removeBookFromStack,
+  setCurrentStack,
+} from '../../store/slices/stackSlice';
+import { deleteBook } from '../../store/slices/bookSlice';
 
 type BookPreviewProps = {
-  book: Book;
+  bookId: number;
   viewedFrom: Stack;
-  resetStack: () => void;
 };
 
-export default function BookPreview({
-  book,
-  viewedFrom,
-  resetStack,
-}: BookPreviewProps) {
+export default function BookPreview({ bookId, viewedFrom }: BookPreviewProps) {
   const navigate = useNavigate();
 
+  const dispatch = useAppDispatch();
+  const book : Book | undefined = useAppSelector((state) => state.book.books[bookId]);
+
   async function onDelete() {
-    await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
-    resetStack();
+    await deleteBookFromStack(book!.id, viewedFrom.id, viewedFrom.type);
+    if (viewedFrom.type !== 'other') {
+      console.log(book!.stacks)
+      dispatch(
+        removeBookFromAllStacks({
+          bookId: book!.id,
+          stackIds: book!.stacks.map((stack) => stack.stackId),
+        })
+      );
+      dispatch(deleteBook(book!.id));
+    } else {
+      dispatch(removeBookFromStack({ stackId: viewedFrom.id, bookId }));
+    }
   }
 
   function goToEditBook() {
-    navigate('/forms/book', { state: { stack: viewedFrom, book, edit: true } });
+    dispatch(setCurrentStack(viewedFrom));
+    navigate('/forms/book', { state: { book, edit: true } });
+  }
+
+  function viewBook() {
+    dispatch(setCurrentStack(viewedFrom));
+    navigate('/book', { state: { bookId: book!.id } });
+  }
+
+  if (book == null) {
+    return <></>;
   }
 
   let imgUrl = defaultIcon;
@@ -39,9 +65,7 @@ export default function BookPreview({
   return (
     <div className='book-container grid'>
       <img
-        onClick={() =>
-          navigate('/book', { state: { bookId: book.id, viewedFrom } })
-        }
+        onClick={viewBook}
         className='large-cover-img'
         src={imgUrl}
         alt={`The cover of ${book.title}`}

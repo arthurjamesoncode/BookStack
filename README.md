@@ -29,14 +29,21 @@ and the server with
     
     npm start
 
-In order to for the app to work you will need a postgres database running on your local machine and to place the url to this in a .env file inside the server folder. If you install the app before I have to chance to add authentication and login a user will be created for you using the username "test" and the password "password"
+In order to for the app to work you will need a postgres database running on your local machine and to place the url to this in a .env file inside the server folder. 
+The environment variable should be in the format DATABASE_URL="postgresql://user:password@localhost:PORT/database?schema=public". You will need to create a database with the name decided. 
+Then in the server folder run:
+
+    npx prisma migrate dev
+
+If you install the app before I have to chance to add authentication and login a user will be created for you using the username "test" and the password "password"
 
 ## Tech Stack
 
 This projects frontend tech stack includes:
  
  - React (With helper libraries)
-
+ - Redux
+ 
 This projects backend tech stack includes:
 
  - Postgres

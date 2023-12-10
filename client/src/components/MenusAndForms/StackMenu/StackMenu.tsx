@@ -1,38 +1,44 @@
 import { useNavigate } from 'react-router-dom';
-import { Stack } from '../../utils/types';
+import { Stack } from '../../../utils/types';
 import Menu from '../Menu/menu';
+import { useAppSelector } from '../../../store';
+
 
 type StackMenuProps = {
   isOpen: boolean;
-  stack: Stack | null;
   openAddBookMenu: (stack: Stack) => void;
   closeMenu: (stack: Stack) => void;
   deleteStack: (id: number) => void;
   showStackForm: (edit: boolean) => void;
 };
 
-export function StackMenu({
-  isOpen,
-  stack,
-  openAddBookMenu,
-  closeMenu,
-  deleteStack,
-  showStackForm,
-}: StackMenuProps) {
+export function StackMenu(props: StackMenuProps) {
+  const {
+    isOpen,
+    openAddBookMenu,
+    closeMenu,
+    deleteStack,
+    showStackForm,
+  } = props;
+
   const navigate = useNavigate();
 
+  const stack = useAppSelector((state) => state.stack.currentStack);
+
   function goToStackView() {
-    navigate(`/view/stack`, {
-      state: { stack },
-    });
+    navigate(`/view/stack`);
+  }
+
+  if (!stack) {
+    return <></>;
   }
 
   const options = [
-    { text: 'Add Book', onClick: () => openAddBookMenu(stack!) },
+    { text: 'Add Book', onClick: () => openAddBookMenu(stack) },
     { text: 'View Stack', onClick: () => goToStackView() },
   ];
 
-  if (stack && stack.type === 'other') {
+  if (stack.type === 'other') {
     options.push({
       text: 'Delete Stack',
       onClick: () => {

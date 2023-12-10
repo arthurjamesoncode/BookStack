@@ -1,4 +1,4 @@
-import logoIcon from '../../assets/book-stack-icon.png';
+import logoIcon from '/assets/book-stack-icon.png';
 import './Navbar.css'
 
 export default function Navbar() {

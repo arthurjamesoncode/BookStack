@@ -1,23 +1,31 @@
 import { getCoverUrl } from '../../services/OpenLibrary';
-import { Book, Stack } from '../../utils/types';
 
-import defaultIcon from '../../assets/default-book-icon.png';
-import plusCircle from '../../assets/plus-circle.svg';
+import defaultIcon from '/assets/default-book-icon.png';
+import plusCircle from '/assets/plus-circle.svg';
 import { addExistingBookToStack } from '../../services/APIClient';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { addBookToStack } from '../../store/slices/stackSlice';
 
 type BookCardProps = {
-  book: Book;
-  stack: Stack;
+  bookId: number;
 };
 
-export default function BookCard({ book, stack }: BookCardProps) {
+export default function BookCard(props: BookCardProps) {
+  const { bookId } = props;
   const navigate = useNavigate();
 
-  async function addToStack() {
-    await addExistingBookToStack(book.id, stack.type, stack.id);
+  const dispatch = useAppDispatch()
+  const stack = useAppSelector(state => state.stack.currentStack);
+  const book = useAppSelector(state => state.book.books[bookId]);
 
-    navigate('/')
+  if(!stack) navigate('/');
+
+  async function addToStack() {
+    await addExistingBookToStack(book.id, stack!.type, stack!.id);
+
+    dispatch(addBookToStack({ stackId: stack!.id, bookId }))
+    navigate('/');
   }
 
   let imgUrl = defaultIcon;

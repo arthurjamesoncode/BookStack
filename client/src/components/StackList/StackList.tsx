@@ -4,72 +4,70 @@ import * as apiClient from '../../services/APIClient';
 import StackComponent from '../StackPreview/StackPreview';
 
 import './StackList.css';
-import plusCircle from '../../assets/plus-circle.svg';
-import { StackMenu } from '../StackMenu/StackMenu';
-import AddBookMenu from '../AddBookMenu/AddBookMenu';
-import StackForm from '../StackForm/StackForm';
+import plusCircle from '/assets/plus-circle.svg';
+import { StackMenu } from '../MenusAndForms/StackMenu/StackMenu';
+import AddBookMenu from '../MenusAndForms/AddBookMenu/AddBookMenu';
+import StackForm from '../MenusAndForms/StackForm/StackForm';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { addStack, editStack, setCurrentStack, setStacks, deleteStack as deleteStackAction } from '../../store/slices/stackSlice';
 
 export default function StackList() {
-  const [stacks, setStacks] = useState<Stack[]>([]);
-  const [stackMenuOpen, setStackMenuOpen] = useState(false);
-  const [addBookMenuOpen, setAddBookMenuOpen] = useState(false);
-  const [stackFormOpen, setStackFormOpen] = useState(false);
-  const [currentStack, setCurrentStack] = useState<Stack | null>(null);
-  const [editStack, setEditStack] = useState(false);
+  const dispatch = useAppDispatch();
+  const stacks = useAppSelector((state) => state.stack.stacks);
+
+  const [bottomMenu, setBottomMenu] = useState<
+    'stackMenu' | 'bookMenu' | 'stackForm' | null
+  >(null);
+  const currentStack = useAppSelector((state) => state.stack.currentStack);
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
-    apiClient.getUserStacks(1).then((result) => setStacks(result)); //1 is a placeholder until i do authenication
+    getStacks();
   }, []);
 
-  function toggleStackMenu(stack: Stack) {
-    setStackMenuOpen((prev) => !prev);
-    if (stack) setCurrentStack(stack);
-    setAddBookMenuOpen(false);
+  async function getStacks() {
+    const stacks = await apiClient.getUserStacks(1); //1 is a placeholder until i do authenication
+    dispatch(setStacks(stacks));
   }
 
-  function toggleAddBookMenu(stack: Stack) {
-    setAddBookMenuOpen((prev) => !prev);
-    if (stack) setCurrentStack(stack);
-    setStackMenuOpen(false);
+  function toggleMenu(menu: 'stackMenu' | 'bookMenu', stack: Stack) {
+    setBottomMenu((prev) => (prev === menu ? null : menu));
+    dispatch(setCurrentStack(stack));
   }
 
   function showStackForm(edit: boolean) {
-    setStackFormOpen(true);
-    setEditStack(edit);
+    setBottomMenu((prev) => (prev === 'stackForm' ? null : 'stackForm'));
+    setEdit(edit);
   }
+
   function hideStackForm() {
-    setStackFormOpen(false);
+    setBottomMenu(null);
   }
 
   async function addOrEditStack(name: string) {
-    const newStack = editStack
+    const newStack = edit
       ? await apiClient.editStack(name, currentStack!.id)
       : await apiClient.addStack(name);
 
-    if (editStack) {
-      setStacks((prev) =>
-        prev.map((stack) => {
-          return stack.id === currentStack!.id ? newStack : stack;
-        })
-      );
-    } else setStacks((prev) => [...prev, newStack]);
+    if (edit) dispatch(editStack(newStack));
+    else dispatch(addStack(newStack));
   }
 
   async function deleteStack(stackId: number) {
     await apiClient.deleteStack(stackId);
-    setStacks((prev) => prev.filter((stack) => stack.id !== stackId));
+    dispatch(deleteStackAction(stackId))
   }
 
   return (
     <div>
       {stacks.map((stack) => (
         <StackComponent
-        openStackMenu={() => toggleStackMenu(stack)}
-        openAddBookMenu={() => toggleAddBookMenu(stack)}
-        key={stack.id}
-        stack={stack}
+          openStackMenu={() => toggleMenu('stackMenu', stack)}
+          openAddBookMenu={() => toggleMenu('stackMenu', stack)}
+          key={stack.id}
+          stack={stack}
         />
-        ))}
+      ))}
       <img
         className='img-button'
         id='new-stack'
@@ -78,18 +76,17 @@ export default function StackList() {
       />
       <StackMenu
         showStackForm={showStackForm}
-        stack={currentStack}
-        isOpen={stackMenuOpen}
-        openAddBookMenu={toggleAddBookMenu}
-        closeMenu={toggleStackMenu}
+        isOpen={bottomMenu === 'stackMenu'}
+        openAddBookMenu={() => toggleMenu('bookMenu', currentStack!)}
+        closeMenu={() => toggleMenu('stackMenu', currentStack!)}
         deleteStack={deleteStack}
       />
-      <AddBookMenu stack={currentStack} isOpen={addBookMenuOpen} />
+      <AddBookMenu isOpen={bottomMenu === 'bookMenu'} />
       <StackForm
         hideStackForm={hideStackForm}
         addOrEditStack={addOrEditStack}
-        open={stackFormOpen}
-        edit={editStack}
+        open={bottomMenu === 'stackForm'}
+        edit={edit}
       />
     </div>
   );
