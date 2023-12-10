@@ -7,7 +7,9 @@ import { BookFormFields } from '../../utils/formFields';
 import GenericForm from '../MenusAndForms/genericForms/GenericForm';
 
 import './BookForm.css';
-import { useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { addNewBookToStack as addNewBookAction} from '../../store/slices/stackSlice'
+import { editBook as editBookAction } from '../../store/slices/bookSlice';
 
 const blankForm: Record<string, number | string> = {
   title: '',
@@ -23,6 +25,7 @@ const blankForm: Record<string, number | string> = {
 export default function BookForm() {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const { book, edit, hasImg } = location.state as {
     book: Record<string, string | number>;
@@ -31,19 +34,24 @@ export default function BookForm() {
   };
 
   const stack = useAppSelector((state) => state.stack.currentStack);
-  if(!stack) {
-    navigate('/')
-    return <></>
+  if (!stack) {
+    navigate('/');
+    return <></>;
   }
 
   const initialFormVals = book || blankForm;
 
-  function submitBook(values: Record<string, number | string>) {
+  async function submitBook(values: Record<string, number | string>) {
     const book = values as unknown as Book; //guaranteed to have all necessary fields for adding a new book
     if (!book.hasImg) book.hasImg = hasImg || false;
 
-    if (!edit) addNewBookToStack(stack!.id, stack!.type, book);
-    else editBook(book);
+    if (!edit) {
+      const newBook = await addNewBookToStack(stack!.id, stack!.type, book);
+      dispatch(addNewBookAction({bookId: newBook.id, stack: stack!}))
+    } else {
+      await editBook(book);
+      dispatch(editBookAction(book))
+    }
 
     navigate('/');
   }

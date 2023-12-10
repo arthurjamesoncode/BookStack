@@ -9,19 +9,19 @@ import defaultIcon from '/assets/default-book-icon.png';
 import editIcon from '/assets/edit.svg';
 import deleteIcon from '/assets/trash.svg';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { setCurrentStack } from '../../store/slices/stackSlice';
+import {
+  removeBookFromAllStacks,
+  removeBookFromStack,
+  setCurrentStack,
+} from '../../store/slices/stackSlice';
+import { deleteBook } from '../../store/slices/bookSlice';
 
 type BookPreviewProps = {
   bookId: number;
   viewedFrom: Stack;
-  resetStack: () => void;
 };
 
-export default function BookPreview({
-  bookId,
-  viewedFrom,
-  resetStack,
-}: BookPreviewProps) {
+export default function BookPreview({ bookId, viewedFrom }: BookPreviewProps) {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -29,7 +29,16 @@ export default function BookPreview({
 
   async function onDelete() {
     await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
-    resetStack();
+    if (viewedFrom.type !== 'other') {
+      dispatch(
+        removeBookFromAllStacks({
+          bookId: book.id,
+          stackIds: book.stacks.map((stack) => stack.stackId),
+        })
+      );
+      dispatch(deleteBook(book.id));
+    }
+    dispatch(removeBookFromStack({ stackId: viewedFrom.id, bookId }));
   }
 
   function goToEditBook() {
@@ -37,7 +46,7 @@ export default function BookPreview({
     navigate('/forms/book', { state: { book, edit: true } });
   }
 
-  function viewBook()  {
+  function viewBook() {
     dispatch(setCurrentStack(viewedFrom));
     navigate('/book', { state: { bookId: book.id } });
   }

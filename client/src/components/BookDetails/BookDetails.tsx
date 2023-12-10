@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Stack } from '../../utils/types';
 import {
   deleteBookFromStack,
   getBookById,
@@ -19,8 +18,11 @@ import ChangePageForm from '../MenusAndForms/AddReadingSession/AddReadingSession
 import NoteList from '../NoteList/NoteList';
 import AddNoteForm from '../MenusAndForms/AddNoteForm/AddNoteForm';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { addBook, editBook } from '../../store/slices/bookSlice';
-import { setCurrentStack } from '../../store/slices/stackSlice';
+import { addBook, deleteBook, editBook } from '../../store/slices/bookSlice';
+import {
+  removeBookFromAllStacks,
+  removeBookFromStack,
+} from '../../store/slices/stackSlice';
 
 export default function BookDetails() {
   const location = useLocation();
@@ -29,11 +31,15 @@ export default function BookDetails() {
   const dispatch = useAppDispatch();
   const [addNoteIsOpen, setAddNoteIsOpen] = useState(false);
   const [addReadingIsOpen, setAddReadingIsOpen] = useState(false);
-  const { bookId, viewedFrom } = location.state as {
+  const { bookId } = location.state as {
     bookId: number;
-    viewedFrom: Stack;
   };
 
+  const stack = useAppSelector((state) => state.stack.currentStack);
+  if (!stack) {
+    navigate('/');
+    return <></>;
+  }
   const book = useAppSelector((state) => state.book.books[bookId]);
   const [noteRefresh, setNoteRefresh] = useState(false);
 
@@ -57,12 +63,10 @@ export default function BookDetails() {
   function goToEditBook() {
     navigate('/forms/book', {
       state: {
-        stack: { title: viewedFrom.name, id: viewedFrom.id },
         book,
         edit: true,
       },
     });
-    dispatch(setCurrentStack(viewedFrom))
   }
 
   async function refreshNotes() {
@@ -70,7 +74,18 @@ export default function BookDetails() {
   }
 
   async function onDelete() {
-    await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
+    await deleteBookFromStack(book.id, stack!.id, stack!.type);
+    if (stack!.type !== 'other') {
+      dispatch(
+        removeBookFromAllStacks({
+          bookId: book.id,
+          stackIds: book.stacks.map((stack) => stack.stackId),
+        })
+      );
+      dispatch(deleteBook(book.id));
+    } else {
+      dispatch(removeBookFromStack({ stackId: stack!.id, bookId: book.id }));
+    }
     navigate(-1);
   }
 

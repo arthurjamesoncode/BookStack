@@ -20,6 +20,7 @@ export type Book = {
   OLID: string;
   description: string;
   hasImg: boolean;
+  stacks: {stackId: number}[];
 };
 
 export type Note = {

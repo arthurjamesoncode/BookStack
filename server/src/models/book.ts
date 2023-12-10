@@ -11,6 +11,7 @@ export async function getAllBooks() {
 export async function getBookById(id: number) {
   const book = await prisma.book.findUnique({
     where: { id },
+    include: {stacks: {select: {stackId: true}}}
   });
 
   return book;

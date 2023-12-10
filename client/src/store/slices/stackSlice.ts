@@ -49,6 +49,24 @@ const userSlice = createSlice({
       state.booksInStacks[stackId].push(bookId);
     },
 
+    addNewBookToStack: (
+      state,
+      action: PayloadAction<{ bookId: number; stack: Stack }>
+    ) => {
+      const { bookId, stack } = action.payload;
+      if (!state.booksInStacks[stack.id]) {
+        state.booksInStacks[stack.id] = [];
+      }
+
+      const primaryStack =
+        stack.type === 'other'
+          ? state.stacks.find((stack) => stack.type === 'tbr')
+          : null;
+      if (primaryStack) state.booksInStacks[primaryStack.id].push(bookId);
+
+      state.booksInStacks[stack.id].push(bookId);
+    },
+
     removeBookFromStack: (
       state,
       action: PayloadAction<{ bookId: number; stackId: number }>
@@ -64,11 +82,25 @@ const userSlice = createSlice({
       action: PayloadAction<{ bookIds: number[]; stackId: number }>
     ) => {
       const { bookIds, stackId } = action.payload;
-      state.booksInStacks[stackId] = bookIds
+      state.booksInStacks[stackId] = bookIds;
     },
+
+    removeBookFromAllStacks: (
+      state,
+      action: PayloadAction<{ bookId: number; stackIds: number[] }>
+    ) => {
+      const { bookId, stackIds } = action.payload;
+
+      stackIds.forEach((stackId) => {
+        state.booksInStacks[stackId] = state.booksInStacks[stackId].filter(
+          (id) => id !== bookId
+        );
+      });
+    },
+
     setCurrentStack: (state, action: PayloadAction<Stack>) => {
       state.currentStack = action.payload;
-    }
+    },
   },
 });
 
@@ -79,7 +111,10 @@ export const {
   deleteStack,
   addBookToStack,
   setBooksInStack,
-  setCurrentStack
+  setCurrentStack,
+  removeBookFromAllStacks,
+  removeBookFromStack,
+  addNewBookToStack
 } = userSlice.actions;
 
 export default userSlice.reducer;

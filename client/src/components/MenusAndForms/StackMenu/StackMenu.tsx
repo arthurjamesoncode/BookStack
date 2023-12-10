@@ -1,35 +1,32 @@
 import { useNavigate } from 'react-router-dom';
 import { Stack } from '../../../utils/types';
 import Menu from '../Menu/menu';
-import { useAppDispatch } from '../../../store';
-import { setCurrentStack } from '../../../store/slices/stackSlice';
+import { useAppSelector } from '../../../store';
+
 
 type StackMenuProps = {
   isOpen: boolean;
-  stack: Stack | null;
   openAddBookMenu: (stack: Stack) => void;
   closeMenu: (stack: Stack) => void;
   deleteStack: (id: number) => void;
   showStackForm: (edit: boolean) => void;
 };
 
-export function StackMenu({
-  isOpen,
-  stack,
-  openAddBookMenu,
-  closeMenu,
-  deleteStack,
-  showStackForm,
-}: StackMenuProps) {
+export function StackMenu(props: StackMenuProps) {
+  const {
+    isOpen,
+    openAddBookMenu,
+    closeMenu,
+    deleteStack,
+    showStackForm,
+  } = props;
+
   const navigate = useNavigate();
 
-  const dispatch = useAppDispatch();
-  
+  const stack = useAppSelector((state) => state.stack.currentStack);
+
   function goToStackView() {
-    dispatch(setCurrentStack(stack!));
-    navigate(`/view/stack`, {
-      state: { stack },
-    });
+    navigate(`/view/stack`);
   }
 
   const options = [

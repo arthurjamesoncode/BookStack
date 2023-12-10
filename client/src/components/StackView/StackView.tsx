@@ -42,7 +42,6 @@ export default function StackView() {
               return (
                 <div key={index} className='book-list-item'>
                   <BookPreview
-                    resetStack={getBooks}
                     viewedFrom={stack}
                     bookId={bookId}
                   />

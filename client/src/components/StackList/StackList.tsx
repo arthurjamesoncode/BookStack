@@ -9,7 +9,7 @@ import { StackMenu } from '../MenusAndForms/StackMenu/StackMenu';
 import AddBookMenu from '../MenusAndForms/AddBookMenu/AddBookMenu';
 import StackForm from '../MenusAndForms/StackForm/StackForm';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { editStack, setCurrentStack, setStacks } from '../../store/slices/stackSlice';
+import { addStack, editStack, setCurrentStack, setStacks, deleteStack as deleteStackAction } from '../../store/slices/stackSlice';
 
 export default function StackList() {
   const dispatch = useAppDispatch();
@@ -50,12 +50,12 @@ export default function StackList() {
       : await apiClient.addStack(name);
 
     if (edit) dispatch(editStack(newStack));
-    else dispatch(setStacks([...stacks, newStack]));
+    else dispatch(addStack(newStack));
   }
 
   async function deleteStack(stackId: number) {
     await apiClient.deleteStack(stackId);
-    setStacks(stacks.filter((stack) => stack.id !== stackId));
+    dispatch(deleteStackAction(stackId))
   }
 
   return (
@@ -76,13 +76,12 @@ export default function StackList() {
       />
       <StackMenu
         showStackForm={showStackForm}
-        stack={currentStack}
         isOpen={bottomMenu === 'stackMenu'}
         openAddBookMenu={() => toggleMenu('bookMenu', currentStack!)}
         closeMenu={() => toggleMenu('stackMenu', currentStack!)}
         deleteStack={deleteStack}
       />
-      <AddBookMenu stack={currentStack} isOpen={bottomMenu === 'bookMenu'} />
+      <AddBookMenu isOpen={bottomMenu === 'bookMenu'} />
       <StackForm
         hideStackForm={hideStackForm}
         addOrEditStack={addOrEditStack}

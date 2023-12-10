@@ -58,7 +58,6 @@ export default function StackPreview(props: StackPreview) {
         <div className='grid'>
           {booksInStack.length > 0 ? (
             <BookPreview
-              resetStack={getBooks}
               viewedFrom={stack}
               bookId={booksInStack[index]}
             />
