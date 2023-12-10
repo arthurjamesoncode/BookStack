@@ -42,7 +42,8 @@ If you install the app before I have to chance to add authentication and login a
 This projects frontend tech stack includes:
  
  - React (With helper libraries)
-
+ - Redux
+ 
 This projects backend tech stack includes:
 
  - Postgres
