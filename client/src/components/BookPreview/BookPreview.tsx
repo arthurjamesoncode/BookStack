@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Stack } from '../../utils/types';
+import { Book, Stack } from '../../utils/types';
 import { deleteBookFromStack } from '../../services/APIClient';
 import { getCoverUrl } from '../../services/OpenLibrary';
 
@@ -25,20 +25,22 @@ export default function BookPreview({ bookId, viewedFrom }: BookPreviewProps) {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
-  const book = useAppSelector((state) => state.book.books[bookId]);
+  const book : Book | undefined = useAppSelector((state) => state.book.books[bookId]);
 
   async function onDelete() {
-    await deleteBookFromStack(book.id, viewedFrom.id, viewedFrom.type);
+    await deleteBookFromStack(book!.id, viewedFrom.id, viewedFrom.type);
     if (viewedFrom.type !== 'other') {
+      console.log(book!.stacks)
       dispatch(
         removeBookFromAllStacks({
-          bookId: book.id,
-          stackIds: book.stacks.map((stack) => stack.stackId),
+          bookId: book!.id,
+          stackIds: book!.stacks.map((stack) => stack.stackId),
         })
       );
-      dispatch(deleteBook(book.id));
+      dispatch(deleteBook(book!.id));
+    } else {
+      dispatch(removeBookFromStack({ stackId: viewedFrom.id, bookId }));
     }
-    dispatch(removeBookFromStack({ stackId: viewedFrom.id, bookId }));
   }
 
   function goToEditBook() {
@@ -48,7 +50,11 @@ export default function BookPreview({ bookId, viewedFrom }: BookPreviewProps) {
 
   function viewBook() {
     dispatch(setCurrentStack(viewedFrom));
-    navigate('/book', { state: { bookId: book.id } });
+    navigate('/book', { state: { bookId: book!.id } });
+  }
+
+  if (book == null) {
+    return <></>;
   }
 
   let imgUrl = defaultIcon;

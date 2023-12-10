@@ -9,7 +9,7 @@ import GenericForm from '../MenusAndForms/genericForms/GenericForm';
 import './BookForm.css';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { addNewBookToStack as addNewBookAction} from '../../store/slices/stackSlice'
-import { editBook as editBookAction } from '../../store/slices/bookSlice';
+import { addBook, editBook as editBookAction } from '../../store/slices/bookSlice';
 
 const blankForm: Record<string, number | string> = {
   title: '',
@@ -47,6 +47,7 @@ export default function BookForm() {
 
     if (!edit) {
       const newBook = await addNewBookToStack(stack!.id, stack!.type, book);
+      dispatch(addBook(newBook));
       dispatch(addNewBookAction({bookId: newBook.id, stack: stack!}))
     } else {
       await editBook(book);

@@ -44,6 +44,8 @@ export default function StackPreview(props: StackPreview) {
     dispatch(setBooksInStack({ stackId: stack.id, bookIds: newBookIds }));
   }
 
+  if (index >= booksInStack.length) setIndex(booksInStack.length - 1);
+
   return (
     booksInStack != null && (
       <div className='container stack-container'>
@@ -57,10 +59,7 @@ export default function StackPreview(props: StackPreview) {
         </div>
         <div className='grid'>
           {booksInStack.length > 0 ? (
-            <BookPreview
-              viewedFrom={stack}
-              bookId={booksInStack[index]}
-            />
+            <BookPreview viewedFrom={stack} bookId={booksInStack[index]} />
           ) : (
             <div className='book-container'>
               <div className='empty-message'>

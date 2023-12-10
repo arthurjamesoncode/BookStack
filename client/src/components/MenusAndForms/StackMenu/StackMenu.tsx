@@ -29,12 +29,16 @@ export function StackMenu(props: StackMenuProps) {
     navigate(`/view/stack`);
   }
 
+  if (!stack) {
+    return <></>;
+  }
+
   const options = [
-    { text: 'Add Book', onClick: () => openAddBookMenu(stack!) },
+    { text: 'Add Book', onClick: () => openAddBookMenu(stack) },
     { text: 'View Stack', onClick: () => goToStackView() },
   ];
 
-  if (stack && stack.type === 'other') {
+  if (stack.type === 'other') {
     options.push({
       text: 'Delete Stack',
       onClick: () => {

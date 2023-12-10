@@ -23,6 +23,7 @@ import {
   removeBookFromAllStacks,
   removeBookFromStack,
 } from '../../store/slices/stackSlice';
+import { Book } from '../../utils/types';
 
 export default function BookDetails() {
   const location = useLocation();
@@ -36,11 +37,9 @@ export default function BookDetails() {
   };
 
   const stack = useAppSelector((state) => state.stack.currentStack);
-  if (!stack) {
-    navigate('/');
-    return <></>;
-  }
-  const book = useAppSelector((state) => state.book.books[bookId]);
+  const book: Book | undefined = useAppSelector(
+    (state) => state.book.books[bookId]
+  );
   const [noteRefresh, setNoteRefresh] = useState(false);
 
   useEffect(() => {
@@ -74,25 +73,25 @@ export default function BookDetails() {
   }
 
   async function onDelete() {
-    await deleteBookFromStack(book.id, stack!.id, stack!.type);
+    await deleteBookFromStack(book!.id, stack!.id, stack!.type);
     if (stack!.type !== 'other') {
       dispatch(
         removeBookFromAllStacks({
-          bookId: book.id,
-          stackIds: book.stacks.map((stack) => stack.stackId),
+          bookId: book!.id,
+          stackIds: book!.stacks.map((stack) => stack.stackId),
         })
       );
-      dispatch(deleteBook(book.id));
+      dispatch(deleteBook(book!.id));
     } else {
-      dispatch(removeBookFromStack({ stackId: stack!.id, bookId: book.id }));
+      dispatch(removeBookFromStack({ stackId: stack!.id, bookId: book!.id }));
     }
     navigate(-1);
   }
 
   async function finishReading() {
     const updatedBook = await switchPrimaryStack(
-      book.id,
-      book.primaryStack,
+      book!.id,
+      book!.primaryStack,
       'finished'
     );
     dispatch(editBook(updatedBook));
@@ -100,11 +99,15 @@ export default function BookDetails() {
 
   async function startReading() {
     const updatedBook = await switchPrimaryStack(
-      book.id,
-      book.primaryStack,
+      book!.id,
+      book!.primaryStack,
       'current'
     );
     dispatch(editBook(updatedBook));
+  }
+
+  if (!stack || !book) {
+    return <></>;
   }
 
   const imgUrl = book.hasImg

@@ -11,7 +11,7 @@ export async function getAllBooks() {
 export async function getBookById(id: number) {
   const book = await prisma.book.findUnique({
     where: { id },
-    include: {stacks: {select: {stackId: true}}}
+    include: { stacks: { select: { stackId: true } } },
   });
 
   return book;
@@ -39,6 +39,7 @@ export async function createAndConnectToStacks(
 ) {
   const newBook = await prisma.book.create({
     data: { ...bookData, stacks: { create: stackIds } },
+    include: { stacks: { select: { stackId: true } } },
   });
 
   return newBook;
@@ -53,6 +54,7 @@ export async function getBooksInStack(stackId: number) {
         },
       },
     },
+    include: { stacks: { select: { stackId: true } } },
   });
 
   return books;
