@@ -21,7 +21,6 @@ type StackPreview = {
 
 export default function StackPreview(props: StackPreview) {
   const { stack, openStackMenu, openAddBookMenu } = props;
-
   const dispatch = useAppDispatch();
   const booksInStack = useAppSelector(
     (state) => state.stack.booksInStacks[stack.id]
@@ -34,17 +33,17 @@ export default function StackPreview(props: StackPreview) {
 
   function changeIndex(diff: number) {
     setIndex(index + diff);
+    if (index >= booksInStack.length) setIndex(booksInStack.length - 1);
   }
 
   async function getBooks() {
     const newBooks: Book[] = await getBooksInStack(stack.id);
     const newBookIds = newBooks.map((book) => book.id);
-
+    console.log(newBooks);
     dispatch(addBooks(newBooks));
     dispatch(setBooksInStack({ stackId: stack.id, bookIds: newBookIds }));
   }
 
-  if (index >= booksInStack.length) setIndex(booksInStack.length - 1);
 
   return (
     booksInStack != null && (
