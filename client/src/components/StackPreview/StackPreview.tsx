@@ -39,11 +39,9 @@ export default function StackPreview(props: StackPreview) {
   async function getBooks() {
     const newBooks: Book[] = await getBooksInStack(stack.id);
     const newBookIds = newBooks.map((book) => book.id);
-    console.log(newBooks);
     dispatch(addBooks(newBooks));
     dispatch(setBooksInStack({ stackId: stack.id, bookIds: newBookIds }));
   }
-
 
   return (
     booksInStack != null && (
